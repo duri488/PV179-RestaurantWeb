@@ -2,8 +2,8 @@
 School project for PV179
 
 ## Team Members
-Juraj Lazorík	527401
-Denis Lebó	527331
+Juraj Lazorík	527401\
+Denis Lebó	527331\
 Pavol Bock	506490
 
 ## Description

@@ -14,6 +14,7 @@ namespace RestaurantWebDAL.Models
         [MaxLength(255)]
         [MinLength(3)]
         public string Name { get; set; }
+        public decimal Volume { get; set; }
 
         [Column(TypeName = "decimal(10,2)")]
         [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {0}")]

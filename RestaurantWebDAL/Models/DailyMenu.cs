@@ -15,9 +15,9 @@ namespace RestaurantWebDAL.Models
         [Column(TypeName = "decimal(10,2)")]
         [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {0}")]
         public decimal MenuPrice { get; set; }
-        public int WeeklyMenuId { get; set; }
+        public int? WeeklyMenuId { get; set; }
         public WeeklyMenu WeeklyMenu { get; set; }
-        public int MealId { get; set; }
+        public int? MealId { get; set; }
         public Meal Meal { get; set; }
     }
 }

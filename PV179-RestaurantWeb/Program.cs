@@ -8,7 +8,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<RestaurantWebDbContext>(
     options => options
         .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-        .UseLazyLoadingProxies()
+        // .UseLazyLoadingProxies()
 );
 
 var app = builder.Build();

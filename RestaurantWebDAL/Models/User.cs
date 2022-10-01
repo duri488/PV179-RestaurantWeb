@@ -6,7 +6,6 @@ namespace RestaurantWebDAL.Models
     {
         [MaxLength(255)]
         [MinLength(6)]
-        [Key]
         public string Username { get; set; }
         [MaxLength(256/8)]
         [MinLength(256/8)]

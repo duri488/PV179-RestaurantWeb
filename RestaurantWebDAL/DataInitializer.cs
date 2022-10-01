@@ -12,6 +12,10 @@ public static class DataInitializer
         SeedRestaurant(modelBuilder);
         SeedMeal(modelBuilder);
         SeedDrink(modelBuilder);
+        SeedLocalization(modelBuilder);
+        SeedWeeklyMenu(modelBuilder);
+        SeedDailyMenu(modelBuilder);
+
     }
 
     public static void SeedUser(this ModelBuilder modelBuilder)
@@ -38,19 +42,17 @@ public static class DataInitializer
     public static void SeedRestaurant(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Restaurant>()
-            .HasData(
-                new Restaurant
-                {
-                    Id = 1,
-                    Name = "Marco",
-                    Description = "Pizza from Italy",
-                    Address = "Hlavna 65 080 01 Presov",
-                    Latitude = 48.996865,
-                    Longtitude = 21.240334,
-                    Phone = "0917123456",
-                    Email = "marco@pizza.sk",
-                }
-            );
+            .HasData(new Restaurant
+            {
+                Id = 1,
+                Name = "Marco",
+                Description = "Pizza from Italy",
+                Address = "Hlavna 65 080 01 Presov",
+                Latitude = 48.996865,
+                Longtitude = 21.240334,
+                Phone = "0917123456",
+                Email = "marco@pizza.sk",
+            });
     }
     public static void SeedMeal(this ModelBuilder modelBuilder)
     {
@@ -116,4 +118,75 @@ public static class DataInitializer
             .WithMany(p => p.Drinks)
             .UsingEntity(j => j.HasData(new { DrinksId = 2, RestaurantsId = 1 }));
     }
+
+    public static void SeedLocalization(this ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Localization>()
+            .HasData(
+                new Localization
+                {
+                    Id = 1,
+                    IsoLanguageCode = "sk",
+                    StringCode = "login",
+                    LocalizedString = "Prihlasenia"
+                },
+                new Localization
+                {
+                    Id = 2,
+                    IsoLanguageCode = "en",
+                    StringCode = "login",
+                    LocalizedString = "Login"
+                }
+            );
+    }
+
+    public static void SeedWeeklyMenu(this ModelBuilder modelBuilder)
+    {
+       
+        modelBuilder.Entity<WeeklyMenu>()
+            .HasData(
+                new WeeklyMenu
+                {
+                    Id = 1,
+                    DateFrom = new DateTime(2022, 10, 3),
+                    DateTo = new DateTime(2022, 10, 7),
+                    MealId = 1,
+                    RestaurantId = 1,
+                },
+                new WeeklyMenu
+                {
+                    Id = 2,
+                    DateFrom = new DateTime(2022, 10, 10),
+                    DateTo = new DateTime(2022, 10, 14),
+                    MealId = 2,
+                    RestaurantId = 1,
+                }
+            );
+    }
+
+    public static void SeedDailyMenu(this ModelBuilder modelBuilder)
+    {
+
+        modelBuilder.Entity<DailyMenu>()
+            .HasData(
+                new DailyMenu
+                {
+                    Id = 1,
+                    DayOfWeek = DayOfWeek.Monday,
+                    MenuPrice = 6.5M,
+                    WeeklyMenuId = 1,
+                    MealId = 1,
+                },
+                new DailyMenu
+                {
+                    Id = 2,
+                    DayOfWeek = DayOfWeek.Tuesday,
+                    MenuPrice = 7.0M,
+                    WeeklyMenuId = 2,
+                    MealId = 2,
+                }
+            );
+
+    }
+
 }

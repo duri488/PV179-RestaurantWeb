@@ -11,6 +11,8 @@ namespace RestaurantWebDAL.Models
         public DayOfWeek DayOfWeek { get; set; }
         public decimal MenuPrice { get; set; }
         public int WeeklyMenuId { get; set; }
+        public WeeklyMenu WeeklyMenu { get; set; }
         public int MealId { get; set; }
+        public Meal Meal { get; set; }
     }
 }

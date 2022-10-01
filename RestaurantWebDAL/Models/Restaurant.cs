@@ -15,8 +15,8 @@ namespace RestaurantWebDAL.Models
         public double Longtitude { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        public List<Meal> Meals { get; set; }
-        public List<Drink> Drinks { get; set; }
-        public List<WeeklyMenu> WeeklyMenus { get; set; }
+        public List<Meal> Meals { get; set; } = new ();
+        public List<Drink> Drinks { get; set; } = new();
+        public List<WeeklyMenu> WeeklyMenus { get; set; } = new();
     }
 }

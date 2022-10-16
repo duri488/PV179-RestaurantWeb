@@ -22,7 +22,7 @@ namespace RestaurantWebInfrastructure.UnitOfWork
         {
             get
             {
-                if (this.DailyMenuRepository == null)
+                if (this.dailyMenuRepository == null)
                 {
                     this.dailyMenuRepository = new Repository<DailyMenu>(Context);
                 }

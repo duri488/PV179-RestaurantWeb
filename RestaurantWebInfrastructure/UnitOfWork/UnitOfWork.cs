@@ -3,42 +3,42 @@ using RestaurantWebDAL.Models;
 
 namespace RestaurantWebInfrastructure.UnitOfWork
 {
-    public class UnitOfWork
+    public class UnitOfWork : IDisposable
     {
         public RestaurantWebDbContext Context { get; } = new();
-        private Repository<DailyMenu> DailyMenuRepository;
-        private Repository<Drink> DrinkRepository;
-        private Repository<Localization> LocalizationRepository;
-        private Repository<Meal> MealRepository;
-        private Repository<User> UserRepository;
-        private Repository<WeeklyMenu> WeeklyMenuRepository;
+        private Repository<DailyMenu> dailyMenuRepository;
+        private Repository<Drink> drinkRepository;
+        private Repository<Localization> localizationRepository;
+        private Repository<Meal> mealRepository;
+        private Repository<User> userRepository;
+        private Repository<WeeklyMenu> weeklyMenuRepository;
 
         public UnitOfWork(RestaurantWebDbContext dbContext)
         {
             Context = dbContext;
         }
-        /* 
+        
         public Repository<DailyMenu> DailyMenuRepository
         {
             get
             {
                 if (this.DailyMenuRepository == null)
                 {
-                    this.DailyMenuRepository = new Repository<DailyMenu>(Context);
+                    this.dailyMenuRepository = new Repository<DailyMenu>(Context);
                 }
-                return DailyMenuRepository;
+                return dailyMenuRepository;
             }
         }
-
+        
         public Repository<Drink> DrinkRepository
         {
             get
             {
-                if (this.DrinkRepository == null)
+                if (this.drinkRepository == null)
                 {
-                    this.DrinkRepository = new Repository<Drink>(Context);
+                    this.drinkRepository = new Repository<Drink>(Context);
                 }
-                return DrinkRepository;
+                return drinkRepository;
             }
         }
 
@@ -46,11 +46,11 @@ namespace RestaurantWebInfrastructure.UnitOfWork
         {
             get
             {
-                if (this.LocalizationRepository == null)
+                if (this.localizationRepository == null)
                 {
-                    this.LocalizationRepository = new Repository<Localization>(Context);
+                    this.localizationRepository = new Repository<Localization>(Context);
                 }
-                return LocalizationRepository;
+                return localizationRepository;
             }
         }
 
@@ -58,11 +58,11 @@ namespace RestaurantWebInfrastructure.UnitOfWork
         {
             get
             {
-                if (this.MealRepository == null)
+                if (this.mealRepository == null)
                 {
-                    this.MealRepository = new Repository<Meal>(Context);
+                    this.mealRepository = new Repository<Meal>(Context);
                 }
-                return MealRepository;
+                return mealRepository;
             }
         }
 
@@ -70,11 +70,11 @@ namespace RestaurantWebInfrastructure.UnitOfWork
         {
             get
             {
-                if (this.UserRepository == null)
+                if (this.userRepository == null)
                 {
-                    this.UserRepository = new Repository<User>(Context);
+                    this.userRepository = new Repository<User>(Context);
                 }
-                return UserRepository;
+                return userRepository;
             }
         }
 
@@ -82,14 +82,14 @@ namespace RestaurantWebInfrastructure.UnitOfWork
         {
             get
             {
-                if (this.WeeklyMenuRepository == null)
+                if (this.weeklyMenuRepository == null)
                 {
-                    this.WeeklyMenuRepository = new Repository<WeeklyMenu>(Context);
+                    this.weeklyMenuRepository = new Repository<WeeklyMenu>(Context);
                 }
-                return WeeklyMenuRepository;
+                return weeklyMenuRepository;
             }
         }
-        */
+        
 
         public async Task Commit()
         {

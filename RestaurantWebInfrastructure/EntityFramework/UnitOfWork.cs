@@ -1,7 +1,7 @@
 ﻿using RestaurantWebDAL;
 using RestaurantWebDAL.Models;
 
-namespace RestaurantWebInfrastructure.UnitOfWork
+namespace RestaurantWebInfrastructure.EntityFramework
 {
     public class UnitOfWork : IDisposable
     {

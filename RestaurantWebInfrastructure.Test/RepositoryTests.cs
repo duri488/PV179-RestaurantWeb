@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework.Constraints;
 using RestaurantWebDAL.Models;
-using RestaurantWebInfrastructure;
 
 namespace RestaurantWebInfrastructure.Test;
 
 using RestaurantWebDAL;
+using RestaurantWebInfrastructure.EntityFramework;
 
 public class Tests
 {

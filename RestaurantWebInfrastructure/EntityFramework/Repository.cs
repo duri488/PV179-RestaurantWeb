@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantWebDAL;
 
-namespace RestaurantWebInfrastructure;
+namespace RestaurantWebInfrastructure.EntityFramework;
 
 public class Repository<TEntity> where TEntity : class
 {
@@ -9,8 +9,8 @@ public class Repository<TEntity> where TEntity : class
     internal readonly DbSet<TEntity> DbSet;
     public Repository(RestaurantWebDbContext dbContext)
     {
-        this._dbContext = dbContext;
-        this.DbSet = _dbContext.Set<TEntity>();
+        _dbContext = dbContext;
+        DbSet = _dbContext.Set<TEntity>();
     }
 
     public void Insert(TEntity entity)

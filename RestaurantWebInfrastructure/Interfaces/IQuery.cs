@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantWebInfrastructure.Interfaces
 {
-    internal interface IQuery<TEntity> where TEntity : class, new()
+    public interface IQuery<TEntity> where TEntity : class, new()
     {
         /// <summary>
         /// Adds a possiblity to filter the result

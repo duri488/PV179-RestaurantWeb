@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantWebInfrastructure.Interfaces
 {
-    internal interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork : IDisposable
     {
         Task Commit();
     }

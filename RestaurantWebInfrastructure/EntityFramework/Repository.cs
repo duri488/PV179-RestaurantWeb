@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantWebDAL;
+using RestaurantWebInfrastructure.Interfaces;
+using System.Collections.Generic;
 
 namespace RestaurantWebInfrastructure.EntityFramework;
 
-public class Repository<TEntity> where TEntity : class
+public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 {
     private readonly RestaurantWebDbContext _dbContext;
     internal readonly DbSet<TEntity> DbSet;
@@ -12,10 +14,20 @@ public class Repository<TEntity> where TEntity : class
         _dbContext = dbContext;
         DbSet = _dbContext.Set<TEntity>();
     }
+    public TEntity GetByID(int id)
+    {
+        return DbSet.Find(id);
+    }
 
     public void Insert(TEntity entity)
     {
         DbSet.Add(entity: entity);
+    }
+
+    public void Delete(object id)
+    {
+        TEntity entityToDelete = DbSet.Find(id);
+        Delete(entityToDelete);
     }
 
     public void Delete(TEntity entity)
@@ -26,15 +38,9 @@ public class Repository<TEntity> where TEntity : class
         }
         DbSet.Remove(entity);
     }
-
-    public void Delete(object id)
+    public virtual void Update(TEntity entityToUpdate)
     {
-        TEntity entityToDelete = DbSet.Find(id);
-        Delete(entityToDelete);
-    }
-
-    public TEntity GetById(int id)
-    {
-        return DbSet.Find(id);
+        DbSet.Attach(entityToUpdate);
+        _dbContext.Entry(entityToUpdate).State = EntityState.Modified;
     }
 }

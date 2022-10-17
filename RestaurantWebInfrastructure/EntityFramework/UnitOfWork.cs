@@ -1,24 +1,25 @@
 ﻿using RestaurantWebDAL;
 using RestaurantWebDAL.Models;
+using RestaurantWebInfrastructure.Interfaces;
 
 namespace RestaurantWebInfrastructure.EntityFramework
 {
-    public class UnitOfWork : IDisposable
+    public class UnitOfWork : IUnitOfWork
     {
         public RestaurantWebDbContext Context { get; } = new();
-        private Repository<DailyMenu> dailyMenuRepository;
-        private Repository<Drink> drinkRepository;
-        private Repository<Localization> localizationRepository;
-        private Repository<Meal> mealRepository;
-        private Repository<User> userRepository;
-        private Repository<WeeklyMenu> weeklyMenuRepository;
+        private IRepository<DailyMenu> dailyMenuRepository;
+        private IRepository<Drink> drinkRepository;
+        private IRepository<Localization> localizationRepository;
+        private IRepository<Meal> mealRepository;
+        private IRepository<User> userRepository;
+        private IRepository<WeeklyMenu> weeklyMenuRepository;
 
         public UnitOfWork(RestaurantWebDbContext dbContext)
         {
             Context = dbContext;
         }
         
-        public Repository<DailyMenu> DailyMenuRepository
+        public IRepository<DailyMenu> DailyMenuRepository
         {
             get
             {
@@ -30,7 +31,7 @@ namespace RestaurantWebInfrastructure.EntityFramework
             }
         }
         
-        public Repository<Drink> DrinkRepository
+        public IRepository<Drink> DrinkRepository
         {
             get
             {
@@ -42,7 +43,7 @@ namespace RestaurantWebInfrastructure.EntityFramework
             }
         }
 
-        public Repository<Localization> LocalizationRepository
+        public IRepository<Localization> LocalizationRepository
         {
             get
             {
@@ -54,7 +55,7 @@ namespace RestaurantWebInfrastructure.EntityFramework
             }
         }
 
-        public Repository<Meal> MealRepository
+        public IRepository<Meal> MealRepository
         {
             get
             {
@@ -66,7 +67,7 @@ namespace RestaurantWebInfrastructure.EntityFramework
             }
         }
 
-        public Repository<User> UserRepository
+        public IRepository<User> UserRepository
         {
             get
             {
@@ -78,7 +79,7 @@ namespace RestaurantWebInfrastructure.EntityFramework
             }
         }
 
-        public Repository<WeeklyMenu> WeeklyMenuRepository
+        public IRepository<WeeklyMenu> WeeklyMenuRepository
         {
             get
             {

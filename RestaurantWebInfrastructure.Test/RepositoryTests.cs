@@ -52,7 +52,7 @@ public class Tests
     public void Repository_DeleteById_removesCorrectElement()
     {
         Drink mojito = CreateTestedEntity("Mojito", (decimal) 50.00, (decimal) 500.00);
-        Drink mimosa = CreateTestedEntity("Mimosa", (decimal) 50.00, (decimal) 500.00, 1);
+        Drink mimosa = CreateTestedEntity("Mimosa", (decimal) 50.00, (decimal) 500.00, 2);
         RepositoryUnderTest.Insert(mojito);
         RepositoryUnderTest.Insert(mimosa);
         RepositoryUnderTest.Delete(1);

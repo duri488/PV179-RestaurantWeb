@@ -65,7 +65,7 @@ public class Tests
     {
         Drink mojito = CreateTestedEntity("Mojito", (decimal) 50.00, (decimal) 500.00);
         RepositoryUnderTest.Insert(mojito);
-        Assert.That(RepositoryUnderTest.GetById(mojito.Id), Is.EqualTo(mojito));
+        Assert.That(RepositoryUnderTest.GetByID(mojito.Id), Is.EqualTo(mojito));
     }
 
     [Test]
@@ -74,9 +74,9 @@ public class Tests
         Drink mojito = CreateTestedEntity( "Mojito", (decimal) 50.00, (decimal) 500.00);
         RepositoryUnderTest.Insert(mojito);
         AssertElementStateInLocal(mojito, Is.True);
-        Drink updated = RepositoryUnderTest.GetById(mojito.Id);
+        Drink updated = RepositoryUnderTest.GetByID(mojito.Id);
         updated.Volume = (decimal) 700.00;
-        Assert.That(RepositoryUnderTest.GetById(mojito.Id), Is.EqualTo(updated), "Object was expected to be updated");
+        Assert.That(RepositoryUnderTest.GetByID(mojito.Id), Is.EqualTo(updated), "Object was expected to be updated");
     }
     
     private static Drink CreateTestedEntity(string drinkName, decimal price, decimal volume, int id = 0)

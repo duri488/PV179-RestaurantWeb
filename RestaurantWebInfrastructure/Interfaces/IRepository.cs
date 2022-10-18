@@ -8,7 +8,7 @@ namespace RestaurantWebInfrastructure.Interfaces
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        TEntity GetByID(int id);
+        TEntity GetById(int id);
 
         void Insert(TEntity entity);
 

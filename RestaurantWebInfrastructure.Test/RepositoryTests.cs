@@ -31,39 +31,40 @@ public class Tests
     [Test]
     public void Repository_Insert_dbSetContainsCorrectElement()
     {
-        var drink = CreateTestedEntity( "Mojito", (decimal) 50.00, (decimal) 500.00);
+        var drink = new Drink{Id = 1, Name = "Mojito", Price = (decimal) 50.00, Volume = (decimal) 500.00};
         RepositoryUnderTest.Insert(drink);
-        AssertElementStateInLocal(drink, Is.True);
+        AssertElementExistsInLocalDb(drink);
     }
 
     [Test]
     public void Repository_DeleteByObject_removesCorrectElement()
     {
-        Drink mojito = CreateTestedEntity("Mojito", (decimal) 50.00, (decimal) 500.00);
-        Drink mimosa = CreateTestedEntity("Mimosa", (decimal) 50.00, (decimal) 500.00);
+        Drink mojito = new Drink{Id = 1, Name = "Mojito", Price = (decimal) 50.00, Volume = (decimal) 500.00};
+        Drink mimosa = new Drink{Id = 2, Name = "Mimosa", Price = (decimal) 50.00, Volume = (decimal) 500.00};
         RepositoryUnderTest.Insert(mojito);
         RepositoryUnderTest.Insert(mimosa);
         RepositoryUnderTest.Delete(mojito);
-        AssertElementStateInLocal(mojito, Is.False);
-        AssertElementStateInLocal(mimosa, Is.True);
+        AssertElementExistsInLocalDb(mojito, false);
+        AssertElementExistsInLocalDb(mimosa);
     }
     
     [Test]
     public void Repository_DeleteById_removesCorrectElement()
     {
-        Drink mojito = CreateTestedEntity("Mojito", (decimal) 50.00, (decimal) 500.00);
-        Drink mimosa = CreateTestedEntity("Mimosa", (decimal) 50.00, (decimal) 500.00, 2);
+        Drink mojito = new Drink{Id = 1, Name = "Mojito", Price = (decimal) 50.00, Volume = (decimal) 500.00};
+        Drink mimosa = new Drink{Id = 2, Name = "Mimosa", Price = (decimal) 50.00, Volume = (decimal) 500.00};
         RepositoryUnderTest.Insert(mojito);
         RepositoryUnderTest.Insert(mimosa);
+        AssertElementExistsInLocalDb(mojito);
         RepositoryUnderTest.Delete(1);
-        AssertElementStateInLocal(mojito, Is.False);
-        AssertElementStateInLocal(mimosa, Is.True);
+        AssertElementExistsInLocalDb(mojito, false);
+        AssertElementExistsInLocalDb(mimosa);
     }
 
     [Test]
     public void Repository_GetById_FindsInsertedElement()
     {
-        Drink mojito = CreateTestedEntity("Mojito", (decimal) 50.00, (decimal) 500.00);
+        Drink mojito = new Drink{Id = 1, Name = "Mojito", Price = (decimal) 50.00, Volume = (decimal) 500.00};
         RepositoryUnderTest.Insert(mojito);
         Assert.That(RepositoryUnderTest.GetById(mojito.Id), Is.EqualTo(mojito));
     }
@@ -71,24 +72,20 @@ public class Tests
     [Test]
     public void Repository_Update_UpdatesCorrectElement()
     {
-        Drink mojito = CreateTestedEntity( "Mojito", (decimal) 50.00, (decimal) 500.00);
+        Drink mojito = new Drink{Id = 1, Name = "Mojito", Price = (decimal) 50.00, Volume = (decimal) 500.00};
         RepositoryUnderTest.Insert(mojito);
-        AssertElementStateInLocal(mojito, Is.True);
+        AssertElementExistsInLocalDb(mojito);
         Drink updated = RepositoryUnderTest.GetById(mojito.Id);
         updated.Volume = (decimal) 700.00;
         Assert.That(RepositoryUnderTest.GetById(mojito.Id), Is.EqualTo(updated), "Object was expected to be updated");
     }
-    
-    private static Drink CreateTestedEntity(string drinkName, decimal price, decimal volume, int id = 0)
-    {
-        return new Drink{Id = id, Name = drinkName, Price = price, Volume = volume, Restaurants = new List<Restaurant>()};
-    }
 
-    private void AssertElementStateInLocal(Drink entity, IResolveConstraint exists)
+    private void AssertElementExistsInLocalDb(BaseEntity entity, bool isElementInDatabase = true)
     {
-        Assert.That(RepositoryUnderTest.DbSet.Local.Any(d => d.Name == entity.Name &&
-                                                         d.Price == entity.Price &&
-                                                         d.Volume == entity.Volume),
-            exists);
+        IResolveConstraint nullConstraint = Is.Not.Null;
+        if (!isElementInDatabase)
+            nullConstraint = Is.Null;
+        
+        Assert.That(RepositoryUnderTest!.DbSet.Local.FirstOrDefault(e => e.Id == entity.Id), nullConstraint);
     }
 }

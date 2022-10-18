@@ -1,14 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RestaurantWebDAL.Models;
 using RestaurantWebDAL;
+using RestaurantWebDAL.Models;
 using RestaurantWebInfrastructure.EntityFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
-using System.Xml.Linq;
 
 namespace RestaurantWebInfrastructure.Test
 {

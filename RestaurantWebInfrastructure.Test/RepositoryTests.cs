@@ -39,8 +39,8 @@ public class Tests
     [Test]
     public void Repository_DeleteByObject_removesCorrectElement()
     {
-        Drink mojito = new Drink{Id = 1, Name = "Mojito", Price = (decimal) 50.00, Volume = (decimal) 500.00};
-        Drink mimosa = new Drink{Id = 2, Name = "Mimosa", Price = (decimal) 50.00, Volume = (decimal) 500.00};
+        var mojito = new Drink{Id = 1, Name = "Mojito", Price = (decimal) 50.00, Volume = (decimal) 500.00};
+        var mimosa = new Drink{Id = 2, Name = "Mimosa", Price = (decimal) 50.00, Volume = (decimal) 500.00};
         RepositoryUnderTest.Insert(mojito);
         RepositoryUnderTest.Insert(mimosa);
         RepositoryUnderTest.Delete(mojito);
@@ -51,8 +51,8 @@ public class Tests
     [Test]
     public void Repository_DeleteById_removesCorrectElement()
     {
-        Drink mojito = new Drink{Id = 1, Name = "Mojito", Price = (decimal) 50.00, Volume = (decimal) 500.00};
-        Drink mimosa = new Drink{Id = 2, Name = "Mimosa", Price = (decimal) 50.00, Volume = (decimal) 500.00};
+        var mojito = new Drink{Id = 1, Name = "Mojito", Price = (decimal) 50.00, Volume = (decimal) 500.00};
+        var mimosa = new Drink{Id = 2, Name = "Mimosa", Price = (decimal) 50.00, Volume = (decimal) 500.00};
         RepositoryUnderTest.Insert(mojito);
         RepositoryUnderTest.Insert(mimosa);
         AssertElementExistsInLocalDb(mojito);
@@ -64,7 +64,7 @@ public class Tests
     [Test]
     public void Repository_GetById_FindsInsertedElement()
     {
-        Drink mojito = new Drink{Id = 1, Name = "Mojito", Price = (decimal) 50.00, Volume = (decimal) 500.00};
+        var mojito = new Drink{Id = 1, Name = "Mojito", Price = (decimal) 50.00, Volume = (decimal) 500.00};
         RepositoryUnderTest.Insert(mojito);
         Assert.That(RepositoryUnderTest.GetById(mojito.Id), Is.EqualTo(mojito));
     }
@@ -72,7 +72,7 @@ public class Tests
     [Test]
     public void Repository_Update_UpdatesCorrectElement()
     {
-        Drink mojito = new Drink{Id = 1, Name = "Mojito", Price = (decimal) 50.00, Volume = (decimal) 500.00};
+        var mojito = new Drink{Id = 1, Name = "Mojito", Price = (decimal) 50.00, Volume = (decimal) 500.00};
         RepositoryUnderTest.Insert(mojito);
         AssertElementExistsInLocalDb(mojito);
         Drink updated = RepositoryUnderTest.GetById(mojito.Id);

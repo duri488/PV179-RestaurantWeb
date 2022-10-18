@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
-namespace RestaurantWebBL.Helpers;
+namespace RestaurantWebUtilities.Helpers;
 
 public static class CryptoHashHelper
 {

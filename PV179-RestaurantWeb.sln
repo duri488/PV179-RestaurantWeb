@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PV179-RestaurantWeb", "PV17
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantWebDAL", "RestaurantWebDAL\RestaurantWebDAL.csproj", "{863DF345-FACA-42B8-91FC-992E159D1AA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantWebBL", "RestaurantWebBL\RestaurantWebBL.csproj", "{649111B6-6C7B-4FFC-A417-FD3BA95129AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantWebUtilities", "RestaurantWebUtilities\RestaurantWebUtilities.csproj", "{649111B6-6C7B-4FFC-A417-FD3BA95129AD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantWebInfrastructure", "RestaurantWebInfrastructure\RestaurantWebInfrastructure.csproj", "{387AC0AD-2621-4EEA-9185-E58D6EE5C2DB}"
 EndProject

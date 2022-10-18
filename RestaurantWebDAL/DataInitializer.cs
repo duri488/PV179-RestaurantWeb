@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RestaurantWebBL.Helpers;
 using RestaurantWebDAL.Models;
+using RestaurantWebUtilities.Helpers;
 
 namespace RestaurantWebDAL;
 

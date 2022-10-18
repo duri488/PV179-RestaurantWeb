@@ -25,7 +25,7 @@ namespace RestaurantWebInfrastructure.Test
         [Test]
         public async Task UnitOfWork_Commit_HappyPath()
         {
-            var pizza = new Meal { Name = "Pizza", Price = (decimal) 10.00, Picture = "Picture", Description = "mnam", Restaurants = new List<Restaurant>() };
+            var pizza = new Meal { Name = "Pizza", Price = (decimal) 10.00, Picture = "Picture", Description = "mnam" };
             
             using UnitOfWork test = new(DbContext);
             {

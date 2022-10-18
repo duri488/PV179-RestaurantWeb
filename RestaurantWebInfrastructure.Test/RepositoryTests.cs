@@ -31,6 +31,9 @@ public class Tests
     [Test]
     public void Repository_Insert_dbSetContainsCorrectElement()
     {
+        if (RepositoryUnderTest is null)
+            throw new InvalidOperationException("Repository not initiated!");
+       
         var drink = new Drink{Id = 1, Name = "Mojito", Price = (decimal) 50.00, Volume = (decimal) 500.00};
         RepositoryUnderTest.Insert(drink);
         AssertElementExistsInLocalDb(drink);
@@ -39,6 +42,9 @@ public class Tests
     [Test]
     public void Repository_DeleteByObject_removesCorrectElement()
     {
+        if (RepositoryUnderTest is null)
+            throw new InvalidOperationException("Repository not initiated!");
+
         var mojito = new Drink{Id = 1, Name = "Mojito", Price = (decimal) 50.00, Volume = (decimal) 500.00};
         var mimosa = new Drink{Id = 2, Name = "Mimosa", Price = (decimal) 50.00, Volume = (decimal) 500.00};
         RepositoryUnderTest.Insert(mojito);
@@ -51,6 +57,9 @@ public class Tests
     [Test]
     public void Repository_DeleteById_removesCorrectElement()
     {
+        if (RepositoryUnderTest is null)
+            throw new InvalidOperationException("Repository not initiated!");
+
         var mojito = new Drink{Id = 1, Name = "Mojito", Price = (decimal) 50.00, Volume = (decimal) 500.00};
         var mimosa = new Drink{Id = 2, Name = "Mimosa", Price = (decimal) 50.00, Volume = (decimal) 500.00};
         RepositoryUnderTest.Insert(mojito);
@@ -64,6 +73,9 @@ public class Tests
     [Test]
     public void Repository_GetById_FindsInsertedElement()
     {
+        if (RepositoryUnderTest is null)
+            throw new InvalidOperationException("Repository not initiated!");
+
         var mojito = new Drink{Id = 1, Name = "Mojito", Price = (decimal) 50.00, Volume = (decimal) 500.00};
         RepositoryUnderTest.Insert(mojito);
         Assert.That(RepositoryUnderTest.GetById(mojito.Id), Is.EqualTo(mojito));
@@ -72,6 +84,9 @@ public class Tests
     [Test]
     public void Repository_Update_UpdatesCorrectElement()
     {
+        if (RepositoryUnderTest is null)
+            throw new InvalidOperationException("Repository not initiated!");
+
         var mojito = new Drink{Id = 1, Name = "Mojito", Price = (decimal) 50.00, Volume = (decimal) 500.00};
         RepositoryUnderTest.Insert(mojito);
         AssertElementExistsInLocalDb(mojito);

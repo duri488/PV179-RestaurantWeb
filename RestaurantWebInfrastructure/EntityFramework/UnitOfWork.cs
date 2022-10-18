@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RestaurantWebDAL;
+﻿using RestaurantWebDAL;
 using RestaurantWebDAL.Models;
 using RestaurantWebInfrastructure.Interfaces;
 
@@ -24,10 +23,6 @@ namespace RestaurantWebInfrastructure.EntityFramework
             MealRepository = new Repository<Meal>(Context);
             UserRepository = new Repository<User>(Context);
             WeeklyMenuRepository = new Repository<WeeklyMenu>(Context);
-        }
-
-        public UnitOfWork(DbContextOptions<RestaurantWebDbContext> options) : this(new RestaurantWebDbContext(options))
-        {
         }
 
         public async Task Commit()

@@ -8,15 +8,18 @@ namespace RestaurantWebInfrastructure.Test
     public class UnitOfWorkTests
     {
         private RestaurantWebDbContext DbContext { get; set; }
+        const string ConnectionString = "Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=unittest;Integrated Security=True";
+        private readonly DbContextOptions<RestaurantWebDbContext> _dbContextOptions = 
+            new DbContextOptionsBuilder<RestaurantWebDbContext>()
+                .UseSqlServer(ConnectionString)
+                .Options;
 
         [SetUp]
         public void Setup()
         {
-            string dbName = "test_database";
-            DbContextOptions<RestaurantWebDbContext> options = new DbContextOptionsBuilder<RestaurantWebDbContext>()
-                .UseInMemoryDatabase(databaseName: dbName)
-                .Options;
-            DbContext = new RestaurantWebDbContext(options);
+            DbContext = new RestaurantWebDbContext(_dbContextOptions);
+            DbContext.Database.EnsureDeleted();
+            DbContext.Database.EnsureCreated();
         }
 
         [Test]
@@ -36,38 +39,32 @@ namespace RestaurantWebInfrastructure.Test
         [Test]
         public async Task UoWTransactionFail()
         {
-            //TODO - not working properly
-            string dbName = "test_database1";
-            DbContextOptions<RestaurantWebDbContext> options = new DbContextOptionsBuilder<RestaurantWebDbContext>()
-                .UseInMemoryDatabase(databaseName: dbName)
-                .Options;
-
-            var DbContext1 = new RestaurantWebDbContext(options);
-
-            var pizza = new Meal {Id = 1, Name = "pizza", Picture = "Picture", Description = "mnam", Restaurants = new List<Restaurant>() };
-
-            using UnitOfWork Unit1 = new(DbContext1);
+            var pizza = new Meal {Name = "pizza", Picture = "Picture", Description = "mnam"};
+            using (var dbContext = new RestaurantWebDbContext(_dbContextOptions))
             {
-                Unit1.MealRepository.Insert(pizza);
-                await Unit1.Commit();                
+                using (UnitOfWork unitOfWork = new(dbContext))
+                {
+                    unitOfWork.MealRepository.Insert(pizza);
+                    await unitOfWork.Commit();
+                    Assert.That(await DbContext.Meal.FindAsync(pizza.Id), Is.Not.Null);
+                }
             }
 
-            var DbContext2 = new RestaurantWebDbContext(options);
-
-            var burger = new Meal { Id = 2, Name = "burger", Picture = "Picture", Description = "mnam", Restaurants = new List<Restaurant>() };
-
-            using UnitOfWork Unit2 = new(DbContext2);
+            await using (var dbContext = new RestaurantWebDbContext(_dbContextOptions))
             {
-                Unit2.MealRepository.Insert(burger);
-                Unit2.MealRepository.Insert(pizza);
-                //await Unit2.Commit();
-                Assert.ThrowsAsync<ArgumentException>(async () => await Unit2.Commit()); //ok
+                using (UnitOfWork unitOfWork = new(dbContext))
+                {
+                    var burger = new Meal { Name = "burger", Picture = "Picture", Description = "mnam" }; 
+                    unitOfWork.MealRepository.Insert(burger);
+                    unitOfWork.MealRepository.Insert(pizza);
+                    Assert.CatchAsync<Exception>(() => unitOfWork.Commit());
+                    
+                    Assert.That(await dbContext.Meal.FindAsync(burger.Id), Is.Null,
+                        "Transaction should fail and object should not be inserted");
+                    Assert.That(await dbContext.Meal.FindAsync(pizza.Id), Is.Not.Null,
+                        "Object should exist after failed transaction");
+                }
             }
-
-            var DbContext3 = new RestaurantWebDbContext(options);
-            
-            Assert.That(DbContext3.Meal.Count() == 1, Is.True); //fail
-            Assert.That(DbContext3.Meal.Count() == 2, Is.True); //ok               
         }
     }
 }

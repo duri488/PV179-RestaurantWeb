@@ -35,9 +35,15 @@ namespace RestaurantWebInfrastructure.EntityFramework
             await Context.SaveChangesAsync();
         }
 
+        private bool _isDisposed = false;
+
         public void Dispose()
         {
+            if (_isDisposed) return;
+            
             Context.Dispose();
+            GC.SuppressFinalize(this);
+            _isDisposed = true;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RestaurantWebDAL.Models;
 using RestaurantWebDAL;
+using RestaurantWebDAL.Models;
 using RestaurantWebInfrastructure.EntityFramework;
 
 namespace RestaurantWebInfrastructure.Test
@@ -34,7 +34,7 @@ namespace RestaurantWebInfrastructure.Test
         }
 
         [Test]
-        public void MealExists_QueryWhere_Test()
+        public void Query_Where_HappyPath()
         {
             var efquery = new Query<Meal>(DbContext);
             efquery.Where<string>(a => a == "Rezen", "Name");
@@ -45,7 +45,7 @@ namespace RestaurantWebInfrastructure.Test
         }
 
         [Test]
-        public void MealExists_QueryOrderBy_Test()
+        public void Query_OrderBy_HappyPath()
         {
 
             DbContext.Meal.Add(new Meal
@@ -69,7 +69,7 @@ namespace RestaurantWebInfrastructure.Test
         }
 
         [Test]
-        public void MealExists_QueryPage_Test()
+        public void Query_Page_HappyPath()
         {
             DbContext.Meal.Add(new Meal
             {

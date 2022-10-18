@@ -23,7 +23,7 @@ namespace RestaurantWebInfrastructure.Test
         }
 
         [Test]
-        public async Task UoWTransactionSucceed()
+        public async Task UnitOfWork_Commit_HappyPath()
         {
             var pizza = new Meal { Name = "Pizza", Price = (decimal) 10.00, Picture = "Picture", Description = "mnam", Restaurants = new List<Restaurant>() };
             
@@ -37,7 +37,7 @@ namespace RestaurantWebInfrastructure.Test
         }
 
         [Test]
-        public async Task UoWTransactionFail()
+        public async Task UnitOfWork_Commit_CommitFailsAndNoChangesAreWrittenToDb()
         {
             var pizza = new Meal {Name = "pizza", Picture = "Picture", Description = "mnam"};
             using (var dbContext = new RestaurantWebDbContext(_dbContextOptions))

@@ -8,22 +8,9 @@ namespace RestaurantWebInfrastructure.EntityFramework
     {
         protected RestaurantWebDbContext Dbcontext { get; set; }
 
-        private UnitOfWork _unitOfWork;
         public List<(Expression expression, Type argumentType, string columnName)> WherePredicate { get; set; } = new();
         public (string tableName, bool isAscending, Type argumentType)? OrderByContainer { get; set; }
         public (int PageToFetch, int PageSize)? PaginationContainer { get; set; }
-        protected UnitOfWork UnitOfWork
-        {
-            get
-            {
-                if (_unitOfWork != null)
-                {
-                    _unitOfWork = new(Dbcontext);
-                }
-
-                return _unitOfWork;
-            }
-        }
 
         public Query(RestaurantWebDbContext dbcontext)
         {

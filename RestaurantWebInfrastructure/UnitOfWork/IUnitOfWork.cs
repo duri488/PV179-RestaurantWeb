@@ -1,4 +1,4 @@
-﻿namespace RestaurantWebInfrastructure.Interfaces
+﻿namespace RestaurantWebInfrastructure.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {

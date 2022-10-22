@@ -1,6 +1,6 @@
 ﻿using RestaurantWebDAL;
 using RestaurantWebDAL.Models;
-using RestaurantWebInfrastructure.Interfaces;
+using RestaurantWebInfrastructure.UnitOfWork;
 
 namespace RestaurantWebInfrastructure.EntityFramework
 {

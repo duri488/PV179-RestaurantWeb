@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 using RestaurantWebDAL;
-using RestaurantWebInfrastructure.Interfaces;
+using RestaurantWebInfrastructure.Query;
 
 namespace RestaurantWebInfrastructure.EntityFramework
 {

@@ -9,11 +9,9 @@ namespace RestaurantWebDAL.Models
         [MinLength(3)]
         public string Name { get; set; }
 
-        [Range(0, double.MaxValue, ErrorMessage = "Please enter a value bigger than {0}")]
         public decimal Volume { get; set; }
 
         [Column(TypeName = "decimal(10,2)")]
-        [Range(0, double.MaxValue, ErrorMessage = "Please enter a value bigger than {0}")]
         public decimal Price { get; set; }
         public List<Restaurant> Restaurants { get; set; }
     }

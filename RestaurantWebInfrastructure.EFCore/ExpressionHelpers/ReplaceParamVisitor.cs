@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace RestaurantWebInfrastructure.EntityFramework
+namespace RestaurantWebInfrastructure.EFCore.ExpressionHelpers
 {
     /// <summary>
     /// This is not that easily explainable ... therefore, please watch at home ;)

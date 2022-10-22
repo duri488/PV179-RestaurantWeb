@@ -2,7 +2,7 @@
 using RestaurantWebDAL;
 using RestaurantWebInfrastructure.Repository;
 
-namespace RestaurantWebInfrastructure.EntityFramework;
+namespace RestaurantWebInfrastructure.EFCore.Repository;
 
 public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 {

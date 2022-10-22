@@ -1,8 +1,9 @@
 ﻿using RestaurantWebDAL;
 using RestaurantWebDAL.Models;
+using RestaurantWebInfrastructure.EFCore.Repository;
 using RestaurantWebInfrastructure.UnitOfWork;
 
-namespace RestaurantWebInfrastructure.EntityFramework
+namespace RestaurantWebInfrastructure.EFCore.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
@@ -35,7 +36,7 @@ namespace RestaurantWebInfrastructure.EntityFramework
         public void Dispose()
         {
             if (_isDisposed) return;
-            
+
             Context.Dispose();
             GC.SuppressFinalize(this);
             _isDisposed = true;

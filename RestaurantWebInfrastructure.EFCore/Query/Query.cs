@@ -2,7 +2,7 @@
 using RestaurantWebDAL;
 using RestaurantWebInfrastructure.Query;
 
-namespace RestaurantWebInfrastructure.EntityFramework
+namespace RestaurantWebInfrastructure.EFCore.Query
 {
     public class Query<TEntity> : IQuery<TEntity> where TEntity : class, new()
     {

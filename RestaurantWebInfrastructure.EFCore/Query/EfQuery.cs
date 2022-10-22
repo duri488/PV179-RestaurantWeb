@@ -4,7 +4,7 @@ using RestaurantWebInfrastructure.Query;
 
 namespace RestaurantWebInfrastructure.EFCore.Query
 {
-    public class Query<TEntity> : IQuery<TEntity> where TEntity : class, new()
+    public class EfQuery<TEntity> : IQuery<TEntity> where TEntity : class, new()
     {
         protected RestaurantWebDbContext Dbcontext { get; set; }
 
@@ -12,7 +12,7 @@ namespace RestaurantWebInfrastructure.EFCore.Query
         public (string tableName, bool isAscending, Type argumentType)? OrderByContainer { get; set; }
         public (int PageToFetch, int PageSize)? PaginationContainer { get; set; }
 
-        public Query(RestaurantWebDbContext dbcontext)
+        public EfQuery(RestaurantWebDbContext dbcontext)
         {
             Dbcontext = dbcontext;
         }

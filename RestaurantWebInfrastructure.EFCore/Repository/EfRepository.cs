@@ -4,11 +4,11 @@ using RestaurantWebInfrastructure.Repository;
 
 namespace RestaurantWebInfrastructure.EFCore.Repository;
 
-public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class
 {
     private readonly RestaurantWebDbContext _dbContext;
     internal readonly DbSet<TEntity> DbSet;
-    public Repository(RestaurantWebDbContext dbContext)
+    public EfRepository(RestaurantWebDbContext dbContext)
     {
         _dbContext = dbContext;
         DbSet = _dbContext.Set<TEntity>();

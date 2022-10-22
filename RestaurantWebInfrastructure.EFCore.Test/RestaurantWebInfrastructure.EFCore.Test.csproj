@@ -19,7 +19,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\RestaurantWebDAL\RestaurantWebDAL.csproj" />
-      <ProjectReference Include="..\RestaurantWebInfrastructure\RestaurantWebInfrastructure.csproj" />
+      <ProjectReference Include="..\RestaurantWebInfrastructure.EFCore\RestaurantWebInfrastructure.EFCore.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,15 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework.Constraints;
 using RestaurantWebDAL.Models;
-using RestaurantWebInfrastructure.EntityFramework;
+using RestaurantWebInfrastructure.EFCore;
 
 namespace RestaurantWebInfrastructure.EFCore.Test;
 
 using RestaurantWebDAL;
+using RestaurantWebInfrastructure.EFCore.Repository;
 
 public class Tests
 {
-    private Repository<Drink>? RepositoryUnderTest { get; set; }
+    private EfRepository<Drink>? RepositoryUnderTest { get; set; }
 
     [SetUp]
     public void Setup()
@@ -19,7 +20,7 @@ public class Tests
             .UseInMemoryDatabase(databaseName: dbName)
             .Options;
         var dbContext = new RestaurantWebDbContext(options);
-        RepositoryUnderTest = new Repository<Drink>(dbContext);
+        RepositoryUnderTest = new EfRepository<Drink>(dbContext);
     }
 
     [TearDown]

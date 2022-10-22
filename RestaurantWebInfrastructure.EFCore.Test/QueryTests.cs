@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantWebDAL;
 using RestaurantWebDAL.Models;
-using RestaurantWebInfrastructure.EntityFramework;
+using RestaurantWebInfrastructure.EFCore;
+using RestaurantWebInfrastructure.EFCore.Query;
 
 namespace RestaurantWebInfrastructure.EFCore.Test
 {
@@ -56,7 +57,7 @@ namespace RestaurantWebInfrastructure.EFCore.Test
         [Test]
         public void Query_Where_HappyPath()
         {
-            var efquery = new Query<Meal>(DbContext);
+            var efquery = new EfQuery<Meal>(DbContext);
             efquery.Where<string>(a => a == "Rezen", "Name");
             var result = efquery.Execute();
 
@@ -80,7 +81,7 @@ namespace RestaurantWebInfrastructure.EFCore.Test
 
             DbContext.SaveChanges();
 
-            var efquery = new Query<Meal>(DbContext);
+            var efquery = new EfQuery<Meal>(DbContext);
             efquery.Where<string>(a => a == "Rezen", "Name");
             efquery.Where<string>(a => a == "Obalovane maso", "Description");
             var result = efquery.Execute();
@@ -93,7 +94,7 @@ namespace RestaurantWebInfrastructure.EFCore.Test
         public void Query_OrderBy_HappyPath()
         {
 
-            var efquery = new Query<Meal>(DbContext);
+            var efquery = new EfQuery<Meal>(DbContext);
             efquery.OrderBy<int>("Id", false);
             var result = efquery.Execute();
 
@@ -117,7 +118,7 @@ namespace RestaurantWebInfrastructure.EFCore.Test
 
             DbContext.SaveChanges();
 
-            var efquery = new Query<Meal>(DbContext);
+            var efquery = new EfQuery<Meal>(DbContext);
             efquery.Where<string>(a => a == "Burger", "Name");
             efquery.OrderBy<int>("Id", false);
             var result = efquery.Execute();
@@ -132,7 +133,7 @@ namespace RestaurantWebInfrastructure.EFCore.Test
 
             DbContext.SaveChanges();
 
-            var efquery = new Query<Meal>(DbContext);
+            var efquery = new EfQuery<Meal>(DbContext);
             efquery.Page(1, 2);
             var result = efquery.Execute();
 
@@ -144,7 +145,7 @@ namespace RestaurantWebInfrastructure.EFCore.Test
         public void Query_PageAndOrder_HappyPath()
         {
 
-            var efquery = new Query<Meal>(DbContext);
+            var efquery = new EfQuery<Meal>(DbContext);
             efquery.Page(1, 2);
             efquery.OrderBy<int>("Id", false);
             var result = efquery.Execute();
@@ -157,7 +158,7 @@ namespace RestaurantWebInfrastructure.EFCore.Test
         public void Query_PageAndWhere_HappyPath()
         {
 
-            var efquery = new Query<Meal>(DbContext);
+            var efquery = new EfQuery<Meal>(DbContext);
             efquery.Page(1, 2);
             efquery.Where<string>(a => a == "Rezen", "Name");
             var result = efquery.Execute();
@@ -191,7 +192,7 @@ namespace RestaurantWebInfrastructure.EFCore.Test
 
             DbContext.SaveChanges();
 
-            var efquery = new Query<Meal>(DbContext);
+            var efquery = new EfQuery<Meal>(DbContext);
             efquery.Where<string>(a => a == "Burger", "Name");
             efquery.Page(1, 2);
             efquery.OrderBy<int>("Id", true);

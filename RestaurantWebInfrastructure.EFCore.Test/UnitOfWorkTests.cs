@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantWebDAL;
 using RestaurantWebDAL.Models;
-using RestaurantWebInfrastructure.EntityFramework;
+using RestaurantWebInfrastructure.EFCore.UnitOfWork;
 
 namespace RestaurantWebInfrastructure.EFCore.Test
 {
@@ -27,7 +27,7 @@ namespace RestaurantWebInfrastructure.EFCore.Test
         {
             var pizza = new Meal { Name = "Pizza", Price = (decimal)10.00, Picture = "Picture", Description = "mnam" };
 
-            using UnitOfWork test = new(DbContext);
+            using EfUnitOfWork test = new(DbContext);
             {
                 test.MealRepository.Insert(pizza);
                 await test.Commit();
@@ -42,7 +42,7 @@ namespace RestaurantWebInfrastructure.EFCore.Test
             var pizza = new Meal { Name = "pizza", Picture = "Picture", Description = "mnam" };
             using (var dbContext = new RestaurantWebDbContext(_dbContextOptions))
             {
-                using (UnitOfWork unitOfWork = new(dbContext))
+                using (EfUnitOfWork unitOfWork = new(dbContext))
                 {
                     unitOfWork.MealRepository.Insert(pizza);
                     await unitOfWork.Commit();
@@ -52,7 +52,7 @@ namespace RestaurantWebInfrastructure.EFCore.Test
 
             await using (var dbContext = new RestaurantWebDbContext(_dbContextOptions))
             {
-                using (UnitOfWork unitOfWork = new(dbContext))
+                using (EfUnitOfWork unitOfWork = new(dbContext))
                 {
                     var burger = new Meal { Name = "burger", Picture = "Picture", Description = "mnam" };
                     unitOfWork.MealRepository.Insert(burger);

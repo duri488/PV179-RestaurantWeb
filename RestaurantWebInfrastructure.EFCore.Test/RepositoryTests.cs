@@ -3,7 +3,7 @@ using NUnit.Framework.Constraints;
 using RestaurantWebDAL.Models;
 using RestaurantWebInfrastructure.EntityFramework;
 
-namespace RestaurantWebInfrastructure.Test;
+namespace RestaurantWebInfrastructure.EFCore.Test;
 
 using RestaurantWebDAL;
 
@@ -33,8 +33,8 @@ public class Tests
     {
         if (RepositoryUnderTest is null)
             throw new InvalidOperationException("Repository not initiated!");
-       
-        var drink = new Drink{Id = 1, Name = "Mojito", Price = (decimal) 50.00, Volume = (decimal) 500.00};
+
+        var drink = new Drink { Id = 1, Name = "Mojito", Price = (decimal)50.00, Volume = (decimal)500.00 };
         RepositoryUnderTest.Insert(drink);
         AssertElementExistsInLocalDb(drink);
     }
@@ -45,23 +45,23 @@ public class Tests
         if (RepositoryUnderTest is null)
             throw new InvalidOperationException("Repository not initiated!");
 
-        var mojito = new Drink{Id = 1, Name = "Mojito", Price = (decimal) 50.00, Volume = (decimal) 500.00};
-        var mimosa = new Drink{Id = 2, Name = "Mimosa", Price = (decimal) 50.00, Volume = (decimal) 500.00};
+        var mojito = new Drink { Id = 1, Name = "Mojito", Price = (decimal)50.00, Volume = (decimal)500.00 };
+        var mimosa = new Drink { Id = 2, Name = "Mimosa", Price = (decimal)50.00, Volume = (decimal)500.00 };
         RepositoryUnderTest.Insert(mojito);
         RepositoryUnderTest.Insert(mimosa);
         RepositoryUnderTest.Delete(mojito);
         AssertElementExistsInLocalDb(mojito, false);
         AssertElementExistsInLocalDb(mimosa);
     }
-    
+
     [Test]
     public void Repository_DeleteById_removesCorrectElement()
     {
         if (RepositoryUnderTest is null)
             throw new InvalidOperationException("Repository not initiated!");
 
-        var mojito = new Drink{Id = 1, Name = "Mojito", Price = (decimal) 50.00, Volume = (decimal) 500.00};
-        var mimosa = new Drink{Id = 2, Name = "Mimosa", Price = (decimal) 50.00, Volume = (decimal) 500.00};
+        var mojito = new Drink { Id = 1, Name = "Mojito", Price = (decimal)50.00, Volume = (decimal)500.00 };
+        var mimosa = new Drink { Id = 2, Name = "Mimosa", Price = (decimal)50.00, Volume = (decimal)500.00 };
         RepositoryUnderTest.Insert(mojito);
         RepositoryUnderTest.Insert(mimosa);
         AssertElementExistsInLocalDb(mojito);
@@ -76,7 +76,7 @@ public class Tests
         if (RepositoryUnderTest is null)
             throw new InvalidOperationException("Repository not initiated!");
 
-        var mojito = new Drink{Id = 1, Name = "Mojito", Price = (decimal) 50.00, Volume = (decimal) 500.00};
+        var mojito = new Drink { Id = 1, Name = "Mojito", Price = (decimal)50.00, Volume = (decimal)500.00 };
         RepositoryUnderTest.Insert(mojito);
         Assert.That(RepositoryUnderTest.GetById(mojito.Id), Is.EqualTo(mojito));
     }
@@ -87,11 +87,11 @@ public class Tests
         if (RepositoryUnderTest is null)
             throw new InvalidOperationException("Repository not initiated!");
 
-        var mojito = new Drink{Id = 1, Name = "Mojito", Price = (decimal) 50.00, Volume = (decimal) 500.00};
+        var mojito = new Drink { Id = 1, Name = "Mojito", Price = (decimal)50.00, Volume = (decimal)500.00 };
         RepositoryUnderTest.Insert(mojito);
         AssertElementExistsInLocalDb(mojito);
         Drink updated = RepositoryUnderTest.GetById(mojito.Id);
-        updated.Volume = (decimal) 700.00;
+        updated.Volume = (decimal)700.00;
         Assert.That(RepositoryUnderTest.GetById(mojito.Id), Is.EqualTo(updated), "Object was expected to be updated");
     }
 
@@ -100,7 +100,7 @@ public class Tests
         IResolveConstraint nullConstraint = Is.Not.Null;
         if (!isElementInDatabase)
             nullConstraint = Is.Null;
-        
+
         Assert.That(RepositoryUnderTest!.DbSet.Local.FirstOrDefault(e => e.Id == entity.Id), nullConstraint);
     }
 }

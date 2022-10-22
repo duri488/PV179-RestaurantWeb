@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PV179-RestaurantWeb", "PV179-RestaurantWeb\PV179-RestaurantWeb.csproj", "{E8202645-EAEC-4AC8-8B91-EF18BDB9B60C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PV179-RestaurantWeb", "PV179-RestaurantWeb\PV179-RestaurantWeb.csproj", "{E8202645-EAEC-4AC8-8B91-EF18BDB9B60C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantWebDAL", "RestaurantWebDAL\RestaurantWebDAL.csproj", "{863DF345-FACA-42B8-91FC-992E159D1AA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantWebDAL", "RestaurantWebDAL\RestaurantWebDAL.csproj", "{863DF345-FACA-42B8-91FC-992E159D1AA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantWebUtilities", "RestaurantWebUtilities\RestaurantWebUtilities.csproj", "{649111B6-6C7B-4FFC-A417-FD3BA95129AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantWebUtilities", "RestaurantWebUtilities\RestaurantWebUtilities.csproj", "{649111B6-6C7B-4FFC-A417-FD3BA95129AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantWebInfrastructure", "RestaurantWebInfrastructure\RestaurantWebInfrastructure.csproj", "{387AC0AD-2621-4EEA-9185-E58D6EE5C2DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantWebInfrastructure", "RestaurantWebInfrastructure\RestaurantWebInfrastructure.csproj", "{387AC0AD-2621-4EEA-9185-E58D6EE5C2DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantWebInfrastructure.Test", "RestaurantWebInfrastructure.Test\RestaurantWebInfrastructure.Test.csproj", "{80414EF2-9C13-405B-8818-7AEB42665AFB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantWebInfrastructure.EFCore.Test", "RestaurantWebInfrastructure.EFCore.Test\RestaurantWebInfrastructure.EFCore.Test.csproj", "{80414EF2-9C13-405B-8818-7AEB42665AFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

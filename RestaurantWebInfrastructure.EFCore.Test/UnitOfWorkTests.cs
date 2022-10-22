@@ -3,13 +3,13 @@ using RestaurantWebDAL;
 using RestaurantWebDAL.Models;
 using RestaurantWebInfrastructure.EntityFramework;
 
-namespace RestaurantWebInfrastructure.Test
+namespace RestaurantWebInfrastructure.EFCore.Test
 {
     public class UnitOfWorkTests
     {
         private RestaurantWebDbContext DbContext { get; set; }
         const string ConnectionString = "Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=unittest;Integrated Security=True";
-        private readonly DbContextOptions<RestaurantWebDbContext> _dbContextOptions = 
+        private readonly DbContextOptions<RestaurantWebDbContext> _dbContextOptions =
             new DbContextOptionsBuilder<RestaurantWebDbContext>()
                 .UseSqlServer(ConnectionString)
                 .Options;
@@ -25,8 +25,8 @@ namespace RestaurantWebInfrastructure.Test
         [Test]
         public async Task UnitOfWork_Commit_HappyPath()
         {
-            var pizza = new Meal { Name = "Pizza", Price = (decimal) 10.00, Picture = "Picture", Description = "mnam" };
-            
+            var pizza = new Meal { Name = "Pizza", Price = (decimal)10.00, Picture = "Picture", Description = "mnam" };
+
             using UnitOfWork test = new(DbContext);
             {
                 test.MealRepository.Insert(pizza);
@@ -39,7 +39,7 @@ namespace RestaurantWebInfrastructure.Test
         [Test]
         public async Task UnitOfWork_Commit_CommitFailsAndNoChangesAreWrittenToDb()
         {
-            var pizza = new Meal {Name = "pizza", Picture = "Picture", Description = "mnam"};
+            var pizza = new Meal { Name = "pizza", Picture = "Picture", Description = "mnam" };
             using (var dbContext = new RestaurantWebDbContext(_dbContextOptions))
             {
                 using (UnitOfWork unitOfWork = new(dbContext))
@@ -54,11 +54,11 @@ namespace RestaurantWebInfrastructure.Test
             {
                 using (UnitOfWork unitOfWork = new(dbContext))
                 {
-                    var burger = new Meal { Name = "burger", Picture = "Picture", Description = "mnam" }; 
+                    var burger = new Meal { Name = "burger", Picture = "Picture", Description = "mnam" };
                     unitOfWork.MealRepository.Insert(burger);
                     unitOfWork.MealRepository.Insert(pizza);
                     Assert.CatchAsync<Exception>(() => unitOfWork.Commit());
-                    
+
                     Assert.That(await dbContext.Meal.FindAsync(burger.Id), Is.Null,
                         "Transaction should fail and object should not be inserted");
                     Assert.That(await dbContext.Meal.FindAsync(pizza.Id), Is.Not.Null,

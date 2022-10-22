@@ -3,7 +3,7 @@ using RestaurantWebDAL;
 using RestaurantWebDAL.Models;
 using RestaurantWebInfrastructure.EntityFramework;
 
-namespace RestaurantWebInfrastructure.Test
+namespace RestaurantWebInfrastructure.EFCore.Test
 {
     public class QueryTests
     {

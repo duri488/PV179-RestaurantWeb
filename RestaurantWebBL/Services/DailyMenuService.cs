@@ -1,10 +1,18 @@
-﻿using RestaurantWebBL.DTOs;
+﻿using RestaurantWebBL.Contracts;
+using RestaurantWebBL.DTOs;
 using RestaurantWebBL.Interfaces;
+using RestaurantWebDomain;
 
 namespace RestaurantWebBL.Services;
 
 public class DailyMenuService : IDailyMenuService
 {
+    private IRepository<DailyMenu> _dailyMenuRepository;
+    public DailyMenuService(IRepository<DailyMenu> dailyMenuRepository)
+    {
+        _dailyMenuRepository = dailyMenuRepository;
+    }
+
     public Task CreateAsync(DailyMenuDto createdEntity)
     {
         throw new NotImplementedException();

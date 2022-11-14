@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
+using RestaurantWeb.Contract;
 using RestaurantWebDAL;
 using RestaurantWebDAL.Models;
 using RestaurantWebInfrastructure.EFCore.Repository;
-using RestaurantWebInfrastructure.UnitOfWork;
 
 namespace RestaurantWebInfrastructure.EFCore.UnitOfWork
 {

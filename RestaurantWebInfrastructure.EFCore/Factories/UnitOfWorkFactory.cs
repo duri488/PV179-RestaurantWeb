@@ -1,7 +1,6 @@
-﻿using RestaurantWebDAL;
+﻿using RestaurantWeb.Contract;
+using RestaurantWebDAL;
 using RestaurantWebInfrastructure.EFCore.UnitOfWork;
-using RestaurantWebInfrastructure.Factories;
-using RestaurantWebInfrastructure.UnitOfWork;
 
 namespace RestaurantWebInfrastructure.EFCore.Factories
 {

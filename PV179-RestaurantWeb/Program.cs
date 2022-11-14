@@ -1,5 +1,9 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using RestaurantWeb.Contract;
+using RestaurantWebBL.Configs;
 using RestaurantWebDAL;
+using RestaurantWebInfrastructure.EFCore.Factories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +14,10 @@ builder.Services.AddDbContext<RestaurantWebDbContext>(
         .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
         // .UseLazyLoadingProxies()
 );
+builder.Services.AddTransient<IMapper, Mapper>(x =>
+    new Mapper(new MapperConfiguration(BusinessMappingConfig.ConfigureMapping)));
+
+builder.Services.AddTransient<IUnitOfWorkFactory, UnitOfWorkFactory>();
 
 var app = builder.Build();
 

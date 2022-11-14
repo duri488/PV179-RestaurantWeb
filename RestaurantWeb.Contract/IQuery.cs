@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace RestaurantWebInfrastructure.Query
+namespace RestaurantWeb.Contract
 {
     public interface IQuery<TEntity> where TEntity : class, new()
     {

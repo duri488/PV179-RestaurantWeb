@@ -8,7 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RestaurantWebBL\RestaurantWebBL.csproj" />
     <ProjectReference Include="..\RestaurantWebDAL\RestaurantWebDAL.csproj" />
+    <ProjectReference Include="..\RestaurantWebDomain\RestaurantWebDomain.csproj" />
+    <ProjectReference Include="..\RestaurantWebInfrastructure.EFCore\RestaurantWebInfrastructure.EFCore.csproj" />
+    <ProjectReference Include="..\RestaurantWebInfrastructure\RestaurantWebInfrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

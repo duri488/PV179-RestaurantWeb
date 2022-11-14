@@ -1,4 +1,4 @@
-﻿namespace RestaurantWebBL.Contracts
+﻿namespace RestaurantWeb.Contract
 {
     public interface IUnitOfWork : IDisposable
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RestaurantWeb.Contract;
 using RestaurantWebDAL;
-using RestaurantWebInfrastructure.Repository;
 
 namespace RestaurantWebInfrastructure.EFCore.Repository;
 

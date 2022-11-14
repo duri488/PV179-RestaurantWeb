@@ -1,6 +1,5 @@
 ﻿using System.Linq.Expressions;
-using System.Security.Principal;
-using RestaurantWebDAL;
+using RestaurantWeb.Contract;
 
 namespace RestaurantWebInfrastructure.Query
 {

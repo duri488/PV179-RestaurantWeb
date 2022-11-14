@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using RestaurantWebBL.Contracts;
+using RestaurantWeb.Contract;
 using RestaurantWebBL.DTOs;
 using RestaurantWebBL.Interfaces;
 using RestaurantWebDomain;

@@ -1,4 +1,5 @@
-﻿using RestaurantWebDAL;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using RestaurantWebDAL;
 using RestaurantWebDAL.Models;
 using RestaurantWebInfrastructure.EFCore.Repository;
 using RestaurantWebInfrastructure.UnitOfWork;
@@ -14,7 +15,7 @@ namespace RestaurantWebInfrastructure.EFCore.UnitOfWork
         public EfRepository<Meal> MealRepository { get; }
         public EfRepository<User> UserRepository { get; }
         public EfRepository<WeeklyMenu> WeeklyMenuRepository { get; }
-
+        private readonly IDbContextTransaction _transaction; 
         public EfUnitOfWork(RestaurantWebDbContext dbContext)
         {
             Context = dbContext;
@@ -24,11 +25,21 @@ namespace RestaurantWebInfrastructure.EFCore.UnitOfWork
             MealRepository = new EfRepository<Meal>(Context);
             UserRepository = new EfRepository<User>(Context);
             WeeklyMenuRepository = new EfRepository<WeeklyMenu>(Context);
+            _transaction = Context.Database.BeginTransaction();
         }
 
         public async Task CommitAsync()
         {
-            await Context.SaveChangesAsync();
+            try
+            {
+                await Context.SaveChangesAsync();
+                await _transaction.CommitAsync();
+            }
+            catch (Exception e)
+            {
+                await _transaction.RollbackAsync();
+                throw;
+            }
         }
 
         private bool _isDisposed = false;
@@ -36,9 +47,7 @@ namespace RestaurantWebInfrastructure.EFCore.UnitOfWork
         public void Dispose()
         {
             if (_isDisposed) return;
-
-            Context.Dispose();
-            GC.SuppressFinalize(this);
+            _transaction.Dispose();
             _isDisposed = true;
         }
     }

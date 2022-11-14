@@ -40,30 +40,25 @@ namespace RestaurantWebInfrastructure.EFCore.Test
         public async Task UnitOfWork_Commit_CommitFailsAndNoChangesAreWrittenToDb()
         {
             var pizza = new Meal { Name = "pizza", Picture = "Picture", Description = "mnam" };
-            using (var dbContext = new RestaurantWebDbContext(_dbContextOptions))
+
+            using (EfUnitOfWork unitOfWork = new(DbContext))
             {
-                using (EfUnitOfWork unitOfWork = new(dbContext))
-                {
-                    unitOfWork.MealRepository.Insert(pizza);
-                    await unitOfWork.CommitAsync();
-                    Assert.That(await DbContext.Meal.FindAsync(pizza.Id), Is.Not.Null);
-                }
+                unitOfWork.MealRepository.Insert(pizza);
+                await unitOfWork.CommitAsync();
+                Assert.That(await DbContext.Meal.FindAsync(pizza.Id), Is.Not.Null);
             }
-
-            await using (var dbContext = new RestaurantWebDbContext(_dbContextOptions))
+            
+            using (EfUnitOfWork unitOfWork = new(DbContext))
             {
-                using (EfUnitOfWork unitOfWork = new(dbContext))
-                {
-                    var burger = new Meal { Name = "burger", Picture = "Picture", Description = "mnam" };
-                    unitOfWork.MealRepository.Insert(burger);
-                    unitOfWork.MealRepository.Insert(pizza);
-                    Assert.CatchAsync<Exception>(() => unitOfWork.CommitAsync());
+                var burger = new Meal { Name = "burger", Picture = "Picture", Description = "mnam" };
+                unitOfWork.MealRepository.Insert(burger);
+                unitOfWork.MealRepository.Insert(pizza);
+                Assert.CatchAsync<Exception>(() => unitOfWork.CommitAsync());
 
-                    Assert.That(await dbContext.Meal.FindAsync(burger.Id), Is.Null,
-                        "Transaction should fail and object should not be inserted");
-                    Assert.That(await dbContext.Meal.FindAsync(pizza.Id), Is.Not.Null,
-                        "Object should exist after failed transaction");
-                }
+                Assert.That(await DbContext.Meal.FindAsync(burger.Id), Is.Null,
+                    "Transaction should fail and object should not be inserted");
+                Assert.That(await DbContext.Meal.FindAsync(pizza.Id), Is.Not.Null,
+                    "Object should exist after failed transaction");
             }
         }
     }

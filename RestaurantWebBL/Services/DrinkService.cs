@@ -2,7 +2,7 @@
 using RestaurantWeb.Contract;
 using RestaurantWebBL.DTOs;
 using RestaurantWebBL.Interfaces;
-using RestaurantWebDomain;
+using RestaurantWebDAL.Models;
 
 namespace RestaurantWebBL.Services
 {

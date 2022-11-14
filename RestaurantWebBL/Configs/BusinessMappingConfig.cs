@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using RestaurantWebBL.DTOs;
-using RestaurantWebDomain;
+using RestaurantWebDAL.Models;
 
 namespace RestaurantWebBL.Configs
 {

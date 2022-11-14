@@ -1,6 +1,6 @@
 ﻿namespace RestaurantWebBL.DTOs;
 
-public class DrinkDto
+public class DrinkDto : BaseEntityDto
 {
     public string Name { get; set; }
     public decimal Volume { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace RestaurantWebBL.DTOs;
 
-public class DailyMenuDto
+public class DailyMenuDto : BaseEntityDto
 {
     public DayOfWeek DayOfWeek { get; set; }
     public decimal MenuPrice { get; set; }

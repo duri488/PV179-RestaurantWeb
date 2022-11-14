@@ -1,6 +1,6 @@
 ﻿namespace RestaurantWebBL.DTOs;
 
-public class RestaurantDto
+public class RestaurantDto : BaseEntityDto
 {
     public string Name { get; set; }
     public string Description { get; set; }

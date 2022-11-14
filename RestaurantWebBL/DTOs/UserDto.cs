@@ -1,6 +1,6 @@
 ﻿namespace RestaurantWebBL.DTOs;
 
-public class UserDto
+public class UserDto : BaseEntityDto
 {
     public string Username { get; set; }
     public byte[] HashedPassword { get; set; }

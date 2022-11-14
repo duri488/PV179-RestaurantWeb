@@ -56,7 +56,7 @@ public class Tests
     }
 
     [Test]
-    public void Repository_DeleteById_removesCorrectElement()
+    public async Task Repository_DeleteById_removesCorrectElement()
     {
         if (RepositoryUnderTest is null)
             throw new InvalidOperationException("Repository not initiated!");
@@ -66,24 +66,24 @@ public class Tests
         RepositoryUnderTest.Insert(mojito);
         RepositoryUnderTest.Insert(mimosa);
         AssertElementExistsInLocalDb(mojito);
-        RepositoryUnderTest.Delete(1);
+        await RepositoryUnderTest.DeleteAsync(1);
         AssertElementExistsInLocalDb(mojito, false);
         AssertElementExistsInLocalDb(mimosa);
     }
 
     [Test]
-    public void Repository_GetById_FindsInsertedElement()
+    public async Task Repository_GetById_FindsInsertedElement()
     {
         if (RepositoryUnderTest is null)
             throw new InvalidOperationException("Repository not initiated!");
 
         var mojito = new Drink { Id = 1, Name = "Mojito", Price = (decimal)50.00, Volume = (decimal)500.00 };
         RepositoryUnderTest.Insert(mojito);
-        Assert.That(RepositoryUnderTest.GetById(mojito.Id), Is.EqualTo(mojito));
+        Assert.That(await RepositoryUnderTest.GetByIdAsync(mojito.Id), Is.EqualTo(mojito));
     }
 
     [Test]
-    public void Repository_Update_UpdatesCorrectElement()
+    public async Task Repository_Update_UpdatesCorrectElement()
     {
         if (RepositoryUnderTest is null)
             throw new InvalidOperationException("Repository not initiated!");
@@ -91,9 +91,9 @@ public class Tests
         var mojito = new Drink { Id = 1, Name = "Mojito", Price = (decimal)50.00, Volume = (decimal)500.00 };
         RepositoryUnderTest.Insert(mojito);
         AssertElementExistsInLocalDb(mojito);
-        Drink updated = RepositoryUnderTest.GetById(mojito.Id);
+        var updated = await RepositoryUnderTest.GetByIdAsync(mojito.Id);
         updated.Volume = (decimal)700.00;
-        Assert.That(RepositoryUnderTest.GetById(mojito.Id), Is.EqualTo(updated), "Object was expected to be updated");
+        Assert.That(await RepositoryUnderTest.GetByIdAsync(mojito.Id), Is.EqualTo(updated), "Object was expected to be updated");
     }
 
     private void AssertElementExistsInLocalDb(BaseEntity entity, bool isElementInDatabase = true)

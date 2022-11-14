@@ -30,7 +30,7 @@ namespace RestaurantWebInfrastructure.EFCore.Test
             using EfUnitOfWork test = new(DbContext);
             {
                 test.MealRepository.Insert(pizza);
-                await test.Commit();
+                await test.CommitAsync();
             }
 
             Assert.That(DbContext.Meal.Contains(pizza), Is.True);
@@ -45,7 +45,7 @@ namespace RestaurantWebInfrastructure.EFCore.Test
                 using (EfUnitOfWork unitOfWork = new(dbContext))
                 {
                     unitOfWork.MealRepository.Insert(pizza);
-                    await unitOfWork.Commit();
+                    await unitOfWork.CommitAsync();
                     Assert.That(await DbContext.Meal.FindAsync(pizza.Id), Is.Not.Null);
                 }
             }
@@ -57,7 +57,7 @@ namespace RestaurantWebInfrastructure.EFCore.Test
                     var burger = new Meal { Name = "burger", Picture = "Picture", Description = "mnam" };
                     unitOfWork.MealRepository.Insert(burger);
                     unitOfWork.MealRepository.Insert(pizza);
-                    Assert.CatchAsync<Exception>(() => unitOfWork.Commit());
+                    Assert.CatchAsync<Exception>(() => unitOfWork.CommitAsync());
 
                     Assert.That(await dbContext.Meal.FindAsync(burger.Id), Is.Null,
                         "Transaction should fail and object should not be inserted");

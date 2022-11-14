@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using RestaurantWebBL.DTOs;
 using RestaurantWebBL.Interfaces;
-using RestaurantWebDAL.Models;
+using RestaurantWebDomain;
 using RestaurantWebInfrastructure.Repository;
 using RestaurantWebInfrastructure.UnitOfWork;
 

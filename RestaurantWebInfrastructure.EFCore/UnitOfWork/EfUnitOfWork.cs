@@ -26,7 +26,7 @@ namespace RestaurantWebInfrastructure.EFCore.UnitOfWork
             WeeklyMenuRepository = new EfRepository<WeeklyMenu>(Context);
         }
 
-        public async Task Commit()
+        public async Task CommitAsync()
         {
             await Context.SaveChangesAsync();
         }

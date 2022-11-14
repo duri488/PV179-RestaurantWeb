@@ -13,9 +13,15 @@ public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class
         _dbContext = dbContext;
         DbSet = _dbContext.Set<TEntity>();
     }
-    public TEntity GetById(int id)
+    public async Task<TEntity?> GetByIdAsync(int id)
     {
-        return DbSet.Find(id);
+        return await DbSet.FindAsync(id);
+    }
+
+    public async Task<IEnumerable<TEntity>> GetAllAsync()
+    {
+        return await _dbContext.Set<TEntity>()
+            .ToListAsync();
     }
 
     public void Insert(TEntity entity)
@@ -23,9 +29,15 @@ public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class
         DbSet.Add(entity: entity);
     }
 
-    public void Delete(object id)
+    public async Task DeleteAsync(object id)
     {
-        TEntity entityToDelete = DbSet.Find(id);
+        TEntity entityToDelete = await DbSet.FindAsync(id);
+
+        if (entityToDelete is null)
+        {
+            throw new ArgumentException($"Entity with '{id}' does not exists");
+        }
+
         Delete(entityToDelete);
     }
 

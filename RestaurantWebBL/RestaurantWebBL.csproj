@@ -16,8 +16,4 @@
       <ProjectReference Include="..\RestaurantWebInfrastructure\RestaurantWebInfrastructure.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Contracts" />
-    </ItemGroup>
-
 </Project>

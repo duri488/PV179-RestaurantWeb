@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using RestaurantWeb.Contract;
 using RestaurantWebBL.Configs;
 using RestaurantWebDAL;
+using RestaurantWebDAL.Models;
 using RestaurantWebInfrastructure.EFCore.Factories;
+using RestaurantWebInfrastructure.EFCore.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,8 @@ builder.Services.AddTransient<IMapper, Mapper>(x =>
     new Mapper(new MapperConfiguration(BusinessMappingConfig.ConfigureMapping)));
 
 builder.Services.AddTransient<IUnitOfWorkFactory, UnitOfWorkFactory>();
+builder.Services.AddTransient<IRepository<DailyMenu>, EfRepository<DailyMenu>>();
+builder.Services.AddTransient<IRepository<Drink>, EfRepository<Drink>>();
 
 var app = builder.Build();
 

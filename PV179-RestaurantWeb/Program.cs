@@ -22,6 +22,8 @@ builder.Services.AddTransient<IMapper, Mapper>(x =>
 builder.Services.AddTransient<IUnitOfWorkFactory, UnitOfWorkFactory>();
 builder.Services.AddTransient<IRepository<DailyMenu>, EfRepository<DailyMenu>>();
 builder.Services.AddTransient<IRepository<Drink>, EfRepository<Drink>>();
+builder.Services.AddTransient<IRepository<Meal>, EfRepository<Meal>>();
+builder.Services.AddTransient<IRepository<Localization>, EfRepository<Localization>>();
 
 var app = builder.Build();
 

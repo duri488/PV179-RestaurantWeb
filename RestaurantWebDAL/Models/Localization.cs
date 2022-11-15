@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RestaurantWebDAL.Models
 {
@@ -10,6 +13,8 @@ namespace RestaurantWebDAL.Models
 
         [MaxLength(255)]
         [MinLength(1)]
+        [Key]
+        [Column(Order = 2)]
         public string StringCode { get; set; }
 
         [MaxLength(1000)]

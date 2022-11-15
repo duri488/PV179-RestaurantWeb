@@ -127,14 +127,14 @@ public static class DataInitializer
                 {
                     Id = 1,
                     IsoLanguageCode = "sk",
-                    StringCode = "login",
+                    StringCode = "loginSk",
                     LocalizedString = "Prihlasenia"
                 },
                 new Localization
                 {
                     Id = 2,
                     IsoLanguageCode = "en",
-                    StringCode = "login",
+                    StringCode = "loginEN",
                     LocalizedString = "Login"
                 }
             );

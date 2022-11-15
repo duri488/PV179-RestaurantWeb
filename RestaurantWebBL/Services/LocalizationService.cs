@@ -55,14 +55,14 @@ namespace RestaurantWebBL.Services
             await unitOfWork.CommitAsync();
         }
 
-        public async Task<IEnumerable<LocalizationDto>> GetAllWithIso(string iso)
+        public async Task<IEnumerable<LocalizationDto>> GetAllWithIsoAsync(string iso)
         {
             var meals = await _localizationRepository.GetAllAsync();
             var localizationsISO = meals.Where(x => x.IsoLanguageCode == iso);
             return _mapper.Map<IEnumerable<LocalizationDto>>(localizationsISO);
         }
 
-        public async Task<IEnumerable<LocalizationDto>> GetStringWithCode(string iso, string stringCode)
+        public async Task<IEnumerable<LocalizationDto>> GetStringWithCodeAsync(string iso, string stringCode)
         {
             var meals = await _localizationRepository.GetAllAsync();
             var localizationsCode = meals.Where(x => x.StringCode == stringCode);

@@ -13,8 +13,6 @@ namespace RestaurantWebDAL.Models
 
         [MaxLength(255)]
         [MinLength(1)]
-        [Key]
-        [Column(Order = 2)]
         public string StringCode { get; set; }
 
         [MaxLength(1000)]

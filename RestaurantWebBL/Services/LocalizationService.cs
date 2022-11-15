@@ -62,7 +62,7 @@ namespace RestaurantWebBL.Services
             return _mapper.Map<IEnumerable<LocalizationDto>>(localizationsISO);
         }
 
-        public async Task<IEnumerable<LocalizationDto>> GetStringWithCode(string stringCode)
+        public async Task<IEnumerable<LocalizationDto>> GetStringWithCode(string iso, string stringCode)
         {
             var meals = await _localizationRepository.GetAllAsync();
             var localizationsCode = meals.Where(x => x.StringCode == stringCode);

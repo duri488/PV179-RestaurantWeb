@@ -9,5 +9,8 @@ namespace RestaurantWebBL.Interfaces
         Task UpdateAsync(int entityId, MealDto updatedEntity);
         Task DeleteAsync(int entityId);
         Task<IEnumerable<MealDto>> GetAllAsync();
+        Task<IEnumerable<MealDto>> GetMealsPriceIsBigger(decimal price);
+        Task<IEnumerable<MealDto>> GetMealsPriceIsLower(decimal price);
+        Task<MealDto?> GetByNameAsync(string name);
     }
 }

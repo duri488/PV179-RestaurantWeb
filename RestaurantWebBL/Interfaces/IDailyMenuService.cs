@@ -6,7 +6,7 @@ public interface IDailyMenuService
 {
     Task CreateAsync(DailyMenuDto createdEntity);
     Task<DailyMenuDto?> GetByIdAsync(int entityId);
-    Task UpdateAsync(int entityId, DailyMenuDto updatedEntity);
+    Task UpdateAsync(DailyMenuDto updatedEntity);
     Task DeleteAsync(int entityId);
     Task<IEnumerable<DailyMenuDto>> GetAllAsync();
 }

@@ -1,4 +1,5 @@
-﻿using RestaurantWeb.Contract;
+﻿using AutoMapper;
+using RestaurantWeb.Contract;
 using RestaurantWebBL.DTOs;
 using RestaurantWebBL.Interfaces;
 using RestaurantWebDAL.Models;
@@ -7,34 +8,50 @@ namespace RestaurantWebBL.Services;
 
 public class DailyMenuService : IDailyMenuService
 {
-    private IRepository<DailyMenu> _dailyMenuRepository;
-    public DailyMenuService(IRepository<DailyMenu> dailyMenuRepository)
+    private readonly IRepository<DailyMenu> _dailyMenuRepository;
+    private readonly IMapper _mapper;
+    private readonly IUnitOfWorkFactory _unitOfWorkFactory;
+    public DailyMenuService(IRepository<DailyMenu> dailyMenuRepository,
+        IMapper mapper,
+        IUnitOfWorkFactory unitOfWorkFactory)
     {
         _dailyMenuRepository = dailyMenuRepository;
+        _mapper = mapper;
+        _unitOfWorkFactory = unitOfWorkFactory;
     }
 
-    public Task CreateAsync(DailyMenuDto createdEntity)
+    public async Task CreateAsync(DailyMenuDto createdEntity)
     {
-        throw new NotImplementedException();
+        var dailyMenu = _mapper.Map<DailyMenu>(createdEntity);
+        using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
+        _dailyMenuRepository.Insert(dailyMenu);
+        await unitOfWork.CommitAsync();
     }
 
-    public Task<DailyMenuDto?> GetByIdAsync(int entityId)
+    public async Task<DailyMenuDto?> GetByIdAsync(int entityId)
     {
-        throw new NotImplementedException();
+        DailyMenu? dailyMenu = await _dailyMenuRepository.GetByIdAsync(entityId);
+        return _mapper.Map<DailyMenuDto?>(dailyMenu);
     }
 
-    public Task UpdateAsync(int entityId, DailyMenuDto updatedEntity)
+    public async Task UpdateAsync(DailyMenuDto updatedEntity)
     {
-        throw new NotImplementedException();
+        var updatedModel = _mapper.Map<DailyMenu>(updatedEntity);
+        using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
+        _dailyMenuRepository.Update(updatedModel);
+        await unitOfWork.CommitAsync();
     }
 
-    public Task DeleteAsync(int entityId)
+    public async Task DeleteAsync(int entityId)
     {
-        throw new NotImplementedException();
+        using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
+        await _dailyMenuRepository.DeleteAsync(entityId);
+        await unitOfWork.CommitAsync();
     }
 
-    public Task<IEnumerable<DailyMenuDto>> GetAllAsync()
+    public async Task<IEnumerable<DailyMenuDto>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        IEnumerable<DailyMenu> dailyMenuList = await _dailyMenuRepository.GetAllAsync();
+        return _mapper.Map<IEnumerable<DailyMenuDto>>(dailyMenuList);
     }
 }

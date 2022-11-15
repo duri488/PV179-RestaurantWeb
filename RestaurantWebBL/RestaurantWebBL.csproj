@@ -12,7 +12,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\RestaurantWeb.Contract\RestaurantWeb.Contract.csproj" />
-      <ProjectReference Include="..\RestaurantWebDomain\RestaurantWebDomain.csproj" />
       <ProjectReference Include="..\RestaurantWebInfrastructure\RestaurantWebInfrastructure.csproj" />
     </ItemGroup>
 

@@ -23,7 +23,7 @@ public class DailyMenuService : IDailyMenuService
     public async Task CreateAsync(DailyMenuDto createdEntity)
     {
         var dailyMenu = _mapper.Map<DailyMenu>(createdEntity);
-        using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
+        await using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
         _dailyMenuRepository.Insert(dailyMenu);
         await unitOfWork.CommitAsync();
     }
@@ -37,14 +37,14 @@ public class DailyMenuService : IDailyMenuService
     public async Task UpdateAsync(DailyMenuDto updatedEntity)
     {
         var updatedModel = _mapper.Map<DailyMenu>(updatedEntity);
-        using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
+        await using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
         _dailyMenuRepository.Update(updatedModel);
         await unitOfWork.CommitAsync();
     }
 
     public async Task DeleteAsync(int entityId)
     {
-        using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
+        await using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
         await _dailyMenuRepository.DeleteAsync(entityId);
         await unitOfWork.CommitAsync();
     }

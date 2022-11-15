@@ -44,6 +44,13 @@ namespace RestaurantWebInfrastructure.EFCore.UnitOfWork
 
         private bool _isDisposed = false;
 
+        public async ValueTask DisposeAsync()
+        {
+            if (_isDisposed) return;
+            await _transaction.DisposeAsync();
+            _isDisposed = true;
+        }
+        
         public void Dispose()
         {
             if (_isDisposed) return;

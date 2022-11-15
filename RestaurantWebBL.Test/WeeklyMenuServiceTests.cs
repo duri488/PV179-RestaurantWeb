@@ -1,0 +1,160 @@
+﻿using AutoMapper;
+using FluentAssertions;
+using Moq;
+using RestaurantWeb.Contract;
+using RestaurantWebBL.Configs;
+using RestaurantWebBL.DTOs;
+using RestaurantWebBL.Services;
+using RestaurantWebDAL.Models;
+
+namespace RestaurantWebBL.Test;
+
+public class WeeklyMenuServiceTests
+{
+    private Mapper _mapper = null!;
+    private Mock<IRepository<WeeklyMenu>> _weeklyMenuRepositoryMock = null!;
+    private Mock<IUnitOfWorkFactory> _unitOfWorkFactoryMock = null!;
+    private Mock<IUnitOfWork> _unitOfWorkMock = null!;
+
+    private Meal _meal = null!;
+    private Restaurant _restaurant = null!;
+    private WeeklyMenu _weeklyMenu = null!;
+    private WeeklyMenuDto _weeklyMenuDto = null!;
+
+    [OneTimeSetUp]
+    public void OneTimeSetup()
+    {
+        _mapper = new Mapper(new MapperConfiguration(BusinessMappingConfig.ConfigureMapping));
+
+        _restaurant = new Restaurant
+        {
+            Address = "Koblizna 30",
+            Description = "Italian restaurant",
+            Drinks = new List<Drink>(),
+            Email = "",
+            Id = 1,
+            Latitude = 20.0,
+            Longtitude = 20.0,
+            Meals = new(),
+            Name = "Papa Johns",
+            Phone = "",
+            WeeklyMenus = new()
+        };
+
+        _meal = new Meal
+        {
+            Description = "Bolognese sauce, pasta, minced beef-pork mix",
+            Id = 1,
+            Name = "Lasagne",
+            Picture = "",
+            Price = (decimal) 50.0,
+            Restaurants = new List<Restaurant> {_restaurant}
+        };
+        
+        _restaurant.Meals.Add(_meal);
+
+        _weeklyMenu = new WeeklyMenu
+        {
+            DateFrom = DateTime.Today.Add(TimeSpan.FromDays(-7)),
+            DateTo = DateTime.Today,
+            Id = 1,
+            Meal = _meal,
+            MealId = _meal.Id,
+            Restaurant = _restaurant,
+            RestaurantId = _restaurant.Id
+        };
+        _restaurant.WeeklyMenus.Add(_weeklyMenu);
+
+        _weeklyMenuDto = new WeeklyMenuDto()
+        {
+            Id = _weeklyMenu.Id,
+            DateFrom = _weeklyMenu.DateFrom,
+            DateTo = _weeklyMenu.DateTo,
+            Meal = _mapper.Map<MealDto>(_weeklyMenu.Meal),
+            Restaurant = _mapper.Map<RestaurantDto>(_restaurant)
+        };
+
+    }
+    
+    [SetUp]
+    public void Setup()
+    {
+        _weeklyMenuRepositoryMock = new Mock<IRepository<WeeklyMenu>>();
+        _unitOfWorkMock = new Mock<IUnitOfWork>();
+        _unitOfWorkMock.Setup(m => m.CommitAsync()).Returns(Task.CompletedTask);
+        _unitOfWorkFactoryMock = new Mock<IUnitOfWorkFactory>();
+        _unitOfWorkFactoryMock.Setup(m => m.Build()).Returns(_unitOfWorkMock.Object);
+    }
+
+    [Test]
+    public async Task DailyMenuService_CreateAsync_HappyPath()
+    {
+        WeeklyMenu expected = _weeklyMenu;
+        WeeklyMenu actual = null!;
+        _weeklyMenuRepositoryMock
+            .Setup(_ => _.Insert(It.IsAny<WeeklyMenu>()))
+            .Callback(new InvocationAction(i => actual = (WeeklyMenu) i.Arguments[0]));
+
+        var service = new WeeklyMenuService(_weeklyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object);
+        await service.CreateAsync(_weeklyMenuDto);
+        
+        _unitOfWorkMock.Verify(u => u.CommitAsync(), Times.Once);
+        AssertEqual(expected, actual);
+    }
+
+    [Test]
+    public async Task DailyMenuService_GetByIdAsync_HappyPath()
+    {
+        WeeklyMenuDto expected = _weeklyMenuDto;
+        _weeklyMenuRepositoryMock.Setup(m => m.GetByIdAsync(1).Result)
+            .Returns(_weeklyMenu);
+
+        var service = new WeeklyMenuService(_weeklyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object);
+        WeeklyMenuDto? actual = await service.GetByIdAsync(1);
+        
+        Assert.That(actual, Is.Not.Null);
+        AssertEqual(expected, actual!);
+    }
+
+    [Test]
+    public async Task DailyMenuService_UpdateAsync_HappyPath()
+    {
+        WeeklyMenu expected = _weeklyMenu;
+        expected.DateTo = DateTime.Today.Add(TimeSpan.FromDays(1));
+        WeeklyMenu actual = null!;
+        _weeklyMenuRepositoryMock.Setup(_ => _.Update(It.IsAny<WeeklyMenu>()))
+            .Callback(new InvocationAction(i => actual = (WeeklyMenu) i.Arguments[0]));
+        
+        WeeklyMenuDto updatedEntity = _weeklyMenuDto;
+        updatedEntity.DateTo = DateTime.Today.Add(TimeSpan.FromDays(1));
+        var service = new WeeklyMenuService(_weeklyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object);
+        await service.UpdateAsync(updatedEntity);
+        
+        _unitOfWorkMock.Verify(u => u.CommitAsync(), Times.Once);
+        AssertEqual(expected, actual);
+    }
+
+    private static void AssertEqual(WeeklyMenu expected, WeeklyMenu actual)
+    {
+        expected.Should().BeEquivalentTo(actual, options =>
+            options
+                .Excluding(o => o.Meal.Restaurants)
+                .Excluding(o => o.Restaurant.Drinks)
+                .Excluding(o => o.Restaurant.Meals)
+                .Excluding(o => o.Restaurant.WeeklyMenus)
+                .Excluding(o => o.Meal.Restaurants)
+        );
+    }
+
+    private static void AssertEqual(WeeklyMenuDto expected, WeeklyMenuDto actual)
+    {
+        expected.Should().BeEquivalentTo(actual, options =>
+            options
+                .Excluding(o => o.Meal.Restaurants)
+                .Excluding(o => o.Restaurant.Drinks)
+                .Excluding(o => o.Restaurant.Meals)
+                .Excluding(o => o.Restaurant.WeeklyMenus)
+                .Excluding(o => o.Meal.Restaurants)
+        );
+    }
+}

@@ -134,6 +134,29 @@ public class WeeklyMenuServiceTests
         AssertEqual(expected, actual);
     }
 
+    [Test]
+    public async Task DailyMenuService_DeleteAsync_HappyPath()
+    {
+        var service = new WeeklyMenuService(_weeklyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object);
+        await service.DeleteAsync(1);
+        
+        _unitOfWorkMock.Verify(u => u.CommitAsync(), Times.Once);
+        _weeklyMenuRepositoryMock.Verify(r => r.DeleteAsync(1));
+    }
+
+    [Test]
+    public async Task DailyMenuService_GetAllAsync_HappyPath()
+    {
+        var expected = (IEnumerable<WeeklyMenuDto>) new []{_weeklyMenuDto};
+        _weeklyMenuRepositoryMock.Setup(r => r.GetAllAsync().Result)
+            .Returns(new List<WeeklyMenu> {_weeklyMenu});
+        
+        var service = new WeeklyMenuService(_weeklyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object);
+        IEnumerable<WeeklyMenuDto> actual = await service.GetAllAsync();
+        
+        AssertEqual(expected.First(), actual.First());
+    }
+
     private static void AssertEqual(WeeklyMenu expected, WeeklyMenu actual)
     {
         expected.Should().BeEquivalentTo(actual, options =>

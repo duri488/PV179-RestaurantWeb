@@ -34,11 +34,14 @@ public class WeeklyMenuService : IWeeklyMenuService
         return _mapper.Map<WeeklyMenuDto?>(dailyMenu);
     }
 
-    public async Task UpdateAsync(WeeklyMenuDto updatedEntity)
+    public async Task UpdateAsync(WeeklyMenuUpdateDto updatedEntity)
     {
-        var updatedModel = _mapper.Map<WeeklyMenu>(updatedEntity);
+        WeeklyMenu weeklyMenu = await _weeklyMenuRepository.GetByIdAsync(updatedEntity.Id) ??
+                                 throw new InvalidOperationException($"Entity with id {updatedEntity.Id} does not exist!");;
+        weeklyMenu.DateFrom = updatedEntity.DateFrom;
+        weeklyMenu.DateTo = updatedEntity.DateTo;
         await using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
-        _weeklyMenuRepository.Update(updatedModel);
+        _weeklyMenuRepository.Update(weeklyMenu);
         await unitOfWork.CommitAsync();
     }
 

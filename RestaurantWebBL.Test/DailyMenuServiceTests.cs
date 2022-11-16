@@ -136,14 +136,26 @@ public class DailyMenuServiceTests
         DailyMenu actual = null!;
         _dailyMenuRepositoryMock.Setup(_ => _.Update(It.IsAny<DailyMenu>()))
             .Callback(new InvocationAction(i => actual = (DailyMenu) i.Arguments[0]));
+        _dailyMenuRepositoryMock.Setup(_ => _.GetByIdAsync(_dailyMenu.Id).Result)
+            .Returns(_dailyMenu);
         
-        DailyMenuDto updatedEntity = _dailyMenuDto;
-        updatedEntity.MenuPrice = (decimal) 10.0;
+        var dailyMenuUpdateDto = new DailyMenuUpdateDto
+        {
+            Id = expected.Id,
+            DayOfWeek = expected.DayOfWeek,
+            MenuPrice = (decimal) 10.0
+        };
         var service = new DailyMenuService(_dailyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object);
-        await service.UpdateAsync(updatedEntity);
+        await service.UpdateAsync(dailyMenuUpdateDto);
         
         _unitOfWorkMock.Verify(u => u.CommitAsync(), Times.Once);
-        AssertEqual(expected, actual);
+        expected.Should().BeEquivalentTo(actual, 
+            o => o
+                .Excluding(m => m.Meal)
+                .Excluding(m => m.MealId)
+                .Excluding(m => m.WeeklyMenu)
+                .Excluding(m => m.WeeklyMenuId)
+            );
     }
 
     [Test]

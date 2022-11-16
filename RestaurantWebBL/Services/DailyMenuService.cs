@@ -34,11 +34,14 @@ public class DailyMenuService : IDailyMenuService
         return _mapper.Map<DailyMenuDto?>(dailyMenu);
     }
 
-    public async Task UpdateAsync(DailyMenuDto updatedEntity)
+    public async Task UpdateAsync(DailyMenuUpdateDto updatedEntity)
     {
-        var updatedModel = _mapper.Map<DailyMenu>(updatedEntity);
+        DailyMenu dailyMenu = await _dailyMenuRepository.GetByIdAsync(updatedEntity.Id) ?? 
+                              throw new InvalidOperationException($"Entity with id {updatedEntity.Id} does not exist!");
+        dailyMenu.MenuPrice = updatedEntity.MenuPrice;
+        dailyMenu.DayOfWeek = updatedEntity.DayOfWeek;
         await using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
-        _dailyMenuRepository.Update(updatedModel);
+        _dailyMenuRepository.Update(dailyMenu);
         await unitOfWork.CommitAsync();
     }
 

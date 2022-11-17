@@ -22,10 +22,19 @@ namespace RestaurantWebBL.Services
         }
         public async Task CreateAsync(LocalizationDto createdEntity)
         {
-            using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
-            var localization = _mapper.Map<Localization>(createdEntity);
-            _localizationRepository.Insert(localization);
-            await unitOfWork.CommitAsync();
+            var checkExistence = await _localizationRepository.GetAllAsync();
+            var existing = checkExistence.Where(x => x.IsoLanguageCode == createdEntity.IsoLanguageCode && x.StringCode == createdEntity.StringCode);
+            // TODO create test for this
+            if (existing.Count() == 0)
+            {
+                using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
+                var localization = _mapper.Map<Localization>(createdEntity);
+                _localizationRepository.Insert(localization);
+                await unitOfWork.CommitAsync();
+            }
+            //Exepcion ?
+            throw new Exception();
+
         }
 
         public async Task DeleteAsync(int entityId)
@@ -57,15 +66,15 @@ namespace RestaurantWebBL.Services
 
         public async Task<IEnumerable<LocalizationDto>> GetAllWithIsoAsync(string iso)
         {
-            var meals = await _localizationRepository.GetAllAsync();
-            var localizationsISO = meals.Where(x => x.IsoLanguageCode == iso);
+            var local = await _localizationRepository.GetAllAsync();
+            var localizationsISO = local.Where(x => x.IsoLanguageCode == iso);
             return _mapper.Map<IEnumerable<LocalizationDto>>(localizationsISO);
         }
 
         public async Task<IEnumerable<LocalizationDto>> GetStringWithCodeAsync(string iso, string stringCode)
         {
-            var meals = await _localizationRepository.GetAllAsync();
-            var localizationsCode = meals.Where(x => x.StringCode == stringCode);
+            var local = await _localizationRepository.GetAllAsync();
+            var localizationsCode = local.Where(x => x.StringCode == stringCode && x.IsoLanguageCode == iso);
             return _mapper.Map<IEnumerable<LocalizationDto>>(localizationsCode);
         }
     }

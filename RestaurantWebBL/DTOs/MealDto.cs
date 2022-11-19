@@ -6,5 +6,5 @@ public class MealDto : BaseEntityDto
     public decimal Price { get; set; }
     public string Description { get; set; }
     public string Picture { get; set; }
-    public List<RestaurantDto> Restaurants { get; set; }
+    public RestaurantDto Restaurant { get; set; }
 }

@@ -24,7 +24,6 @@ namespace RestaurantWebBL.Services
         {
             var checkExistence = await _localizationRepository.GetAllAsync();
             var existing = checkExistence.Where(x => x.IsoLanguageCode == createdEntity.IsoLanguageCode && x.StringCode == createdEntity.StringCode);
-            // TODO create test for this
             if (existing.Count() == 0)
             {
                 using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();

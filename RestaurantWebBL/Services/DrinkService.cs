@@ -21,10 +21,18 @@ namespace RestaurantWebBL.Services
 
         public async Task CreateAsync(DrinkDto createdEntity)
         {
-            using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
-            var drink = _mapper.Map<Drink>(createdEntity);
-            _drinkRepository.Insert(drink);
-            await unitOfWork.CommitAsync();
+            // TODO create test for fail
+            if (createdEntity.Restaurant == null) 
+            {
+                using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
+                var drink = _mapper.Map<Drink>(createdEntity);
+                _drinkRepository.Insert(drink);
+                await unitOfWork.CommitAsync();
+            }
+            else
+            {
+                throw new SystemException();
+            }
         }
 
         public async Task DeleteAsync(int entityId)
@@ -48,10 +56,17 @@ namespace RestaurantWebBL.Services
 
         public async Task UpdateAsync(int entityId, DrinkDto updatedEntity)
         {
-            using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
-            var updatedDrink = _mapper.Map<Drink>(updatedEntity);
-            _drinkRepository.Update(updatedDrink);
-            await unitOfWork.CommitAsync();
+            if (updatedEntity.Restaurant == null)
+            {
+                using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
+                var updatedDrink = _mapper.Map<Drink>(updatedEntity);
+                _drinkRepository.Update(updatedDrink);
+                await unitOfWork.CommitAsync();
+            }
+            else
+            {
+                throw new SystemException();
+            }
         }
     }
 }

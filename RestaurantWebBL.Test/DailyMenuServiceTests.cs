@@ -31,15 +31,12 @@ public class DailyMenuServiceTests
         {
             Address = "Koblizna 30",
             Description = "Italian restaurant",
-            Drinks = new List<Drink>(),
             Email = "",
             Id = 1,
             Latitude = 20.0,
             Longtitude = 20.0,
-            Meals = new(),
             Name = "Papa Johns",
             Phone = "",
-            WeeklyMenus = new()
         };
 
         _meal = new Meal
@@ -49,10 +46,10 @@ public class DailyMenuServiceTests
             Name = "Lasagne",
             Picture = "",
             Price = (decimal) 50.0,
-            Restaurants = new List<Restaurant> {_restaurant}
+            Restaurant = _restaurant,
+            RestaurantId = _restaurant.Id
         };
-        
-        _restaurant.Meals.Add(_meal);
+       
 
         _weeklyMenu = new WeeklyMenu
         {
@@ -64,7 +61,6 @@ public class DailyMenuServiceTests
             Restaurant = _restaurant,
             RestaurantId = _restaurant.Id
         };
-        _restaurant.WeeklyMenus.Add(_weeklyMenu);
 
         _dailyMenu = new DailyMenu
         {
@@ -185,11 +181,8 @@ public class DailyMenuServiceTests
     {
         expected.Should().BeEquivalentTo(actual, options =>
             options
-                .Excluding(o => o.Meal.Restaurants)
-                .Excluding(o => o.WeeklyMenu.Restaurant.Meals)
-                .Excluding(o => o.WeeklyMenu.Restaurant.Drinks)
-                .Excluding(o => o.WeeklyMenu.Restaurant.WeeklyMenus)
-                .Excluding(o => o.WeeklyMenu.Meal.Restaurants)
+                .Excluding(o => o.Meal.Restaurant)
+                .Excluding(o => o.WeeklyMenu.Meal.Restaurant)
         );
     }
 
@@ -197,11 +190,8 @@ public class DailyMenuServiceTests
     {
         expected.Should().BeEquivalentTo(actual, options =>
             options
-                .Excluding(o => o.Meal.Restaurants)
-                .Excluding(o => o.WeeklyMenu.Restaurant.Meals)
-                .Excluding(o => o.WeeklyMenu.Restaurant.Drinks)
-                .Excluding(o => o.WeeklyMenu.Restaurant.WeeklyMenus)
-                .Excluding(o => o.WeeklyMenu.Meal.Restaurants)
+                .Excluding(o => o.Meal.Restaurant)
+                .Excluding(o => o.WeeklyMenu.Meal.Restaurant)
         );
     }
 }

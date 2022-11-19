@@ -28,7 +28,7 @@ namespace RestaurantWebInfrastructure.EFCore.Test
                 Description = "Obalovane maso",
                 Picture = "obrazok",
                 Price = (decimal)100.00,
-                Restaurants = new List<Restaurant>()
+                RestaurantId = 1
             });
 
             DbContext.Meal.Add(new Meal
@@ -38,7 +38,7 @@ namespace RestaurantWebInfrastructure.EFCore.Test
                 Description = "Maso v zemli",
                 Picture = "obrazok",
                 Price = (decimal)140.00,
-                Restaurants = new List<Restaurant>()
+                RestaurantId = 1
             });
 
             DbContext.Meal.Add(new Meal
@@ -48,7 +48,7 @@ namespace RestaurantWebInfrastructure.EFCore.Test
                 Description = "Cesto so syrom a pretlakom",
                 Picture = "obrazok",
                 Price = (decimal)150.00,
-                Restaurants = new List<Restaurant>()
+                RestaurantId = 1
             });
 
             DbContext.SaveChanges();
@@ -76,7 +76,7 @@ namespace RestaurantWebInfrastructure.EFCore.Test
                 Description = "Maso",
                 Picture = "obrazok",
                 Price = (decimal)150.00,
-                Restaurants = new List<Restaurant>()
+                RestaurantId = 1
             });
 
             DbContext.SaveChanges();
@@ -113,7 +113,7 @@ namespace RestaurantWebInfrastructure.EFCore.Test
                 Description = "Maso v zemli so syrom",
                 Picture = "obrazok",
                 Price = (decimal)150.00,
-                Restaurants = new List<Restaurant>()
+                RestaurantId = 1
             });
 
             DbContext.SaveChanges();
@@ -177,7 +177,7 @@ namespace RestaurantWebInfrastructure.EFCore.Test
                 Description = "Maso v zemli so syrom",
                 Picture = "obrazok",
                 Price = (decimal)150.00,
-                Restaurants = new List<Restaurant>()
+                RestaurantId = 1
             });
 
             DbContext.Meal.Add(new Meal
@@ -187,7 +187,7 @@ namespace RestaurantWebInfrastructure.EFCore.Test
                 Description = "Maso v zemli so syrom a salatom",
                 Picture = "obrazok",
                 Price = (decimal)180.00,
-                Restaurants = new List<Restaurant>()
+                RestaurantId = 1
             });
 
             DbContext.SaveChanges();

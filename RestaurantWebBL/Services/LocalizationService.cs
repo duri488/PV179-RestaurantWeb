@@ -32,9 +32,12 @@ namespace RestaurantWebBL.Services
                 _localizationRepository.Insert(localization);
                 await unitOfWork.CommitAsync();
             }
-            //Exepcion ?
-            throw new Exception();
-
+            else 
+            {
+                //Exepcion Type ?
+                throw new SystemException(); 
+            }
+            
         }
 
         public async Task DeleteAsync(int entityId)

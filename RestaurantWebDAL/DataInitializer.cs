@@ -64,7 +64,8 @@ public static class DataInitializer
                      Name = "Capri",
                      Description = "Tomato, Cheese, Ham, Mushrooms",
                      Price = 6.35M,
-                     Picture = "path to picture"
+                     Picture = "path to picture",
+                     RestaurantId = 1
                  },
 
                  new Meal
@@ -73,19 +74,10 @@ public static class DataInitializer
                      Name = "Hawai",
                      Description = "Tomato, Cheese, Ham, Pineapple",
                      Price = 8.99M,
-                     Picture = "path to picture"
+                     Picture = "path to picture",
+                     RestaurantId = 1
                  }
             );
-
-        modelBuilder.Entity<Meal>()
-            .HasMany(p => p.Restaurants)
-            .WithMany(p => p.Meals)
-            .UsingEntity(j => j.HasData(new { MealsId = 1, RestaurantsId = 1 }));
-
-        modelBuilder.Entity<Meal>()
-            .HasMany(p => p.Restaurants)
-            .WithMany(p => p.Meals)
-            .UsingEntity(j => j.HasData(new { MealsId = 2, RestaurantsId = 1 }));
     }
     public static void SeedDrink(this ModelBuilder modelBuilder)
     {
@@ -97,6 +89,7 @@ public static class DataInitializer
                      Name = "Kofola",
                      Volume = 0.1M,
                      Price = 0.3M,
+                     RestaurantId = 1
                  },
 
                  new Drink
@@ -105,18 +98,9 @@ public static class DataInitializer
                      Name = "Pilsner Urquell",
                      Volume = 0.5M,
                      Price = 2M,
+                     RestaurantId = 1
                  }
             );
-
-        modelBuilder.Entity<Drink>()
-            .HasMany(p => p.Restaurants)
-            .WithMany(p => p.Drinks)
-            .UsingEntity(j => j.HasData(new { DrinksId = 1, RestaurantsId = 1 }));
-
-        modelBuilder.Entity<Drink>()
-            .HasMany(p => p.Restaurants)
-            .WithMany(p => p.Drinks)
-            .UsingEntity(j => j.HasData(new { DrinksId = 2, RestaurantsId = 1 }));
     }
 
     public static void SeedLocalization(this ModelBuilder modelBuilder)

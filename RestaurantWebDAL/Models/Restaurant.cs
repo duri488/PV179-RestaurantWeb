@@ -21,8 +21,5 @@ namespace RestaurantWebDAL.Models
         public string Phone { get; set; }
         [MaxLength(255)]
         public string Email { get; set; }
-        public List<Meal> Meals { get; set; } = new ();
-        public List<Drink> Drinks { get; set; } = new();
-        public List<WeeklyMenu> WeeklyMenus { get; set; } = new();
     }
 }

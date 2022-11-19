@@ -17,6 +17,7 @@ namespace RestaurantWebDAL.Models
 
         [MaxLength(1000)]
         public string Picture { get; set; }
-        public List<Restaurant> Restaurants { get; set; }
+        public int? RestaurantId { get; set; }
+        public Restaurant Restaurant { get; set; }
     }
 }

@@ -13,6 +13,7 @@ namespace RestaurantWebDAL.Models
 
         [Column(TypeName = "decimal(10,2)")]
         public decimal Price { get; set; }
-        public List<Restaurant> Restaurants { get; set; }
+        public int? RestaurantId { get; set; }
+        public Restaurant Restaurant { get; set; }
     }
 }

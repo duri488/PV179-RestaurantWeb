@@ -8,7 +8,7 @@ namespace RestaurantWebInfrastructure.EFCore.Test;
 using RestaurantWebDAL;
 using RestaurantWebInfrastructure.EFCore.Repository;
 
-public class Tests
+public class RepositoryTests
 {
     private EfRepository<Drink>? RepositoryUnderTest { get; set; }
 

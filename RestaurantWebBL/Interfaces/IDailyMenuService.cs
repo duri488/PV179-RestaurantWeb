@@ -4,9 +4,9 @@ namespace RestaurantWebBL.Interfaces;
 
 public interface IDailyMenuService
 {
-    Task CreateAsync(DailyMenuDto createdEntity);
+    Task<int> CreateAsync(DailyMenuDto createdEntity, int? menuId, int? weeklyMenuId);
     Task<DailyMenuDto?> GetByIdAsync(int entityId);
-    Task UpdateAsync(DailyMenuUpdateDto updatedEntity);
+    Task UpdateAsync(DailyMenuDto updatedEntity, int? menuId, int? weeklyMenuId);
     Task DeleteAsync(int entityId);
     Task<IEnumerable<DailyMenuDto>> GetAllAsync();
 }

@@ -22,6 +22,10 @@ namespace RestaurantWebBL.Services
 
         public async Task CreateAsync(MealDto createdEntity)
         {
+            if (createdEntity.Restaurant != null)
+            {
+                throw new SystemException();
+            }
             using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
             var meal = _mapper.Map<Meal>(createdEntity);
             _mealRepository.Insert(meal);
@@ -49,6 +53,10 @@ namespace RestaurantWebBL.Services
 
         public async Task UpdateAsync(int entityId, MealDto updatedEntity)
         {
+            if (updatedEntity.Restaurant != null)
+            {
+                throw new SystemException();
+            }
             using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
             var updatedMeal = _mapper.Map<Meal>(updatedEntity);
             _mealRepository.Update(updatedMeal);

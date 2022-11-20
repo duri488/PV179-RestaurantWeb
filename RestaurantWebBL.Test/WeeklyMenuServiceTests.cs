@@ -65,8 +65,6 @@ public class WeeklyMenuServiceTests
             Id = _weeklyMenu.Id,
             DateFrom = _weeklyMenu.DateFrom,
             DateTo = _weeklyMenu.DateTo,
-            Meal = _mapper.Map<MealDto>(_weeklyMenu.Meal),
-            Restaurant = _mapper.Map<RestaurantDto>(_restaurant)
         };
 
     }
@@ -82,7 +80,7 @@ public class WeeklyMenuServiceTests
     }
 
     [Test]
-    public async Task DailyMenuService_CreateAsync_HappyPath()
+    public async Task WeeklyMenuService_CreateAsync_HappyPath()
     {
         WeeklyMenu expected = _weeklyMenu;
         WeeklyMenu actual = null!;
@@ -91,14 +89,14 @@ public class WeeklyMenuServiceTests
             .Callback(new InvocationAction(i => actual = (WeeklyMenu) i.Arguments[0]));
 
         var service = new WeeklyMenuService(_weeklyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object);
-        await service.CreateAsync(_weeklyMenuDto);
+        await service.CreateAsync(_weeklyMenuDto, _weeklyMenu.MealId, _weeklyMenu.RestaurantId);
         
         _unitOfWorkMock.Verify(u => u.CommitAsync(), Times.Once);
         AssertEqual(expected, actual);
     }
 
     [Test]
-    public async Task DailyMenuService_GetByIdAsync_HappyPath()
+    public async Task WeeklyMenuService_GetByIdAsync_HappyPath()
     {
         WeeklyMenuDto expected = _weeklyMenuDto;
         _weeklyMenuRepositoryMock.Setup(m => m.GetByIdAsync(1).Result)
@@ -112,7 +110,7 @@ public class WeeklyMenuServiceTests
     }
 
     [Test]
-    public async Task DailyMenuService_UpdateAsync_HappyPath()
+    public async Task WeeklyMenuService_UpdateAsync_HappyPath()
     {
         WeeklyMenu expected = _weeklyMenu;
         expected.DateTo = DateTime.Today.Add(TimeSpan.FromDays(1));
@@ -122,21 +120,15 @@ public class WeeklyMenuServiceTests
         _weeklyMenuRepositoryMock.Setup(_ => _.GetByIdAsync(_weeklyMenu.Id).Result)
             .Returns(_weeklyMenu);
         
-        var dailyMenuUpdateDto = new WeeklyMenuUpdateDto
-        {
-            Id = expected.Id,
-            DateFrom = expected.DateFrom,
-            DateTo = DateTime.Today.Add(TimeSpan.FromDays(1))
-        };
         var service = new WeeklyMenuService(_weeklyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object);
-        await service.UpdateAsync(dailyMenuUpdateDto);
+        await service.UpdateAsync(_weeklyMenuDto, _weeklyMenu.MealId, _weeklyMenu.RestaurantId);
         
         _unitOfWorkMock.Verify(u => u.CommitAsync(), Times.Once);
         AssertEqual(expected, actual);
     }
 
     [Test]
-    public async Task DailyMenuService_DeleteAsync_HappyPath()
+    public async Task WeeklyMenuService_DeleteAsync_HappyPath()
     {
         var service = new WeeklyMenuService(_weeklyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object);
         await service.DeleteAsync(1);
@@ -146,7 +138,7 @@ public class WeeklyMenuServiceTests
     }
 
     [Test]
-    public async Task DailyMenuService_GetAllAsync_HappyPath()
+    public async Task WeeklyMenuService_GetAllAsync_HappyPath()
     {
         var expected = (IEnumerable<WeeklyMenuDto>) new []{_weeklyMenuDto};
         _weeklyMenuRepositoryMock.Setup(r => r.GetAllAsync().Result)
@@ -158,19 +150,21 @@ public class WeeklyMenuServiceTests
         AssertEqual(expected.First(), actual.First());
     }
 
-    private static void AssertEqual(WeeklyMenu expected, WeeklyMenu actual)
+    private static void AssertEqual(WeeklyMenu actual, WeeklyMenu expected)
     {
         expected.Should().BeEquivalentTo(actual, options =>
             options
-                .Excluding(o => o.Meal.Restaurant)
+                .Excluding(o => o.Restaurant)
+                .Excluding(o => o.Meal)
         );
     }
 
-    private static void AssertEqual(WeeklyMenuDto expected, WeeklyMenuDto actual)
+    private static void AssertEqual(WeeklyMenuDto actual, WeeklyMenuDto expected)
     {
         expected.Should().BeEquivalentTo(actual, options =>
             options
-                .Excluding(o => o.Meal.Restaurant)
+                .Excluding(o => o.Meal)
+                .Excluding(o => o.Restaurant)
         );
     }
 }

@@ -15,6 +15,8 @@ namespace RestaurantWebDAL.Models
         [MaxLength(1000)]
         public string Description { get; set; }
 
+        public int AllergenFlags { get; set; } = 0;
+
         [MaxLength(1000)]
         public string Picture { get; set; }
         public int? RestaurantId { get; set; }

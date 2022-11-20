@@ -20,12 +20,26 @@ public class DailyMenuService : IDailyMenuService
         _unitOfWorkFactory = unitOfWorkFactory;
     }
 
-    public async Task CreateAsync(DailyMenuDto createdEntity)
+    public async Task<int> UpsertAsync(DailyMenuDto dailyMenuDto)
+    {
+        DailyMenu? dailyMenu = await _dailyMenuRepository.GetByIdAsync(dailyMenuDto.Id);
+        if (dailyMenu is null)
+        {
+            dailyMenuDto.Id = await CreateAsync(dailyMenuDto);
+            return dailyMenuDto.Id;
+        }
+
+        await UpdateAsync(dailyMenuDto);
+        return dailyMenuDto.Id;
+    }
+    
+    public async Task<int> CreateAsync(DailyMenuDto createdEntity)
     {
         var dailyMenu = _mapper.Map<DailyMenu>(createdEntity);
         await using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
-        _dailyMenuRepository.Insert(dailyMenu);
+        int id = _dailyMenuRepository.Insert(dailyMenu);
         await unitOfWork.CommitAsync();
+        return id;
     }
 
     public async Task<DailyMenuDto?> GetByIdAsync(int entityId)
@@ -34,7 +48,7 @@ public class DailyMenuService : IDailyMenuService
         return _mapper.Map<DailyMenuDto?>(dailyMenu);
     }
 
-    public async Task UpdateAsync(DailyMenuUpdateDto updatedEntity)
+    public async Task UpdateAsync(DailyMenuDto updatedEntity)
     {
         DailyMenu dailyMenu = await _dailyMenuRepository.GetByIdAsync(updatedEntity.Id) ?? 
                               throw new InvalidOperationException($"Entity with id {updatedEntity.Id} does not exist!");

@@ -27,7 +27,7 @@ namespace RestaurantWebBL.Services
             using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
 
             var users = GetByName(userName);
-            if (users.Count() > 0)
+            if (users.Any())
             {
                 throw new Exception("Username already exists.");
             }
@@ -83,16 +83,8 @@ namespace RestaurantWebBL.Services
 
         public IEnumerable<UserDto?> GetByName(string userName)
         {
-            var result = _userQueryObject.ExecuteQuery(new UserNameFilterDto() { Name = userName, SortAscending = true });
+            var result = _userQueryObject.ExecuteQuery(new UserFilterDto() { Name = userName, SortAscending = true });
             return result.Items;
-
-            //var userQueryObject = _userQuery.Where<string>(a => a == userName, "Name");
-            //var result = userQueryObject.Execute();
-            //return _mapper.Map<UserDto?>(result);
-
-            //var users = await _userRepository.GetAllAsync();
-            //var user = users.Where(x => x.Username == userName);
-            //return _mapper.Map<UserDto?>(user);
         }
     }
 }

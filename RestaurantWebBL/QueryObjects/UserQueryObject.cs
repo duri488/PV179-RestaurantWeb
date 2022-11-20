@@ -17,7 +17,7 @@ namespace RestaurantWebBL.QueryObjects
             myQuery = _userQuery;
         }
 
-        public QueryResultDto<UserDto> ExecuteQuery(UserNameFilterDto filter)
+        public QueryResultDto<UserDto> ExecuteQuery(UserFilterDto filter)
         {
             var query = myQuery
                 .Where<string>(a => a == filter.Name, nameof(User.Username));

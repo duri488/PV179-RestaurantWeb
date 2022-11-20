@@ -65,25 +65,16 @@ namespace RestaurantWebBL.Services
             await unitOfWork.CommitAsync();
         }
 
-        public async Task<MealDto?> GetByNameAsync(string name)
-        {
-            var meals = await _mealRepository.GetAllAsync();
-            var mealName = meals.Where(x => x.Name == name);
-            return _mapper.Map<MealDto?>(mealName);
-        }
+        //TODO rework to for query objects
 
         public async Task<IEnumerable<MealDto>> GetMealsPriceIsBiggerAsync(decimal price)
         {
-            var meals = await _mealRepository.GetAllAsync();
-            var mealsBigger = meals.Where(x => x.Price > price);
-            return _mapper.Map<IEnumerable<MealDto>>(mealsBigger);
+            throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<MealDto>> GetMealsPriceIsLowerAsync(decimal price)
+        public Task<IEnumerable<MealDto>> GetMealsPriceIsLowerAsync(decimal price)
         {
-            var meals = await _mealRepository.GetAllAsync();
-            var mealsLower = meals.Where(x => x.Price < price);
-            return _mapper.Map<IEnumerable<MealDto>>(mealsLower);
+            throw new NotImplementedException();
         }
     }
 }

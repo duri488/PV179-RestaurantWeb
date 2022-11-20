@@ -119,21 +119,21 @@ namespace RestaurantWebBL.Test
                     {
                         Id = expected,
                         IsoLanguageCode = "en",
-                        StringCode = "loginEN",
+                        StringCode = "login",
                         LocalizedString = "Login"
                     },
                     new Localization
                     {
                         Id = expected,
                         IsoLanguageCode = "en",
-                        StringCode = "logoutEN",
+                        StringCode = "logout",
                         LocalizedString = "Logout"
                     },
                     new Localization
                     {
                         Id = expected,
                         IsoLanguageCode = "sk",
-                        StringCode = "logoutSK",
+                        StringCode = "logout",
                         LocalizedString = "Odhlasenie"
                     }
 

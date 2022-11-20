@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantWeb.Contract;
 using RestaurantWebDAL;
+using RestaurantWebDAL.Models;
 
 namespace RestaurantWebInfrastructure.EFCore.Repository;
 
-public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class
+public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
 {
     private readonly RestaurantWebDbContext _dbContext;
     internal readonly DbSet<TEntity> DbSet;
@@ -24,9 +25,10 @@ public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class
             .ToListAsync();
     }
 
-    public void Insert(TEntity entity)
+    public int Insert(TEntity entity)
     {
         DbSet.Add(entity: entity);
+        return entity.Id;
     }
 
     public async Task DeleteAsync(object id)

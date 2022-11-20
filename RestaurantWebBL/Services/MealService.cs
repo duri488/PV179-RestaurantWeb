@@ -20,7 +20,7 @@ namespace RestaurantWebBL.Services
             _mapper = mapper;
         }
 
-        public async Task CreateAsync(MealDto createdEntity)
+        public async Task CreateAsync(MealDto createdEntity, int restaurantId)
         {
             if (createdEntity.Restaurant != null)
             {
@@ -28,6 +28,7 @@ namespace RestaurantWebBL.Services
             }
             using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
             var meal = _mapper.Map<Meal>(createdEntity);
+            meal.RestaurantId = restaurantId;
             _mealRepository.Insert(meal);
             await unitOfWork.CommitAsync();
         }
@@ -51,7 +52,7 @@ namespace RestaurantWebBL.Services
             return _mapper.Map<MealDto?>(meal);
         }
 
-        public async Task UpdateAsync(int entityId, MealDto updatedEntity)
+        public async Task UpdateAsync(MealDto updatedEntity, int restaurantId)
         {
             if (updatedEntity.Restaurant != null)
             {
@@ -59,6 +60,7 @@ namespace RestaurantWebBL.Services
             }
             using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
             var updatedMeal = _mapper.Map<Meal>(updatedEntity);
+            updatedMeal.RestaurantId = restaurantId;
             _mealRepository.Update(updatedMeal);
             await unitOfWork.CommitAsync();
         }

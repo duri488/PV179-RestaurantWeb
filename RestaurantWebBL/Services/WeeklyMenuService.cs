@@ -20,12 +20,26 @@ public class WeeklyMenuService : IWeeklyMenuService
         _unitOfWorkFactory = unitOfWorkFactory;
     }
 
-    public async Task CreateAsync(WeeklyMenuDto createdEntity)
+    public async Task<int> UpsertAsync(WeeklyMenuDto weeklyMenuDto)
+    {
+        WeeklyMenu? weeklyMenu = await _weeklyMenuRepository.GetByIdAsync(weeklyMenuDto.Id);
+        if (weeklyMenu is null)
+        {
+            weeklyMenuDto.Id = await CreateAsync(weeklyMenuDto);
+            return weeklyMenuDto.Id;
+        }
+
+        await UpdateAsync(weeklyMenuDto);
+        return weeklyMenuDto.Id;
+    }
+
+    public async Task<int> CreateAsync(WeeklyMenuDto createdEntity)
     {
         var weeklyMenu = _mapper.Map<WeeklyMenu>(createdEntity);
         await using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
-        _weeklyMenuRepository.Insert(weeklyMenu);
+        int id = _weeklyMenuRepository.Insert(weeklyMenu);
         await unitOfWork.CommitAsync();
+        return id;
     }
 
     public async Task<WeeklyMenuDto?> GetByIdAsync(int entityId)
@@ -34,7 +48,7 @@ public class WeeklyMenuService : IWeeklyMenuService
         return _mapper.Map<WeeklyMenuDto?>(dailyMenu);
     }
 
-    public async Task UpdateAsync(WeeklyMenuUpdateDto updatedEntity)
+    public async Task UpdateAsync(WeeklyMenuDto updatedEntity)
     {
         WeeklyMenu weeklyMenu = await _weeklyMenuRepository.GetByIdAsync(updatedEntity.Id) ??
                                  throw new InvalidOperationException($"Entity with id {updatedEntity.Id} does not exist!");;

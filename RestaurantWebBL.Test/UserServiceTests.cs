@@ -7,6 +7,7 @@ using RestaurantWebBL.DTOs.FilterDTOs;
 using RestaurantWebBL.Interfaces;
 using RestaurantWebBL.Services;
 using RestaurantWebDAL.Models;
+using RestaurantWebUtilities.Helpers;
 
 namespace RestaurantWebBL.Test
 {
@@ -42,16 +43,100 @@ namespace RestaurantWebBL.Test
                 .Setup(x => x.ExecuteQuery(It.IsAny<UserFilterDto>()))
                 .Returns(new QueryResultDto<UserDto>());
 
-            _userRepositoryMock.Setup(x => x.GetAllAsync().Result)
-                .Returns(new List<User>());
-
             _userRepositoryMock.Setup(x => x.Insert(It.IsAny<User>()))
                 .Callback(new InvocationAction(i => actual = (User)i.Arguments[0]));
 
             var service = new UserService(_unitOfWorkFactoryMock.Object, _mapper, _userRepositoryMock.Object, _userQueryObjectMock.Object);
             await service.CreateAsync(username, password);
 
-            ;
+            var expectedHash = CryptoHashHelper.GenerateSaltedPbkdf2Hash(password, actual.Salt);
+            
+            Assert.That(actual.HashedPassword, Is.EqualTo(expectedHash));
+            Assert.That(actual.Username, Is.EqualTo(username));
+        }
+
+        [Test]
+        public void UserService_CreateAsync_SadPath()
+        {
+            User actual = null!;
+
+            _userQueryObjectMock
+                .Setup(x => x.ExecuteQuery(It.IsAny<UserFilterDto>()))
+                .Returns(new QueryResultDto<UserDto>() { Items = new List<UserDto>
+                {
+                    new UserDto()
+                    {
+                        Username = username,
+                    }
+                }});
+
+            _userRepositoryMock.Setup(x => x.Insert(It.IsAny<User>()))
+                .Callback(new InvocationAction(i => actual = (User)i.Arguments[0]));
+
+            var service = new UserService(_unitOfWorkFactoryMock.Object, _mapper, _userRepositoryMock.Object, _userQueryObjectMock.Object);
+
+            Assert.CatchAsync<Exception>(() => service.CreateAsync(username, password));
+        }
+
+        [Test]
+        public async Task UserService_LogInAsync_HappyPathAsync()
+        {
+            byte[] salt = CryptoHashHelper.GenerateSalt();
+            UserDto userDto = new UserDto()
+            {
+                Username = username,
+                HashedPassword = CryptoHashHelper.GenerateSaltedPbkdf2Hash(password, salt),
+                Salt = salt,
+            };
+
+            _userQueryObjectMock
+                .Setup(x => x.ExecuteQuery(It.IsAny<UserFilterDto>()))
+                .Returns(new QueryResultDto<UserDto>()
+                {
+                    Items = new List<UserDto>
+                    {
+                        userDto
+                    }
+                });
+
+            var service = new UserService(_unitOfWorkFactoryMock.Object, _mapper, _userRepositoryMock.Object, _userQueryObjectMock.Object);
+            await service.LogInAsync(username, password);
+        }
+
+        [Test]
+        public void UserService_LogInAsync_SadPathAsync_UserDoesntExists()
+        {
+            _userQueryObjectMock
+                .Setup(x => x.ExecuteQuery(It.IsAny<UserFilterDto>()))
+                .Returns(new QueryResultDto<UserDto>());
+
+            var service = new UserService(_unitOfWorkFactoryMock.Object, _mapper, _userRepositoryMock.Object, _userQueryObjectMock.Object);
+            Assert.CatchAsync<Exception>(() => service.LogInAsync(username, password));
+        }
+
+        [Test]
+        public void UserService_LogInAsync_SadPathAsync_PasswordsDoesntMatch()
+        {
+            byte[] salt = CryptoHashHelper.GenerateSalt();
+            UserDto userDto = new UserDto()
+            {
+                Username = username,
+                HashedPassword = CryptoHashHelper.GenerateSaltedPbkdf2Hash(password, salt),
+                Salt = salt,
+            };
+
+            _userQueryObjectMock
+                .Setup(x => x.ExecuteQuery(It.IsAny<UserFilterDto>()))
+                .Returns(new QueryResultDto<UserDto>()
+                {
+                    Items = new List<UserDto>
+                {
+                    userDto
+                }
+                });
+
+            var service = new UserService(_unitOfWorkFactoryMock.Object, _mapper, _userRepositoryMock.Object, _userQueryObjectMock.Object);
+            Assert.CatchAsync<Exception>(() => service.LogInAsync(username, "different"));
         }
     }
 }

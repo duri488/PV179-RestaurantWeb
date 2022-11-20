@@ -60,17 +60,17 @@ namespace RestaurantWebBL.Services
 
         public async Task LogInAsync(string userName, string password)
         {
-            /*var user = await GetByNameAsync(userName);
-            if (user == null)
+            var user = await Task.Run(() => GetByName(userName));
+            if (!user.Any())
             {
                 throw new Exception("Unknown username.");
             }
 
-            var hashedPassword = CryptoHashHelper.GenerateSaltedPbkdf2Hash(password, user.Salt);
-            if (hashedPassword != user.HashedPassword)
+            var hashedPassword = CryptoHashHelper.GenerateSaltedPbkdf2Hash(password, user.First().Salt);
+            if (!CryptoHashHelper.IsByteArrayEqual(hashedPassword, user.First().HashedPassword))
             {
                 throw new Exception("Incorrect password.");
-            }*/
+            }
         }
 
         public async Task UpdateAsync(int entityId, UserDto updatedEntity)

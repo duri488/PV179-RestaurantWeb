@@ -9,8 +9,8 @@ namespace RestaurantWebBL.Interfaces
 {
     public interface IUserService
     {
-        Task CreateAsync(UserDto createdEntity);
-        Task LogInAsync(UserDto logInEntity);
+        Task CreateAsync(string userName, string password);
+        Task LogInAsync(string userName, string password);
         Task DeleteAsync(int entityId);
         Task<UserDto?> GetByIdAsync(int entityId);
         Task UpdateAsync(int entityId, UserDto updatedEntity);

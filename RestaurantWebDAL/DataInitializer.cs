@@ -15,7 +15,7 @@ public static class DataInitializer
         SeedLocalization(modelBuilder);
         SeedWeeklyMenu(modelBuilder);
         SeedDailyMenu(modelBuilder);
-
+        SeedAllergen(modelBuilder);
     }
 
     public static void SeedUser(this ModelBuilder modelBuilder)
@@ -39,6 +39,7 @@ public static class DataInitializer
                 }
             );
     }
+
     public static void SeedRestaurant(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Restaurant>()
@@ -54,52 +55,52 @@ public static class DataInitializer
                 Email = "marco@pizza.sk",
             });
     }
+
     public static void SeedMeal(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Meal>()
             .HasData(
-                 new Meal
-                 {
-                     Id = 1,
-                     Name = "Capri",
-                     Description = "Tomato, Cheese, Ham, Mushrooms",
-                     Price = 6.35M,
-                     Picture = "path to picture",
-                     RestaurantId = 1
-                 },
-
-                 new Meal
-                 {
-                     Id = 2,
-                     Name = "Hawai",
-                     Description = "Tomato, Cheese, Ham, Pineapple",
-                     Price = 8.99M,
-                     Picture = "path to picture",
-                     RestaurantId = 1
-                 }
+                new Meal
+                {
+                    Id = 1,
+                    Name = "Capri",
+                    Description = "Tomato, Cheese, Ham, Mushrooms",
+                    Price = 6.35M,
+                    Picture = "path to picture",
+                    RestaurantId = 1
+                },
+                new Meal
+                {
+                    Id = 2,
+                    Name = "Hawai",
+                    Description = "Tomato, Cheese, Ham, Pineapple",
+                    Price = 8.99M,
+                    Picture = "path to picture",
+                    RestaurantId = 1
+                }
             );
     }
+
     public static void SeedDrink(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Drink>()
             .HasData(
-                 new Drink
-                 {
-                     Id = 1,
-                     Name = "Kofola",
-                     Volume = 0.1M,
-                     Price = 0.3M,
-                     RestaurantId = 1
-                 },
-
-                 new Drink
-                 {
-                     Id = 2,
-                     Name = "Pilsner Urquell",
-                     Volume = 0.5M,
-                     Price = 2M,
-                     RestaurantId = 1
-                 }
+                new Drink
+                {
+                    Id = 1,
+                    Name = "Kofola",
+                    Volume = 0.1M,
+                    Price = 0.3M,
+                    RestaurantId = 1
+                },
+                new Drink
+                {
+                    Id = 2,
+                    Name = "Pilsner Urquell",
+                    Volume = 0.5M,
+                    Price = 2M,
+                    RestaurantId = 1
+                }
             );
     }
 
@@ -111,22 +112,217 @@ public static class DataInitializer
                 {
                     Id = 1,
                     IsoLanguageCode = "sk",
-                    StringCode = "loginSk",
-                    LocalizedString = "Prihlasenia"
+                    StringCode = "login",
+                    LocalizedString = "Prihlasenie"
                 },
                 new Localization
                 {
                     Id = 2,
                     IsoLanguageCode = "en",
-                    StringCode = "loginEN",
+                    StringCode = "login",
                     LocalizedString = "Login"
+                },
+                new Localization
+                {
+                    Id = 3,
+                    IsoLanguageCode = "sk",
+                    StringCode = "gluten-number",
+                    LocalizedString = "1"
+                },
+                new Localization
+                {
+                    Id = 4,
+                    IsoLanguageCode = "sk",
+                    StringCode = "gluten-name",
+                    LocalizedString = "lepok"
+                },
+                new Localization
+                {
+                    Id = 5,
+                    IsoLanguageCode = "sk",
+                    StringCode = "crustaceans-number",
+                    LocalizedString = "2"
+                },
+                new Localization
+                {
+                    Id = 6,
+                    IsoLanguageCode = "sk",
+                    StringCode = "crustaceans-name",
+                    LocalizedString = "kôrovce"
+                },
+                new Localization
+                {
+                    Id = 7,
+                    IsoLanguageCode = "sk",
+                    StringCode = "eggs-number",
+                    LocalizedString = "3"
+                },
+                new Localization
+                {
+                    Id = 8,
+                    IsoLanguageCode = "sk",
+                    StringCode = "eggs-name",
+                    LocalizedString = "vajcia"
+                },
+                new Localization
+                {
+                    Id = 9,
+                    IsoLanguageCode = "sk",
+                    StringCode = "fish-number",
+                    LocalizedString = "4"
+                },
+                new Localization
+                {
+                    Id = 10,
+                    IsoLanguageCode = "sk",
+                    StringCode = "fish-name",
+                    LocalizedString = "ryby"
+                },
+                new Localization
+                {
+                    Id = 11,
+                    IsoLanguageCode = "sk",
+                    StringCode = "peanuts-number",
+                    LocalizedString = "5"
+                },
+                new Localization
+                {
+                    Id = 12,
+                    IsoLanguageCode = "sk",
+                    StringCode = "peanuts-name",
+                    LocalizedString = "podzemnica olejná (arašidy)"
+                },
+                new Localization
+                {
+                    Id = 13,
+                    IsoLanguageCode = "sk",
+                    StringCode = "soybeans-number",
+                    LocalizedString = "6"
+                },
+                new Localization
+                {
+                    Id = 14,
+                    IsoLanguageCode = "sk",
+                    StringCode = "soybeans-name",
+                    LocalizedString = "sójové bôby (sója)"
+                },
+                new Localization
+                {
+                    Id = 15,
+                    IsoLanguageCode = "sk",
+                    StringCode = "milk-number",
+                    LocalizedString = "7"
+                },
+                new Localization
+                {
+                    Id = 16,
+                    IsoLanguageCode = "sk",
+                    StringCode = "milk-name",
+                    LocalizedString = "mlieko"
+                },
+                new Localization
+                {
+                    Id = 17,
+                    IsoLanguageCode = "sk",
+                    StringCode = "nuts-number",
+                    LocalizedString = "8"
+                },
+                new Localization
+                {
+                    Id = 18,
+                    IsoLanguageCode = "sk",
+                    StringCode = "nuts-name",
+                    LocalizedString = "škrupinové plody"
+                },
+                new Localization
+                {
+                    Id = 19,
+                    IsoLanguageCode = "sk",
+                    StringCode = "celery-number",
+                    LocalizedString = "9"
+                },
+                new Localization
+                {
+                    Id = 20,
+                    IsoLanguageCode = "sk",
+                    StringCode = "celery-name",
+                    LocalizedString = "zeler"
+                },
+                new Localization
+                {
+                    Id = 21,
+                    IsoLanguageCode = "sk",
+                    StringCode = "mustard-number",
+                    LocalizedString = "10"
+                },
+                new Localization
+                {
+                    Id = 22,
+                    IsoLanguageCode = "sk",
+                    StringCode = "mustard-name",
+                    LocalizedString = "horčica"
+                },
+                new Localization
+                {
+                    Id = 23,
+                    IsoLanguageCode = "sk",
+                    StringCode = "sesame-seeds-number",
+                    LocalizedString = "11"
+                },
+                new Localization
+                {
+                    Id = 24,
+                    IsoLanguageCode = "sk",
+                    StringCode = "sesame-seeds-name",
+                    LocalizedString = "sezamové semená (sezam)"
+                },
+                new Localization
+                {
+                    Id = 25,
+                    IsoLanguageCode = "sk",
+                    StringCode = "sulfur-number",
+                    LocalizedString = "12"
+                },
+                new Localization
+                {
+                    Id = 26,
+                    IsoLanguageCode = "sk",
+                    StringCode = "sulfur-name",
+                    LocalizedString = "oxid siričitý a siričitany"
+                },
+                new Localization
+                {
+                    Id = 27,
+                    IsoLanguageCode = "sk",
+                    StringCode = "lupin-number",
+                    LocalizedString = "13"
+                },
+                new Localization
+                {
+                    Id = 28,
+                    IsoLanguageCode = "sk",
+                    StringCode = "lupin-name",
+                    LocalizedString = "vlčí bôb (lupina)"
+                },
+                new Localization
+                {
+                    Id = 29,
+                    IsoLanguageCode = "sk",
+                    StringCode = "molluscs-number",
+                    LocalizedString = "14"
+                },
+                new Localization
+                {
+                    Id = 30,
+                    IsoLanguageCode = "sk",
+                    StringCode = "molluscs-name",
+                    LocalizedString = "mäkkýše"
                 }
             );
     }
 
     public static void SeedWeeklyMenu(this ModelBuilder modelBuilder)
     {
-       
         modelBuilder.Entity<WeeklyMenu>()
             .HasData(
                 new WeeklyMenu
@@ -150,7 +346,6 @@ public static class DataInitializer
 
     public static void SeedDailyMenu(this ModelBuilder modelBuilder)
     {
-
         modelBuilder.Entity<DailyMenu>()
             .HasData(
                 new DailyMenu
@@ -170,7 +365,110 @@ public static class DataInitializer
                     MealId = 2,
                 }
             );
-
     }
 
+    private static void SeedAllergen(this ModelBuilder builder)
+    {
+        builder.Entity<Allergen>()
+            .HasData(
+                new Allergen
+                {
+                    Id = 1,
+                    Name = "gluten",
+                    NumberLocalizationCode = "gluten-number",
+                    NameLocalizationCode = "gluten-name"
+                },
+                new Allergen
+                {
+                    Id = 2,
+                    Name = "crustaceans",
+                    NumberLocalizationCode = "crustaceans-number",
+                    NameLocalizationCode = "crustaceans-name",
+                },
+                new Allergen
+                {
+                    Id = 4,
+                    Name = "eggs",
+                    NumberLocalizationCode = "eggs-number",
+                    NameLocalizationCode = "eggs-name",
+                },
+                new Allergen
+                {
+                    Id = 8,
+                    Name = "fish",
+                    NumberLocalizationCode = "fish-number",
+                    NameLocalizationCode = "fish-name",
+                },
+                new Allergen
+                {
+                    Id = 16,
+                    Name = "peanuts",
+                    NumberLocalizationCode = "peanuts-number",
+                    NameLocalizationCode = "peanuts-name",
+                },
+                new Allergen
+                {
+                    Id = 32,
+                    Name = "soybeans",
+                    NumberLocalizationCode = "soybeans-number",
+                    NameLocalizationCode = "soybeans-name",
+                },
+                new Allergen
+                {
+                    Id = 64,
+                    Name = "milk",
+                    NumberLocalizationCode = "milk-number",
+                    NameLocalizationCode = "milk-name",
+                },
+                new Allergen
+                {
+                    Id = 128,
+                    Name = "nuts",
+                    NumberLocalizationCode = "nuts-number",
+                    NameLocalizationCode = "nuts-name",
+                },
+                new Allergen
+                {
+                    Id = 256,
+                    Name = "celery",
+                    NumberLocalizationCode = "celery-number",
+                    NameLocalizationCode = "celery-name",
+                },
+                new Allergen
+                {
+                    Id = 512,
+                    Name = "mustard",
+                    NumberLocalizationCode = "mustard-number",
+                    NameLocalizationCode = "mustard-name",
+                },
+                new Allergen
+                {
+                    Id = 1024,
+                    Name = "sesame-seeds",
+                    NumberLocalizationCode = "sesame-seeds-number",
+                    NameLocalizationCode = "sesame-seeds-name",
+                },
+                new Allergen
+                {
+                    Id = 2048,
+                    Name = "sulphur",
+                    NumberLocalizationCode = "sulphur-number",
+                    NameLocalizationCode = "sulphur-name",
+                },
+                new Allergen
+                {
+                    Id = 4096,
+                    Name = "lupin",
+                    NumberLocalizationCode = "lupin-number",
+                    NameLocalizationCode = "lupin-name",
+                },
+                new Allergen
+                {
+                    Id = 8192,
+                    Name = "molluscs",
+                    NumberLocalizationCode = "molluscs-number",
+                    NameLocalizationCode = "molluscs-name",
+                }
+            );
+    }
 }

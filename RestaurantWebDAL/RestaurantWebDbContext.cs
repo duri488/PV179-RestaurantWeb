@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantWebDAL.Models;
+
 namespace RestaurantWebDAL
 {
     public class RestaurantWebDbContext : DbContext
@@ -11,6 +12,7 @@ namespace RestaurantWebDAL
         public DbSet<DailyMenu> DailyMenu { get; set; }
         public DbSet<WeeklyMenu> WeeklyMenu { get; set; }
         public DbSet<Localization> Localization { get; set; }
+        public DbSet<Allergen> Allergen { get; set; }
 
 
         public RestaurantWebDbContext(DbContextOptions<RestaurantWebDbContext> options) : base(options)

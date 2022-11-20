@@ -2,6 +2,8 @@
 using Moq;
 using RestaurantWeb.Contract;
 using RestaurantWebBL.Configs;
+using RestaurantWebBL.DTOs;
+using RestaurantWebBL.DTOs.FilterDTOs;
 using RestaurantWebBL.Interfaces;
 using RestaurantWebBL.Services;
 using RestaurantWebDAL.Models;
@@ -13,12 +15,14 @@ namespace RestaurantWebBL.Test
         private static readonly IMapper Mapper = new Mapper(new MapperConfiguration(BusinessMappingConfig.ConfigureMapping));
         Mock<IRepository<Meal>> _mealRepositoryMock;
         Mock<IUnitOfWorkFactory> _unitOfWorkFactory;
+        Mock<IMealQueryObject> _mealQueryObjectMock;
 
         [SetUp]
         public void Setup()
         {
             _unitOfWorkFactory = new Mock<IUnitOfWorkFactory>();
             _mealRepositoryMock = new Mock<IRepository<Meal >>();
+            _mealQueryObjectMock = new Mock<IMealQueryObject>();
         }
 
         [Test]
@@ -48,7 +52,7 @@ namespace RestaurantWebBL.Test
                     },
                 });
 
-            var service = new MealService(_unitOfWorkFactory.Object,Mapper,_mealRepositoryMock.Object);
+            var service = new MealService(_unitOfWorkFactory.Object,Mapper,_mealRepositoryMock.Object, _mealQueryObjectMock.Object);
 
             var actual = await service.GetAllAsync();
             Assert.That(actual.Count, Is.EqualTo(2));

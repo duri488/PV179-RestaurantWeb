@@ -11,7 +11,7 @@ namespace RestaurantWebBL.Interfaces
     {
         Task CreateAsync(RestaurantDto createdEntity);
         Task<RestaurantDto?> GetByIdAsync(int entityId);
-        Task UpdateAsync(int entityId, RestaurantDto updatedEntity);
+        Task UpdateAsync(RestaurantDto updatedEntity);
         Task DeleteAsync(int entityId);
         Task<IEnumerable<RestaurantDto>> GetAllAsync();
     }

@@ -54,7 +54,7 @@ namespace RestaurantWebBL.Test
 
             var service = new DrinkService(_unitOfWorkFactory.Object, Mapper, _drinkRepository.Object);
 
-            await service.CreateAsync(expected);
+            await service.CreateAsync(expected, 1);
             var actual = await service.GetByIdAsync(Id);
             Assert.Multiple(() =>
             {

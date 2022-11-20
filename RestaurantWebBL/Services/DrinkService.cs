@@ -19,20 +19,18 @@ namespace RestaurantWebBL.Services
             _mapper = mapper;
         }
 
-        public async Task CreateAsync(DrinkDto createdEntity)
+        public async Task CreateAsync(DrinkDto createdEntity, int restaurantId)
         {
-            // TODO create test for fail
-            if (createdEntity.Restaurant == null) 
-            {
-                using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
-                var drink = _mapper.Map<Drink>(createdEntity);
-                _drinkRepository.Insert(drink);
-                await unitOfWork.CommitAsync();
-            }
-            else
+            if (createdEntity.Restaurant != null)
             {
                 throw new SystemException();
             }
+
+            using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
+            var drink = _mapper.Map<Drink>(createdEntity);
+            drink.RestaurantId = restaurantId;
+            _drinkRepository.Insert(drink);
+            await unitOfWork.CommitAsync();
         }
 
         public async Task DeleteAsync(int entityId)
@@ -54,19 +52,18 @@ namespace RestaurantWebBL.Services
             return _mapper.Map<DrinkDto?>(drink);
         }
 
-        public async Task UpdateAsync(int entityId, DrinkDto updatedEntity)
+        public async Task UpdateAsync(DrinkDto updatedEntity, int restaurantId)
         {
-            if (updatedEntity.Restaurant == null)
-            {
-                using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
-                var updatedDrink = _mapper.Map<Drink>(updatedEntity);
-                _drinkRepository.Update(updatedDrink);
-                await unitOfWork.CommitAsync();
-            }
-            else
+            if (updatedEntity.Restaurant != null)
             {
                 throw new SystemException();
             }
+
+            using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
+            var drink = _mapper.Map<Drink>(updatedEntity);
+            drink.RestaurantId = restaurantId;
+            _drinkRepository.Update(drink);
+            await unitOfWork.CommitAsync();
         }
     }
 }

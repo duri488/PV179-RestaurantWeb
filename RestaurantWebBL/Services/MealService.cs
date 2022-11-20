@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using RestaurantWeb.Contract;
 using RestaurantWebBL.DTOs;
+using RestaurantWebBL.DTOs.FilterDTOs;
 using RestaurantWebBL.Interfaces;
+using RestaurantWebBL.QueryObjects;
 using RestaurantWebDAL.Models;
 using System.Diagnostics;
 
@@ -12,12 +14,14 @@ namespace RestaurantWebBL.Services
         private readonly IMapper _mapper;
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
         private readonly IRepository<Meal> _mealRepository;
+        private readonly IMealQueryObject _mealQueryObject;
 
-        public MealService(IUnitOfWorkFactory unitOfWorkFactory, IMapper mapper, IRepository<Meal> mealRepository)
+        public MealService(IUnitOfWorkFactory unitOfWorkFactory, IMapper mapper, IRepository<Meal> mealRepository, IMealQueryObject mealQueryObject)
         {
             _unitOfWorkFactory = unitOfWorkFactory;
             _mealRepository = mealRepository;
             _mapper = mapper;
+            _mealQueryObject = mealQueryObject;
         }
 
         public async Task CreateAsync(MealDto createdEntity, int restaurantId)
@@ -65,16 +69,16 @@ namespace RestaurantWebBL.Services
             await unitOfWork.CommitAsync();
         }
 
-        //TODO rework to for query objects
-
-        public async Task<IEnumerable<MealDto>> GetMealsPriceIsBiggerAsync(decimal price)
+        public IEnumerable<MealDto> GetMealsPriceIsBigger(decimal price)
         {
-            throw new NotImplementedException();
+            var localizationsISO = _mealQueryObject.GetMealByPrice(new MealFilterDTOs() { Price = price }, 1);
+            return localizationsISO.Items;
         }
 
-        public Task<IEnumerable<MealDto>> GetMealsPriceIsLowerAsync(decimal price)
+        public IEnumerable<MealDto> GetMealsPriceIsLower(decimal price)
         {
-            throw new NotImplementedException();
+            var localizationsISO = _mealQueryObject.GetMealByPrice(new MealFilterDTOs() { Price = price }, 0);
+            return localizationsISO.Items;
         }
     }
 }

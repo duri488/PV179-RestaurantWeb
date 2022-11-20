@@ -9,7 +9,7 @@ namespace RestaurantWebBL.Interfaces
         Task<IEnumerable<MealDto>> GetAllAsync();
         Task<MealDto?> GetByIdAsync(int entityId);
         Task UpdateAsync(MealDto updatedEntity, int restaurantId);
-        Task<IEnumerable<MealDto>> GetMealsPriceIsBiggerAsync(decimal price);
-        Task<IEnumerable<MealDto>> GetMealsPriceIsLowerAsync(decimal price);
+        IEnumerable<MealDto> GetMealsPriceIsBigger(decimal price);
+        IEnumerable<MealDto> GetMealsPriceIsLower(decimal price);
     }
 }

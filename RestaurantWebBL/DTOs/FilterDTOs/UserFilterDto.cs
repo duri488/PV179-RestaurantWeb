@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantWebBL.DTOs.FilterDTOs
 {
-    public class UserNameFilterDto
+    public class UserFilterDto
     {
         public string Name { get; set; }
         public int? RequestedPageNumber { get; set; }

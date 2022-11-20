@@ -39,7 +39,7 @@ namespace RestaurantWebBL.Test
             User actual = null!;
 
             _userQueryObjectMock
-                .Setup(x => x.ExecuteQuery(It.IsAny<UserNameFilterDto>()))
+                .Setup(x => x.ExecuteQuery(It.IsAny<UserFilterDto>()))
                 .Returns(new QueryResultDto<UserDto>());
 
             _userRepositoryMock.Setup(x => x.GetAllAsync().Result)

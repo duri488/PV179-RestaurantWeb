@@ -5,6 +5,6 @@ namespace RestaurantWebBL.Interfaces
 {
     public interface IUserQueryObject
     {
-        public QueryResultDto<UserDto> ExecuteQuery(UserNameFilterDto filter);
+        public QueryResultDto<UserDto> ExecuteQuery(UserFilterDto filter);
     }
 }

@@ -65,8 +65,6 @@ public class WeeklyMenuServiceTests
             Id = _weeklyMenu.Id,
             DateFrom = _weeklyMenu.DateFrom,
             DateTo = _weeklyMenu.DateTo,
-            Meal = _mapper.Map<MealDto>(_weeklyMenu.Meal),
-            Restaurant = _mapper.Map<RestaurantDto>(_restaurant)
         };
 
     }
@@ -91,7 +89,7 @@ public class WeeklyMenuServiceTests
             .Callback(new InvocationAction(i => actual = (WeeklyMenu) i.Arguments[0]));
 
         var service = new WeeklyMenuService(_weeklyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object);
-        await service.CreateAsync(_weeklyMenuDto);
+        await service.CreateAsync(_weeklyMenuDto, _weeklyMenu.MealId, _weeklyMenu.RestaurantId);
         
         _unitOfWorkMock.Verify(u => u.CommitAsync(), Times.Once);
         AssertEqual(expected, actual);
@@ -123,7 +121,7 @@ public class WeeklyMenuServiceTests
             .Returns(_weeklyMenu);
         
         var service = new WeeklyMenuService(_weeklyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object);
-        await service.UpdateAsync(_weeklyMenuDto);
+        await service.UpdateAsync(_weeklyMenuDto, _weeklyMenu.MealId, _weeklyMenu.RestaurantId);
         
         _unitOfWorkMock.Verify(u => u.CommitAsync(), Times.Once);
         AssertEqual(expected, actual);
@@ -152,19 +150,21 @@ public class WeeklyMenuServiceTests
         AssertEqual(expected.First(), actual.First());
     }
 
-    private static void AssertEqual(WeeklyMenu expected, WeeklyMenu actual)
+    private static void AssertEqual(WeeklyMenu actual, WeeklyMenu expected)
     {
         expected.Should().BeEquivalentTo(actual, options =>
             options
-                .Excluding(o => o.Meal.Restaurant)
+                .Excluding(o => o.Restaurant)
+                .Excluding(o => o.Meal)
         );
     }
 
-    private static void AssertEqual(WeeklyMenuDto expected, WeeklyMenuDto actual)
+    private static void AssertEqual(WeeklyMenuDto actual, WeeklyMenuDto expected)
     {
         expected.Should().BeEquivalentTo(actual, options =>
             options
-                .Excluding(o => o.Meal.Restaurant)
+                .Excluding(o => o.Meal)
+                .Excluding(o => o.Restaurant)
         );
     }
 }

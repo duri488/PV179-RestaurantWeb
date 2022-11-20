@@ -77,9 +77,7 @@ public class DailyMenuServiceTests
         {
             DayOfWeek = _dailyMenu.DayOfWeek,
             Id = _dailyMenu.Id,
-            Meal = _mapper.Map<MealDto>(_meal),
             MenuPrice = _dailyMenu.MenuPrice,
-            WeeklyMenu = _mapper.Map<WeeklyMenuDto>(_weeklyMenu)
         };
 
     }
@@ -104,7 +102,7 @@ public class DailyMenuServiceTests
             .Callback(new InvocationAction(i => actual = (DailyMenu) i.Arguments[0]));
 
         var service = new DailyMenuService(_dailyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object);
-        await service.CreateAsync(_dailyMenuDto);
+        await service.CreateAsync(_dailyMenuDto, _dailyMenu.MealId, _dailyMenu.WeeklyMenuId);
         
         _unitOfWorkMock.Verify(u => u.CommitAsync(), Times.Once);
         AssertEqual(expected, actual);
@@ -136,7 +134,7 @@ public class DailyMenuServiceTests
             .Returns(_dailyMenu);
         
         var service = new DailyMenuService(_dailyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object);
-        await service.UpdateAsync(_dailyMenuDto);
+        await service.UpdateAsync(_dailyMenuDto, _dailyMenu.MealId, _dailyMenu.WeeklyMenuId);
         
         _unitOfWorkMock.Verify(u => u.CommitAsync(), Times.Once);
         expected.Should().BeEquivalentTo(actual, 
@@ -171,21 +169,21 @@ public class DailyMenuServiceTests
         AssertEqual(expected.First(), actual.First());
     }
 
-    private static void AssertEqual(DailyMenu expected, DailyMenu actual)
+    private static void AssertEqual(DailyMenu actual, DailyMenu expected)
     {
         expected.Should().BeEquivalentTo(actual, options =>
             options
-                .Excluding(o => o.Meal.Restaurant)
-                .Excluding(o => o.WeeklyMenu.Meal.Restaurant)
+                .Excluding(o => o.Meal)
+                .Excluding(o => o.WeeklyMenu)
         );
     }
 
-    private static void AssertEqual(DailyMenuDto expected, DailyMenuDto actual)
+    private static void AssertEqual(DailyMenuDto actual, DailyMenuDto expected)
     {
         expected.Should().BeEquivalentTo(actual, options =>
             options
-                .Excluding(o => o.Meal.Restaurant)
-                .Excluding(o => o.WeeklyMenu.Meal.Restaurant)
+                .Excluding(o => o.Meal)
+                .Excluding(o => o.WeeklyMenu)
         );
     }
 }

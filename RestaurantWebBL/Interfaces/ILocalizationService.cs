@@ -9,7 +9,7 @@ namespace RestaurantWebBL.Interfaces
         Task UpdateAsync(int entityId, LocalizationDto updatedEntity);
         Task DeleteAsync(int entityId);
         Task<IEnumerable<LocalizationDto>> GetAllAsync();
-        Task<IEnumerable<LocalizationDto>> GetAllWithIsoAsync(string iso);
-        Task<IEnumerable<LocalizationDto>> GetStringWithCodeAsync(string iso, string stringCode);
+        IEnumerable<LocalizationDto?> GetAllWithIso(string iso);
+        IEnumerable<LocalizationDto> GetStringWithCode(string iso, string stringCode);
     }
 }

@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using FluentAssertions;
 using Moq;
+using NUnit.Framework;
 using RestaurantWeb.Contract;
 using RestaurantWebBL.Configs;
 using RestaurantWebBL.DTOs;
+using RestaurantWebBL.DTOs.FilterDTOs;
+using RestaurantWebBL.Interfaces;
 using RestaurantWebBL.Services;
 using RestaurantWebDAL.Models;
 using System.Runtime.InteropServices;
@@ -16,11 +19,13 @@ namespace RestaurantWebBL.Test
         private static readonly IMapper Mapper = new Mapper(new MapperConfiguration(BusinessMappingConfig.ConfigureMapping));
         Mock<IRepository<Localization>> _localRepositoryMock;
         Mock<IUnitOfWorkFactory> _unitOfWorkFactory;
+        Mock<ILocalizationQueryObject> _localQueryObjectMock;
 
         [SetUp]
         public void Setup()
         {
             _unitOfWorkFactory = new Mock<IUnitOfWorkFactory>();
+            _localQueryObjectMock = new Mock<ILocalizationQueryObject>();
             _localRepositoryMock = new Mock<IRepository<Localization>>();
         }
 
@@ -49,12 +54,16 @@ namespace RestaurantWebBL.Test
                 .Setup(x => x.Insert(It.IsAny<Localization>()));
 
             _unitOfWorkFactory.Setup(x => x.Build().CommitAsync());
-
+            
             _localRepositoryMock
                 .Setup(x => x.GetByIdAsync(Id).Result)
                 .Returns(local);
 
-            var service = new LocalizationService(_unitOfWorkFactory.Object, Mapper, _localRepositoryMock.Object);
+            _localQueryObjectMock
+                .Setup(x => x.GetStringWithCode(It.IsAny<LocalizationFilterDTOs>()))
+                .Returns(new QueryResultDto<LocalizationDto>());
+
+            var service = new LocalizationService(_unitOfWorkFactory.Object, Mapper, _localRepositoryMock.Object, _localQueryObjectMock.Object);
 
             await service.CreateAsync(expected);
             var actual = await service.GetByIdAsync(Id);
@@ -75,18 +84,6 @@ namespace RestaurantWebBL.Test
         {
             var Id = 1;
 
-            _localRepositoryMock
-                .Setup(x => x.GetAllAsync().Result)
-                .Returns(new Localization[]
-                {
-                    new Localization
-                    {
-                        Id = Id,
-                        IsoLanguageCode = "en",
-                        StringCode = "buttonLogin",
-                        LocalizedString = "Login"
-                    },
-                });
 
             var expectedSame = new LocalizationDto
             {
@@ -101,7 +98,22 @@ namespace RestaurantWebBL.Test
 
             _unitOfWorkFactory.Setup(x => x.Build().CommitAsync());
 
-            var service = new LocalizationService(_unitOfWorkFactory.Object, Mapper, _localRepositoryMock.Object);
+            _localQueryObjectMock
+                .Setup(x => x.GetStringWithCode(It.IsAny<LocalizationFilterDTOs>()))
+                .Returns(new QueryResultDto<LocalizationDto>()
+                {
+                    Items = new List<LocalizationDto>{
+                    new LocalizationDto
+                     {
+                        Id = 2,
+                        IsoLanguageCode = "en",
+                        StringCode = "buttonLogin",
+                        LocalizedString = "LoginTest"
+                    }
+                }
+                });
+
+            var service = new LocalizationService(_unitOfWorkFactory.Object, Mapper, _localRepositoryMock.Object, _localQueryObjectMock.Object);
 
             Func<Task> act = async () => { await service.CreateAsync(expectedSame); };
             await act.Should().ThrowAsync<SystemException>();
@@ -110,39 +122,30 @@ namespace RestaurantWebBL.Test
         [Test]
         public async Task LocalizationService_GetAllWithIso_HappyPathAsync()
         {
-            _unitOfWorkFactory.Setup(x => x.Build().CommitAsync());
-            var expected = 1;
-            _localRepositoryMock.Setup(x => x.GetAllAsync().Result)
-                .Returns(new Localization[]
-                {
-                    new Localization
-                    {
-                        Id = expected,
-                        IsoLanguageCode = "en",
-                        StringCode = "login",
-                        LocalizedString = "Login"
-                    },
-                    new Localization
-                    {
-                        Id = expected,
-                        IsoLanguageCode = "en",
-                        StringCode = "logout",
-                        LocalizedString = "Logout"
-                    },
-                    new Localization
-                    {
-                        Id = expected,
-                        IsoLanguageCode = "sk",
-                        StringCode = "logout",
-                        LocalizedString = "Odhlasenie"
-                    }
+            Localization actual = null!;
 
+            _localQueryObjectMock
+                .Setup(x => x.GetStringWithIso(It.IsAny<LocalizationFilterDTOs>()))
+                .Returns(new QueryResultDto<LocalizationDto>(){ Items =new List<LocalizationDto>{
+                    new LocalizationDto
+                     {
+                        Id = 2,
+                        IsoLanguageCode = "en",
+                        StringCode = "buttonLogin",
+                        LocalizedString = "LoginTest"
+                    }
+                }
                 });
 
-            var service = new LocalizationService(_unitOfWorkFactory.Object, Mapper, _localRepositoryMock.Object);
+            _localRepositoryMock
+                .Setup(x => x.Insert(It.IsAny<Localization>()));
 
-            var actual = await service.GetAllWithIsoAsync("en");
-            Assert.That(actual.Count, Is.EqualTo(2));
+            _unitOfWorkFactory.Setup(x => x.Build().CommitAsync());
+
+            var service = new LocalizationService(_unitOfWorkFactory.Object, Mapper, _localRepositoryMock.Object, _localQueryObjectMock.Object);
+            var result = service.GetAllWithIso("en");
+
+            Assert.That(result.Count, Is.EqualTo(1));
 
         }
     }

@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using RestaurantWeb.Contract;
 using RestaurantWebBL.DTOs;
+using RestaurantWebBL.DTOs.FilterDTOs;
 using RestaurantWebBL.Interfaces;
+using RestaurantWebBL.QueryObjects;
 using RestaurantWebDAL.Models;
 using System.Diagnostics;
 
@@ -13,30 +15,28 @@ namespace RestaurantWebBL.Services
         private readonly IMapper _mapper;
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
         private readonly IRepository<Localization> _localizationRepository;
+        private readonly ILocalizationQueryObject _localizationQueryObject;
 
-        public LocalizationService(IUnitOfWorkFactory unitOfWorkFactory, IMapper mapper, IRepository<Localization> localizationRepository)
+        public LocalizationService(IUnitOfWorkFactory unitOfWorkFactory, IMapper mapper, IRepository<Localization> localizationRepository, ILocalizationQueryObject localizationQueryObject)
         {
             _unitOfWorkFactory = unitOfWorkFactory;
             _localizationRepository = localizationRepository;
             _mapper = mapper;
+            _localizationQueryObject = localizationQueryObject;
         }
         public async Task CreateAsync(LocalizationDto createdEntity)
         {
-            var checkExistence = await _localizationRepository.GetAllAsync();
-            var existing = checkExistence.Where(x => x.IsoLanguageCode == createdEntity.IsoLanguageCode && x.StringCode == createdEntity.StringCode);
-            if (existing.Count() == 0)
+            var result = _localizationQueryObject.GetStringWithCode(new LocalizationFilterDTOs() { IsoLanguageCode = createdEntity.IsoLanguageCode, StringCode = createdEntity.StringCode});
+            if (result.Items.Count() > 0)
             {
-                using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
-                var localization = _mapper.Map<Localization>(createdEntity);
-                _localizationRepository.Insert(localization);
-                await unitOfWork.CommitAsync();
+                throw new SystemException();
+
             }
-            else 
-            {
-                //Exepcion Type ?
-                throw new SystemException(); 
-            }
-            
+            using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
+            var localization = _mapper.Map<Localization>(createdEntity);
+            _localizationRepository.Insert(localization);
+            await unitOfWork.CommitAsync();
+
         }
 
         public async Task DeleteAsync(int entityId)
@@ -65,19 +65,16 @@ namespace RestaurantWebBL.Services
             _localizationRepository.Update(updatedLocal);
             await unitOfWork.CommitAsync();
         }
-
-        public async Task<IEnumerable<LocalizationDto>> GetAllWithIsoAsync(string iso)
+        public IEnumerable<LocalizationDto> GetAllWithIso(string iso)
         {
-            var local = await _localizationRepository.GetAllAsync();
-            var localizationsISO = local.Where(x => x.IsoLanguageCode == iso);
-            return _mapper.Map<IEnumerable<LocalizationDto>>(localizationsISO);
+            var localizationsISO = _localizationQueryObject.GetStringWithIso(new LocalizationFilterDTOs() { IsoLanguageCode = iso});
+            return localizationsISO.Items;
         }
 
-        public async Task<IEnumerable<LocalizationDto>> GetStringWithCodeAsync(string iso, string stringCode)
+        public IEnumerable<LocalizationDto> GetStringWithCode(string iso, string stringCode)
         {
-            var local = await _localizationRepository.GetAllAsync();
-            var localizationsCode = local.Where(x => x.StringCode == stringCode && x.IsoLanguageCode == iso);
-            return _mapper.Map<IEnumerable<LocalizationDto>>(localizationsCode);
+            var localizationsCode = _localizationQueryObject.GetStringWithCode(new LocalizationFilterDTOs() { IsoLanguageCode = iso, StringCode = stringCode });
+            return localizationsCode.Items;
         }
     }
 }

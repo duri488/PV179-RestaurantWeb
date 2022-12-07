@@ -16,6 +16,9 @@ builder.Services.AddDbContext<RestaurantWebDbContext>(
         .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
         // .UseLazyLoadingProxies()
 );
+
+builder.Services.AddTransient<DbContext>(x => x.GetRequiredService<RestaurantWebDbContext>());
+
 builder.Services.AddTransient<IMapper, Mapper>(x =>
     new Mapper(new MapperConfiguration(BusinessMappingConfig.ConfigureMapping)));
 
@@ -24,6 +27,7 @@ builder.Services.AddTransient<IRepository<DailyMenu>, EfRepository<DailyMenu>>()
 builder.Services.AddTransient<IRepository<Drink>, EfRepository<Drink>>();
 builder.Services.AddTransient<IRepository<Meal>, EfRepository<Meal>>();
 builder.Services.AddTransient<IRepository<Localization>, EfRepository<Localization>>();
+builder.Services.AddTransient<IRepository<Restaurant>, EfRepository<Restaurant>>();
 
 var app = builder.Build();
 
@@ -43,6 +47,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Restaurant}/{action=Index}/{id?}");
 
 app.Run();

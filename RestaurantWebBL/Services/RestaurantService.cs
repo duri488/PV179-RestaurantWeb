@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantWebBL.Services
 {
-    internal class RestaurantService : IRestaurantService
+    public class RestaurantService : IRestaurantService
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;

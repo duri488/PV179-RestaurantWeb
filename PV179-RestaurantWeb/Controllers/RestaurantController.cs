@@ -4,6 +4,8 @@ using RestaurantWeb.Contract;
 using RestaurantWebDAL.Models;
 using RestaurantWebBL.Services;
 using AutoMapper;
+using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 
 namespace PV179_RestaurantWeb.Controllers
 {
@@ -13,11 +15,14 @@ namespace PV179_RestaurantWeb.Controllers
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
         private readonly IMapper _mapper;
 
-        public RestaurantController(IRepository<Restaurant> restaurantRepository, IUnitOfWorkFactory unitOfWorkFactory, IMapper mapper)
+        private readonly ILogger<RestaurantController> _logger;
+
+        public RestaurantController(ILogger<RestaurantController> logger, IRepository<Restaurant> restaurantRepository, IUnitOfWorkFactory unitOfWorkFactory, IMapper mapper)
         {
             _restaurantRepository = restaurantRepository;
             _unitOfWorkFactory = unitOfWorkFactory;
             _mapper = mapper;
+            _logger = logger;
         }
         public async Task<IActionResult> Index()
         {
@@ -38,6 +43,16 @@ namespace PV179_RestaurantWeb.Controllers
             };
 
             return View(model);
+        }
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

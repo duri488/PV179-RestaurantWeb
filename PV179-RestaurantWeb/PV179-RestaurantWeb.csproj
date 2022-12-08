@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\Assets\food-pizza-baking.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\RestaurantWeb.Contract\RestaurantWeb.Contract.csproj" />
     <ProjectReference Include="..\RestaurantWebBL\RestaurantWebBL.csproj" />
     <ProjectReference Include="..\RestaurantWebDAL\RestaurantWebDAL.csproj" />

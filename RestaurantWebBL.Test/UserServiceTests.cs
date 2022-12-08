@@ -25,7 +25,10 @@ namespace RestaurantWebBL.Test
         [SetUp]
         public void Setup()
         {
-            _mapper = new Mapper(new MapperConfiguration(BusinessLayerProfile.ConfigureMapping));
+            _mapper = new Mapper(new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<BusinessLayerProfile>();
+            }));
             _userRepositoryMock = new Mock<IRepository<User>>();
             _userQueryObjectMock = new Mock<IUserQueryObject>();
             _unitOfWorkMock = new Mock<IUnitOfWork>();

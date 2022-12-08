@@ -14,7 +14,10 @@ namespace RestaurantWebBL.Test
     internal class LocalizationServiceTests
     {
 
-        private static readonly IMapper Mapper = new Mapper(new MapperConfiguration(BusinessLayerProfile.ConfigureMapping));
+        private static readonly IMapper Mapper = new Mapper(new MapperConfiguration(cfg =>
+        {
+            cfg.AddProfile<BusinessLayerProfile>();
+        }));
         Mock<IRepository<Localization>> _localRepositoryMock;
         Mock<IUnitOfWorkFactory> _unitOfWorkFactory;
         Mock<ILocalizationQueryObject> _localQueryObjectMock;

@@ -4,17 +4,17 @@ using RestaurantWebDAL.Models;
 
 namespace RestaurantWebBL.Configs
 {
-    public class BusinessLayerProfile
+    public class BusinessLayerProfile : Profile
     {
-        public static void ConfigureMapping(IMapperConfigurationExpression config)
+        public BusinessLayerProfile()
         {
-            config.CreateMap<DailyMenu, DailyMenuDto>().ReverseMap();
-            config.CreateMap<Drink, DrinkDto>().ReverseMap();
-            config.CreateMap<Localization, LocalizationDto>().ReverseMap();
-            config.CreateMap<Meal, MealDto>().ReverseMap();
-            config.CreateMap<Restaurant, RestaurantDto>().ReverseMap();
-            config.CreateMap<User, UserDto>().ReverseMap();
-            config.CreateMap<WeeklyMenu, WeeklyMenuDto>().ReverseMap();
+            CreateMap<DailyMenu, DailyMenuDto>().ReverseMap();
+            CreateMap<Drink, DrinkDto>().ReverseMap();
+            CreateMap<Localization, LocalizationDto>().ReverseMap();
+            CreateMap<Meal, MealDto>().ReverseMap();
+            CreateMap<Restaurant, RestaurantDto>().ReverseMap();
+            CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<WeeklyMenu, WeeklyMenuDto>().ReverseMap();
         }
     }
 }

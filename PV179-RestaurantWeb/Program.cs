@@ -20,7 +20,7 @@ builder.Services.AddDbContext<RestaurantWebDbContext>(
 builder.Services.AddTransient<DbContext>(x => x.GetRequiredService<RestaurantWebDbContext>());
 
 builder.Services.AddTransient<IMapper, Mapper>(x =>
-    new Mapper(new MapperConfiguration(BusinessMappingConfig.ConfigureMapping)));
+    new Mapper(new MapperConfiguration(BusinessLayerProfile.ConfigureMapping)));
 
 builder.Services.AddTransient<IUnitOfWorkFactory, UnitOfWorkFactory>();
 builder.Services.AddTransient<IRepository<DailyMenu>, EfRepository<DailyMenu>>();

@@ -4,7 +4,7 @@ using RestaurantWebDAL.Models;
 
 namespace RestaurantWebBL.Configs
 {
-    public class BusinessMappingConfig
+    public class BusinessLayerProfile
     {
         public static void ConfigureMapping(IMapperConfigurationExpression config)
         {

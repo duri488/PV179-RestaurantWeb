@@ -2,8 +2,6 @@
 using Moq;
 using RestaurantWeb.Contract;
 using RestaurantWebBL.Configs;
-using RestaurantWebBL.DTOs;
-using RestaurantWebBL.DTOs.FilterDTOs;
 using RestaurantWebBL.Interfaces;
 using RestaurantWebBL.Services;
 using RestaurantWebDAL.Models;
@@ -12,7 +10,7 @@ namespace RestaurantWebBL.Test
 {
     public class MealServiceTests
     {
-        private static readonly IMapper Mapper = new Mapper(new MapperConfiguration(BusinessMappingConfig.ConfigureMapping));
+        private static readonly IMapper Mapper = new Mapper(new MapperConfiguration(BusinessLayerProfile.ConfigureMapping));
         Mock<IRepository<Meal>> _mealRepositoryMock;
         Mock<IUnitOfWorkFactory> _unitOfWorkFactory;
         Mock<IMealQueryObject> _mealQueryObjectMock;

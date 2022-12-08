@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using FluentAssertions;
 using Moq;
-using NUnit.Framework;
 using RestaurantWeb.Contract;
 using RestaurantWebBL.Configs;
 using RestaurantWebBL.DTOs;
@@ -9,14 +8,13 @@ using RestaurantWebBL.DTOs.FilterDTOs;
 using RestaurantWebBL.Interfaces;
 using RestaurantWebBL.Services;
 using RestaurantWebDAL.Models;
-using System.Runtime.InteropServices;
 
 namespace RestaurantWebBL.Test
 {
     internal class LocalizationServiceTests
     {
 
-        private static readonly IMapper Mapper = new Mapper(new MapperConfiguration(BusinessMappingConfig.ConfigureMapping));
+        private static readonly IMapper Mapper = new Mapper(new MapperConfiguration(BusinessLayerProfile.ConfigureMapping));
         Mock<IRepository<Localization>> _localRepositoryMock;
         Mock<IUnitOfWorkFactory> _unitOfWorkFactory;
         Mock<ILocalizationQueryObject> _localQueryObjectMock;

@@ -11,7 +11,7 @@ namespace RestaurantWebBL.Test
     public class DrinkServiceTests
     {
 
-        private static readonly IMapper Mapper = new Mapper(new MapperConfiguration(BusinessMappingConfig.ConfigureMapping));
+        private static readonly IMapper Mapper = new Mapper(new MapperConfiguration(BusinessLayerProfile.ConfigureMapping));
         Mock<IUnitOfWorkFactory> _unitOfWorkFactory;
         Mock<IRepository<Drink>> _drinkRepository;
 

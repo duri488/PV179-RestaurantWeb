@@ -24,7 +24,7 @@ public class WeeklyMenuServiceTests
     [OneTimeSetUp]
     public void OneTimeSetup()
     {
-        _mapper = new Mapper(new MapperConfiguration(BusinessMappingConfig.ConfigureMapping));
+        _mapper = new Mapper(new MapperConfiguration(BusinessLayerProfile.ConfigureMapping));
 
         _restaurant = new Restaurant
         {

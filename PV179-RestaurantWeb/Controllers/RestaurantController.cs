@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Diagnostics;
+using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using PV179_RestaurantWeb.Models;
 using RestaurantWeb.Contract;
-using RestaurantWebDAL.Models;
 using RestaurantWebBL.Services;
-using AutoMapper;
-using Microsoft.Extensions.Logging;
-using System.Diagnostics;
+using RestaurantWebDAL.Models;
 
 namespace PV179_RestaurantWeb.Controllers
 {
@@ -37,7 +36,7 @@ namespace PV179_RestaurantWeb.Controllers
                 Address = restaurant.Address,
                 Description = restaurant.Description,
                 Latitude = restaurant.Latitude,
-                Longtitude = restaurant.Longtitude,
+                Longitude = restaurant.Longitude,
                 Phone = restaurant.Phone,
                 Email = restaurant.Email
             };

@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using PV179_RestaurantWeb.MappingProfiles;
 using RestaurantWeb.Contract;
 using RestaurantWebBL.MappingProfiles;
 using RestaurantWebDAL;
@@ -23,6 +24,7 @@ builder.Services.AddTransient<IMapper, Mapper>(x =>
     new Mapper(new MapperConfiguration(cfg =>
     {
         cfg.AddProfile<BusinessLayerProfile>();
+        cfg.AddProfile<PresentationLayerProfile>();
     })));
 
 builder.Services.AddTransient<IUnitOfWorkFactory, UnitOfWorkFactory>();

@@ -30,16 +30,7 @@ namespace PV179_RestaurantWeb.Controllers
             var restaurants = await restaurantService.GetAllAsync();
             var restaurant = restaurants.FirstOrDefault();
 
-            var model = new RestaurantViewModel()
-            {
-                Name = restaurant.Name,
-                Address = restaurant.Address,
-                Description = restaurant.Description,
-                Latitude = restaurant.Latitude,
-                Longitude = restaurant.Longitude,
-                Phone = restaurant.Phone,
-                Email = restaurant.Email
-            };
+            var model = _mapper.Map<RestaurantViewModel>(restaurant);
 
             return View(model);
         }

@@ -2,7 +2,7 @@
 using RestaurantWebBL.DTOs;
 using RestaurantWebDAL.Models;
 
-namespace RestaurantWebBL.Configs
+namespace RestaurantWebBL.MappingProfiles
 {
     public class BusinessLayerProfile : Profile
     {

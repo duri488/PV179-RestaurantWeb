@@ -2,10 +2,10 @@
 using FluentAssertions;
 using Moq;
 using RestaurantWeb.Contract;
-using RestaurantWebBL.Configs;
 using RestaurantWebBL.DTOs;
 using RestaurantWebBL.DTOs.FilterDTOs;
 using RestaurantWebBL.Interfaces;
+using RestaurantWebBL.MappingProfiles;
 using RestaurantWebBL.Services;
 using RestaurantWebDAL.Models;
 

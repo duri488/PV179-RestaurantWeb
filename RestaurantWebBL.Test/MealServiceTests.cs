@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Moq;
 using RestaurantWeb.Contract;
-using RestaurantWebBL.Configs;
 using RestaurantWebBL.Interfaces;
+using RestaurantWebBL.MappingProfiles;
 using RestaurantWebBL.Services;
 using RestaurantWebDAL.Models;
 

@@ -1,7 +1,7 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using RestaurantWeb.Contract;
-using RestaurantWebBL.Configs;
+using RestaurantWebBL.MappingProfiles;
 using RestaurantWebDAL;
 using RestaurantWebDAL.Models;
 using RestaurantWebInfrastructure.EFCore.Factories;

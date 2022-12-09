@@ -1,0 +1,9 @@
+﻿@model List<AllergenViewModel>
+
+<ul class="list-group list-group-flush">
+    @foreach (var item in Model)
+    {
+        // TODO: Localisation
+        <p style="margin-bottom: 0">@item.NameLocalizationCode (@item.NumberLocalizationCode)</p>
+    }
+</ul>

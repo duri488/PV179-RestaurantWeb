@@ -15,6 +15,7 @@ namespace RestaurantWebBL.MappingProfiles
             CreateMap<Restaurant, RestaurantDto>().ReverseMap();
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<WeeklyMenu, WeeklyMenuDto>().ReverseMap();
+            CreateMap<Allergen, AllergenDto>().ReverseMap();
         }
     }
 }

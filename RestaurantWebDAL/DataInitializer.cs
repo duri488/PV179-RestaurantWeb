@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RestaurantWeb.Contract.Enums;
 using RestaurantWebDAL.Models;
 using RestaurantWebUtilities.Helpers;
 
@@ -373,98 +374,98 @@ public static class DataInitializer
             .HasData(
                 new Allergen
                 {
-                    Id = 1,
+                    Id = (int) Allergens.Gluten,
                     Name = "gluten",
                     NumberLocalizationCode = "gluten-number",
                     NameLocalizationCode = "gluten-name"
                 },
                 new Allergen
                 {
-                    Id = 2,
+                    Id = (int) Allergens.Crustaceans,
                     Name = "crustaceans",
                     NumberLocalizationCode = "crustaceans-number",
                     NameLocalizationCode = "crustaceans-name",
                 },
                 new Allergen
                 {
-                    Id = 4,
+                    Id = (int) Allergens.Eggs,
                     Name = "eggs",
                     NumberLocalizationCode = "eggs-number",
                     NameLocalizationCode = "eggs-name",
                 },
                 new Allergen
                 {
-                    Id = 8,
+                    Id = (int) Allergens.Fish,
                     Name = "fish",
                     NumberLocalizationCode = "fish-number",
                     NameLocalizationCode = "fish-name",
                 },
                 new Allergen
                 {
-                    Id = 16,
+                    Id = (int) Allergens.Peanuts,
                     Name = "peanuts",
                     NumberLocalizationCode = "peanuts-number",
                     NameLocalizationCode = "peanuts-name",
                 },
                 new Allergen
                 {
-                    Id = 32,
+                    Id = (int) Allergens.Soybeans,
                     Name = "soybeans",
                     NumberLocalizationCode = "soybeans-number",
                     NameLocalizationCode = "soybeans-name",
                 },
                 new Allergen
                 {
-                    Id = 64,
+                    Id = (int) Allergens.Milk,
                     Name = "milk",
                     NumberLocalizationCode = "milk-number",
                     NameLocalizationCode = "milk-name",
                 },
                 new Allergen
                 {
-                    Id = 128,
+                    Id = (int) Allergens.Nuts,
                     Name = "nuts",
                     NumberLocalizationCode = "nuts-number",
                     NameLocalizationCode = "nuts-name",
                 },
                 new Allergen
                 {
-                    Id = 256,
+                    Id = (int) Allergens.Celery,
                     Name = "celery",
                     NumberLocalizationCode = "celery-number",
                     NameLocalizationCode = "celery-name",
                 },
                 new Allergen
                 {
-                    Id = 512,
+                    Id = (int) Allergens.Mustard,
                     Name = "mustard",
                     NumberLocalizationCode = "mustard-number",
                     NameLocalizationCode = "mustard-name",
                 },
                 new Allergen
                 {
-                    Id = 1024,
+                    Id = (int) Allergens.SesameSeeds,
                     Name = "sesame-seeds",
                     NumberLocalizationCode = "sesame-seeds-number",
                     NameLocalizationCode = "sesame-seeds-name",
                 },
                 new Allergen
                 {
-                    Id = 2048,
+                    Id = (int) Allergens.Sulphur,
                     Name = "sulphur",
                     NumberLocalizationCode = "sulphur-number",
                     NameLocalizationCode = "sulphur-name",
                 },
                 new Allergen
                 {
-                    Id = 4096,
+                    Id = (int) Allergens.Lupin,
                     Name = "lupin",
                     NumberLocalizationCode = "lupin-number",
                     NameLocalizationCode = "lupin-name",
                 },
                 new Allergen
                 {
-                    Id = 8192,
+                    Id = (int) Allergens.Molluscs,
                     Name = "molluscs",
                     NumberLocalizationCode = "molluscs-number",
                     NameLocalizationCode = "molluscs-name",

@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RestaurantWeb.Contract\RestaurantWeb.Contract.csproj" />
     <ProjectReference Include="..\RestaurantWebUtilities\RestaurantWebUtilities.csproj" />
   </ItemGroup>
 

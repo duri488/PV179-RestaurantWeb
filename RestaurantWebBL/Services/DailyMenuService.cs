@@ -47,7 +47,12 @@ public class DailyMenuService : IDailyMenuService
 
     public async Task<DailyMenuDto?> GetByIdAsync(int entityId)
     {
-        DailyMenu? dailyMenu = await _dailyMenuRepository.GetByIdAsync(entityId);
+        return await GetByIdAsync(entityId, false);
+    }
+
+    public async Task<DailyMenuDto?> GetByIdAsync(int entityId, bool includeNavigationProperties)
+    {
+        DailyMenu? dailyMenu = await _dailyMenuRepository.GetByIdAsync(entityId, includeNavigationProperties);
         return _mapper.Map<DailyMenuDto?>(dailyMenu);
     }
 

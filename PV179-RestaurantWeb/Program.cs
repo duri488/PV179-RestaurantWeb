@@ -8,6 +8,7 @@ using RestaurantWebBL.Services;
 using RestaurantWebDAL;
 using RestaurantWebDAL.Models;
 using RestaurantWebInfrastructure.EFCore.Factories;
+using RestaurantWebInfrastructure.EFCore.Query;
 using RestaurantWebInfrastructure.EFCore.Repository;
 
 var builder = WebApplication.CreateBuilder(args);

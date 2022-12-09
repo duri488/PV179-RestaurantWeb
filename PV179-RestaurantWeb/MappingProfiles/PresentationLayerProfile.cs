@@ -13,5 +13,6 @@ public class PresentationLayerProfile : Profile
         CreateMap<MealViewModel, MealDto>().ReverseMap();
         CreateMap<AllergenViewModel, AllergenDto>().ReverseMap();
         CreateMap<DrinkViewModel, DrinkDto>().ReverseMap();
+        CreateMap<DrinkCreateModel, DrinkDto>().ReverseMap();
     }
 }

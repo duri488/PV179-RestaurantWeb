@@ -9,4 +9,5 @@ public interface IDailyMenuService
     Task UpdateAsync(DailyMenuDto updatedEntity, int? menuId, int? weeklyMenuId);
     Task DeleteAsync(int entityId);
     Task<IEnumerable<DailyMenuDto>> GetAllAsync();
+    Task<IEnumerable<DailyMenuDto>> GetAllAsync(bool includeNavigationProperties);
 }

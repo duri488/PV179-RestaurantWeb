@@ -20,7 +20,7 @@ namespace PV179_RestaurantWeb.Controllers
         // GET: DailyMenu
         public async Task<IActionResult> Index()
         {
-            IEnumerable<DailyMenuDto> dailyMenuDtos = await _dailyMenuService.GetAllAsync();
+            IEnumerable<DailyMenuDto> dailyMenuDtos = await _dailyMenuService.GetAllAsync(true);
             var dailyMenuViewModels = _mapper.Map<IEnumerable<DailyMenuViewModel>>(dailyMenuDtos);
             return View(dailyMenuViewModels);
         }

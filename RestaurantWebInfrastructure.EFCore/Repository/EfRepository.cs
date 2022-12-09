@@ -7,7 +7,7 @@ namespace RestaurantWebInfrastructure.EFCore.Repository;
 
 public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
 {
-    private readonly RestaurantWebDbContext _dbContext;
+    protected readonly RestaurantWebDbContext _dbContext;
     internal readonly DbSet<TEntity> DbSet;
     public EfRepository(RestaurantWebDbContext dbContext)
     {

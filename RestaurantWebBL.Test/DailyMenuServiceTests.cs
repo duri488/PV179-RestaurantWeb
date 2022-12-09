@@ -12,7 +12,7 @@ namespace RestaurantWebBL.Test;
 public class DailyMenuServiceTests
 {
     private Mapper _mapper = null!;
-    private Mock<IRepository<DailyMenu>> _dailyMenuRepositoryMock = null!;
+    private Mock<IEagerLoadingRepository<DailyMenu>> _dailyMenuRepositoryMock = null!;
     private Mock<IUnitOfWorkFactory> _unitOfWorkFactoryMock = null!;
     private Mock<IUnitOfWork> _unitOfWorkMock = null!;
 
@@ -85,7 +85,7 @@ public class DailyMenuServiceTests
     [SetUp]
     public void Setup()
     {
-        _dailyMenuRepositoryMock = new Mock<IRepository<DailyMenu>>();
+        _dailyMenuRepositoryMock = new Mock<IEagerLoadingRepository<DailyMenu>>();
         _unitOfWorkMock = new Mock<IUnitOfWork>();
         _unitOfWorkMock.Setup(m => m.CommitAsync()).Returns(Task.CompletedTask);
         _unitOfWorkFactoryMock = new Mock<IUnitOfWorkFactory>();

@@ -8,10 +8,10 @@ namespace RestaurantWebBL.Services;
 
 public class DailyMenuService : IDailyMenuService
 {
-    private readonly IRepository<DailyMenu> _dailyMenuRepository;
+    private readonly IEagerLoadingRepository<DailyMenu> _dailyMenuRepository;
     private readonly IMapper _mapper;
     private readonly IUnitOfWorkFactory _unitOfWorkFactory;
-    public DailyMenuService(IRepository<DailyMenu> dailyMenuRepository,
+    public DailyMenuService(IEagerLoadingRepository<DailyMenu> dailyMenuRepository,
         IMapper mapper,
         IUnitOfWorkFactory unitOfWorkFactory)
     {
@@ -74,7 +74,12 @@ public class DailyMenuService : IDailyMenuService
 
     public async Task<IEnumerable<DailyMenuDto>> GetAllAsync()
     {
-        IEnumerable<DailyMenu> dailyMenuList = await _dailyMenuRepository.GetAllAsync();
+        return await this.GetAllAsync(false);
+    }
+
+    public async Task<IEnumerable<DailyMenuDto>> GetAllAsync(bool includeNavigationProperties)
+    {
+        IEnumerable<DailyMenu> dailyMenuList = await _dailyMenuRepository.GetAllAsync(includeNavigationProperties);
         return _mapper.Map<IEnumerable<DailyMenuDto>>(dailyMenuList);
     }
     

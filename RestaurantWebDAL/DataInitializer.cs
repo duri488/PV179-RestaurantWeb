@@ -68,7 +68,8 @@ public static class DataInitializer
                     Description = "Tomato, Cheese, Ham, Mushrooms",
                     Price = 6.35M,
                     Picture = "path to picture",
-                    RestaurantId = 1
+                    RestaurantId = 1,
+                    AllergenFlags = 0b1000001
                 },
                 new Meal
                 {
@@ -77,7 +78,8 @@ public static class DataInitializer
                     Description = "Tomato, Cheese, Ham, Pineapple",
                     Price = 8.99M,
                     Picture = "path to picture",
-                    RestaurantId = 1
+                    RestaurantId = 1,
+                    AllergenFlags = 0b1000001
                 }
             );
     }

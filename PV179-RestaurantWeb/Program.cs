@@ -39,6 +39,7 @@ builder.Services.AddTransient<IRepository<Allergen>, EfRepository<Allergen>>();
 builder.Services.AddTransient<IDailyMenuService, DailyMenuService>();
 builder.Services.AddTransient<IDrinkService, DrinkService>();
 builder.Services.AddTransient<IAllergenService, AllergenService>();
+//builder.Services.AddTransient<IMealService, MealService>();
 
 var app = builder.Build();
 

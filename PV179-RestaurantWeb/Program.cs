@@ -38,6 +38,7 @@ builder.Services.AddTransient<IDailyMenuService, DailyMenuService>();
 builder.Services.AddTransient<IDrinkService, DrinkService>();
 builder.Services.AddTransient<IAllergenService, AllergenService>();
 builder.Services.AddTransient<IRestaurantService, RestaurantService>();
+//builder.Services.AddTransient<IMealService, MealService>();
 
 var app = builder.Build();
 

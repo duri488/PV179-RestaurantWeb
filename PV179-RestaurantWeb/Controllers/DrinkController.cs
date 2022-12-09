@@ -23,5 +23,10 @@ namespace PV179_RestaurantWeb.Controllers
             return View(drinkViewModels);
         }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
+
     }
 }

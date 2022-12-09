@@ -20,8 +20,6 @@ builder.Services.AddDbContext<RestaurantWebDbContext>(
         // .UseLazyLoadingProxies()
 );
 
-builder.Services.AddTransient<DbContext>(x => x.GetRequiredService<RestaurantWebDbContext>());
-
 builder.Services.AddTransient<IMapper, Mapper>(x =>
     new Mapper(new MapperConfiguration(cfg =>
     {
@@ -39,7 +37,7 @@ builder.Services.AddTransient<IRepository<Allergen>, EfRepository<Allergen>>();
 builder.Services.AddTransient<IDailyMenuService, DailyMenuService>();
 builder.Services.AddTransient<IDrinkService, DrinkService>();
 builder.Services.AddTransient<IAllergenService, AllergenService>();
-//builder.Services.AddTransient<IMealService, MealService>();
+builder.Services.AddTransient<IRestaurantService, RestaurantService>();
 
 var app = builder.Build();
 

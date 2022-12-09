@@ -9,5 +9,6 @@ public class PresentationLayerProfile : Profile
     public PresentationLayerProfile()
     {
         CreateMap<RestaurantViewModel, RestaurantDto>().ReverseMap();
+        CreateMap<DailyMenuViewModel, DailyMenuDto>().ReverseMap();
     }
 }

@@ -2,7 +2,9 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using PV179_RestaurantWeb.MappingProfiles;
 using RestaurantWeb.Contract;
+using RestaurantWebBL.Interfaces;
 using RestaurantWebBL.MappingProfiles;
+using RestaurantWebBL.Services;
 using RestaurantWebDAL;
 using RestaurantWebDAL.Models;
 using RestaurantWebInfrastructure.EFCore.Factories;
@@ -33,6 +35,7 @@ builder.Services.AddTransient<IRepository<Drink>, EfRepository<Drink>>();
 builder.Services.AddTransient<IRepository<Meal>, EfRepository<Meal>>();
 builder.Services.AddTransient<IRepository<Localization>, EfRepository<Localization>>();
 builder.Services.AddTransient<IRepository<Restaurant>, EfRepository<Restaurant>>();
+builder.Services.AddTransient<IDailyMenuService, DailyMenuService>();
 
 var app = builder.Build();
 

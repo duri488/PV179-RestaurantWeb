@@ -2,11 +2,12 @@
 using RestaurantWeb.Contract;
 using RestaurantWebBL.DTOs;
 using RestaurantWebBL.DTOs.FilterDTOs;
+using RestaurantWebBL.Interfaces;
 using RestaurantWebDAL.Models;
 
 namespace RestaurantWebBL.QueryObjects;
 
-public class DailyMenuQueryObject
+public class DailyMenuQueryObject : IDailyMenuQueryObject
 {
     private readonly IQuery<DailyMenu> _query;
     private readonly IMapper _mapper;

@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using PV179_RestaurantWeb.Models;
 using RestaurantWebBL.DTOs;
 using RestaurantWebBL.Interfaces;
@@ -11,13 +12,15 @@ namespace PV179_RestaurantWeb.Controllers
         private readonly IMapper _mapper;
         private readonly IDailyMenuService _dailyMenuService;
         private readonly IAllergenService _allergenService;
+        private readonly IMenuFacade _menuFacade;
         private readonly ILocalizationService _localizationService;
         public DailyMenuController(IMapper mapper, IDailyMenuService dailyMenuService, IAllergenService allergenService,
-            ILocalizationService localizationService)
+            IMenuFacade menuFacade, ILocalizationService localizationService)
         {
             _mapper = mapper;
             _dailyMenuService = dailyMenuService;
             _allergenService = allergenService;
+            _menuFacade = menuFacade;
             _localizationService = localizationService;
         }
 
@@ -65,6 +68,48 @@ namespace PV179_RestaurantWeb.Controllers
                          throw new NotImplementedException($"Unable to find localization string for " +
                                                            $"code:{a.NumberLocalizationCode}; iso:{isoCode}")
             });
+        }
+
+        // GET: DailyMenu/Create
+        public async Task<IActionResult> Create()
+        {
+            IEnumerable<MealDto> meals = await _menuFacade.GetAllMealsAsync();
+            IEnumerable<WeeklyMenuDto> weeklyMenuDtos = await _menuFacade.GetAllWeeklyMenusAsync();
+            var weeklyMenus = weeklyMenuDtos.Select(wm => new
+            {
+                Id = wm.Id,
+                DateRange = wm.DateFrom.ToShortDateString() + '-' + wm.DateTo.ToShortDateString()
+            });
+            ViewData["WeeklyMenuId"] = new SelectList(weeklyMenus, "Id", "DateRange");
+            ViewData["MealId"] = new SelectList(meals, nameof(MealDto.Id), nameof(MealDto.Name));
+            return View();
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind($"DayOfWeek,MenuPrice,WeeklyMenu,Meal")] DailyMenuCreateModel dailyMenu)
+        {
+            if (ModelState.IsValid)
+            {
+                var dailyMenuDto = new DailyMenuDto
+                {
+                    DayOfWeek = dailyMenu.DayOfWeek,
+                    MenuPrice = dailyMenu.MenuPrice
+                };
+                
+                await _dailyMenuService.CreateAsync(dailyMenuDto,dailyMenu.Meal, dailyMenu.WeeklyMenu);
+                return RedirectToAction(nameof(Index));
+            }
+            IEnumerable<MealDto> meals = await _menuFacade.GetAllMealsAsync();
+            IEnumerable<WeeklyMenuDto> weeklyMenuDtos = await _menuFacade.GetAllWeeklyMenusAsync();
+            var weeklyMenus = weeklyMenuDtos.Select(wm => new
+            {
+                Id = wm.Id,
+                DateRange = wm.DateFrom.ToShortDateString() + '-' + wm.DateTo.ToShortDateString()
+            });
+            ViewData["WeeklyMenuId"] = new SelectList(weeklyMenus, "Id", "DateRange");
+            ViewData["MealId"] = new SelectList(meals, "Id", "Name");
+            return View(dailyMenu);
         }
     }
 }

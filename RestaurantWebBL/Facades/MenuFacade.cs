@@ -21,6 +21,11 @@ public class MenuFacade : IMenuFacade
         return await _mealService.GetAllAsync();
     }
 
+    public async Task<MealDto?> GetMealByIdAsync(int id)
+    {
+        return await _mealService.GetByIdAsync(id);
+    }
+
     public async Task<IEnumerable<DailyMenuDto>> GetAllDailyMenusAsync()
     {
         return await _dailyMenuService.GetAllAsync();
@@ -34,6 +39,11 @@ public class MenuFacade : IMenuFacade
     public async Task<IEnumerable<WeeklyMenuDto>> GetAllWeeklyMenusAsync()
     {
         return await _weeklyMenuService.GetAllAsync();
+    }
+
+    public async Task<WeeklyMenuDto?> GetWeeklyMenuByIdAsync(int id)
+    {
+        return await _weeklyMenuService.GetByIdAsync(id);
     }
 
     public IEnumerable<WeeklyMenuDto> GetWeeklyMenusByDate(DateTime date)

@@ -1,25 +1,21 @@
-﻿using RestaurantWebBL.DTOs;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using RestaurantWebBL.DTOs;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PV179_RestaurantWeb.Models
 {
     public class DrinkCreateModel
     {
-        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
         public decimal Volume { get; set; }
         [Required]
+        [DataType(DataType.Currency)]
         public decimal Price { get; set; }
+        [Required]
         public IEnumerable<AllergenViewModel> Allergens { get; set; }
 
-        public DrinkDto drinkDto() => new()
-        {
-            Id = Id,
-            Name = Name,
-            Volume = Volume,
-            Price = Price,
-        };
     }
 }

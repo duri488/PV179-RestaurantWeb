@@ -54,16 +54,19 @@ namespace PV179_RestaurantWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(DrinkCreateModel model)
+        public async Task<IActionResult> Create(DrinkCreateModel model)
         {
-            
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            var dto = model.drinkDto();
-            _drinkService.CreateAsync(dto, 1);
+            DrinkDto drinkDto = new DrinkDto {
+                Price = model.Price,
+                Volume = model.Volume,
+                Name = model.Name,
+            };
+            await _drinkService.CreateAsync(drinkDto, 1);
 
             return RedirectToAction(nameof(Index));
         }

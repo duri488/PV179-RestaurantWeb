@@ -11,11 +11,14 @@ namespace PV179_RestaurantWeb.Controllers
         private readonly IMapper _mapper;
         private readonly IDailyMenuService _dailyMenuService;
         private readonly IAllergenService _allergenService;
-        public DailyMenuController(IMapper mapper, IDailyMenuService dailyMenuService, IAllergenService allergenService)
+        private readonly ILocalizationService _localizationService;
+        public DailyMenuController(IMapper mapper, IDailyMenuService dailyMenuService, IAllergenService allergenService,
+            ILocalizationService localizationService)
         {
             _mapper = mapper;
             _dailyMenuService = dailyMenuService;
             _allergenService = allergenService;
+            _localizationService = localizationService;
         }
 
         // GET: DailyMenu
@@ -43,9 +46,25 @@ namespace PV179_RestaurantWeb.Controllers
 
             var dailyMenu = _mapper.Map<DailyMenuViewModel>(dailyMenuDto);
             IEnumerable<AllergenDto> allergenDtos = await _allergenService.GetByFlags(dailyMenuDto.Meal.AllergenFlags);
-            var allergens = _mapper.Map<IEnumerable<AllergenViewModel>>(allergenDtos);
+            List<AllergenViewModel> allergens = LocalizeAllergens(allergenDtos).ToList();
             dailyMenu.Meal.Allergens = allergens;
             return View(dailyMenu);
+        }
+
+        private IEnumerable<AllergenViewModel> LocalizeAllergens(IEnumerable<AllergenDto> allergenDtos)
+        {
+            // TODO: How to get ISO code?
+            string isoCode = "en";
+            return allergenDtos.Select(a => new AllergenViewModel
+            {
+            
+                Name = _localizationService.GetStringWithCode(isoCode, a.NameLocalizationCode)?.LocalizedString ?? 
+                       throw new NotImplementedException($"Unable to find localization string for " +
+                                                         $"code:{a.NameLocalizationCode}; iso:{isoCode}"),
+                Number = _localizationService.GetStringWithCode(isoCode, a.NumberLocalizationCode)?.LocalizedString ??
+                         throw new NotImplementedException($"Unable to find localization string for " +
+                                                           $"code:{a.NumberLocalizationCode}; iso:{isoCode}")
+            });
         }
     }
 }

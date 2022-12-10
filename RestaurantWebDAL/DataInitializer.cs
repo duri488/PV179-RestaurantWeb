@@ -124,7 +124,219 @@ public static class DataInitializer
                     IsoLanguageCode = "en",
                     StringCode = "login",
                     LocalizedString = "Login"
+                }
+            );
+        SeedSkAllergenLocalization(modelBuilder);
+        SeedEnAllergenLocalization(modelBuilder);
+    }
+
+    private static void SeedEnAllergenLocalization(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Localization>()
+            .HasData(
+                new Localization
+                {
+                    Id = 31,
+                    IsoLanguageCode = "en",
+                    StringCode = "gluten-number",
+                    LocalizedString = "1"
                 },
+                new Localization
+                {
+                    Id = 32,
+                    IsoLanguageCode = "en",
+                    StringCode = "gluten-name",
+                    LocalizedString = "Cereals containing gluten"
+                },
+                new Localization
+                {
+                    Id = 33,
+                    IsoLanguageCode = "en",
+                    StringCode = "crustaceans-number",
+                    LocalizedString = "2"
+                },
+                new Localization
+                {
+                    Id = 34,
+                    IsoLanguageCode = "en",
+                    StringCode = "crustaceans-name",
+                    LocalizedString = "Crustaceans and products thereof"
+                },
+                new Localization
+                {
+                    Id = 35,
+                    IsoLanguageCode = "en",
+                    StringCode = "eggs-number",
+                    LocalizedString = "3"
+                },
+                new Localization
+                {
+                    Id = 36,
+                    IsoLanguageCode = "en",
+                    StringCode = "eggs-name",
+                    LocalizedString = "Eggs and products thereof"
+                },
+                new Localization
+                {
+                    Id = 37,
+                    IsoLanguageCode = "en",
+                    StringCode = "fish-number",
+                    LocalizedString = "4"
+                },
+                new Localization
+                {
+                    Id = 38,
+                    IsoLanguageCode = "en",
+                    StringCode = "fish-name",
+                    LocalizedString = "Fish and products thereof"
+                },
+                new Localization
+                {
+                    Id = 39,
+                    IsoLanguageCode = "en",
+                    StringCode = "peanuts-number",
+                    LocalizedString = "5"
+                },
+                new Localization
+                {
+                    Id = 40,
+                    IsoLanguageCode = "en",
+                    StringCode = "peanuts-name",
+                    LocalizedString = "Peanuts and products thereof"
+                },
+                new Localization
+                {
+                    Id = 41,
+                    IsoLanguageCode = "en",
+                    StringCode = "soybeans-number",
+                    LocalizedString = "6"
+                },
+                new Localization
+                {
+                    Id = 42,
+                    IsoLanguageCode = "en",
+                    StringCode = "soybeans-name",
+                    LocalizedString = "Soybeans and products thereof"
+                },
+                new Localization
+                {
+                    Id = 43,
+                    IsoLanguageCode = "en",
+                    StringCode = "milk-number",
+                    LocalizedString = "7"
+                },
+                new Localization
+                {
+                    Id = 44,
+                    IsoLanguageCode = "en",
+                    StringCode = "milk-name",
+                    LocalizedString = "Milk and products thereof (including lactose)"
+                },
+                new Localization
+                {
+                    Id = 45,
+                    IsoLanguageCode = "en",
+                    StringCode = "nuts-number",
+                    LocalizedString = "8"
+                },
+                new Localization
+                {
+                    Id = 46,
+                    IsoLanguageCode = "en",
+                    StringCode = "nuts-name",
+                    LocalizedString = "Nuts"
+                },
+                new Localization
+                {
+                    Id = 47,
+                    IsoLanguageCode = "en",
+                    StringCode = "celery-number",
+                    LocalizedString = "9"
+                },
+                new Localization
+                {
+                    Id = 48,
+                    IsoLanguageCode = "en",
+                    StringCode = "celery-name",
+                    LocalizedString = "Celery and products thereof"
+                },
+                new Localization
+                {
+                    Id = 49,
+                    IsoLanguageCode = "en",
+                    StringCode = "mustard-number",
+                    LocalizedString = "10"
+                },
+                new Localization
+                {
+                    Id = 50,
+                    IsoLanguageCode = "en",
+                    StringCode = "mustard-name",
+                    LocalizedString = "Mustard and products thereof"
+                },
+                new Localization
+                {
+                    Id = 51,
+                    IsoLanguageCode = "en",
+                    StringCode = "sesame-seeds-number",
+                    LocalizedString = "11"
+                },
+                new Localization
+                {
+                    Id = 52,
+                    IsoLanguageCode = "en",
+                    StringCode = "sesame-seeds-name",
+                    LocalizedString = "Sesame seeds and products thereof"
+                },
+                new Localization
+                {
+                    Id = 53,
+                    IsoLanguageCode = "sk",
+                    StringCode = "sulfur-number",
+                    LocalizedString = "12"
+                },
+                new Localization
+                {
+                    Id = 54,
+                    IsoLanguageCode = "en",
+                    StringCode = "sulfur-name",
+                    LocalizedString = "Sulphur dioxide and sulphites at concentrations of more than 10 mg/kg or 10 mg/litre"
+                },
+                new Localization
+                {
+                    Id = 55,
+                    IsoLanguageCode = "en",
+                    StringCode = "lupin-number",
+                    LocalizedString = "13"
+                },
+                new Localization
+                {
+                    Id = 56,
+                    IsoLanguageCode = "en",
+                    StringCode = "lupin-name",
+                    LocalizedString = "Lupin and products thereof"
+                },
+                new Localization
+                {
+                    Id = 57,
+                    IsoLanguageCode = "sk",
+                    StringCode = "molluscs-number",
+                    LocalizedString = "14"
+                },
+                new Localization
+                {
+                    Id = 58,
+                    IsoLanguageCode = "sk",
+                    StringCode = "molluscs-name",
+                    LocalizedString = "Molluscs and products thereof"
+                }
+            );
+    }
+
+    private static void SeedSkAllergenLocalization(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Localization>()
+            .HasData(
                 new Localization
                 {
                     Id = 3,

@@ -2,7 +2,6 @@
 
 public class AllergenViewModel
 {
+    public string Number { get; set; }
     public string Name { get; set; }
-    public string NumberLocalizationCode { get; set; }
-    public string NameLocalizationCode { get; set; }
 }

@@ -12,6 +12,8 @@ using RestaurantWebDAL.Models;
 using RestaurantWebInfrastructure.EFCore.Factories;
 using RestaurantWebInfrastructure.EFCore.Query;
 using RestaurantWebInfrastructure.EFCore.Repository;
+using PV179_RestaurantWeb.Areas.Identity.Data;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +24,15 @@ builder.Services.AddDbContext<RestaurantWebDbContext>(
         .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
         // .UseLazyLoadingProxies()
 );
+
+builder.Services.AddDbContext<AuthDbContext>(
+    options => options
+        .UseSqlServer(builder.Configuration.GetConnectionString("AuthDbContextConnection"))
+// .UseLazyLoadingProxies()
+);
+
+builder.Services.AddDefaultIdentity<AdminUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<AuthDbContext>();
 
 builder.Services.AddTransient<IMapper, Mapper>(x =>
     new Mapper(new MapperConfiguration(cfg =>
@@ -57,6 +68,7 @@ builder.Services.AddTransient<IQueryFactory<WeeklyMenu>, EfQueryFactory<WeeklyMe
 builder.Services.AddTransient<IQueryFactory<DailyMenu>, EfQueryFactory<DailyMenu>>();
 builder.Services.AddTransient<IQueryFactory<Meal>, EfQueryFactory<Meal>>();
 builder.Services.AddTransient<IQueryFactory<User>, EfQueryFactory<User>>();
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
@@ -72,10 +84,12 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Restaurant}/{action=Index}/{id?}");
+app.MapRazorPages();
 
 app.Run();

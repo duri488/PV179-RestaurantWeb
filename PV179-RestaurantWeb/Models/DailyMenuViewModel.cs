@@ -7,6 +7,7 @@ public class DailyMenuViewModel
 {
     public int Id { get; set; }
     [DisplayName("Day")]
+    [EnumDataType(typeof(DayOfWeek))]
     public DayOfWeek DayOfWeek { get; set; }
     [DataType(DataType.Date)]
     public DateTime Date {
@@ -20,4 +21,6 @@ public class DailyMenuViewModel
     [DisplayName("Price")]
     public decimal MenuPrice { get; set; }
     public MealViewModel Meal { get; set; }
+    [DisplayName("Week")]
+    public WeeklyMenuViewModel WeeklyMenu { get; set; }
 }

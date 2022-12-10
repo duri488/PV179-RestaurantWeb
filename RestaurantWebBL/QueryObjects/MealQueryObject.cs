@@ -1,17 +1,13 @@
 ﻿using AutoMapper;
 using RestaurantWeb.Contract;
-using RestaurantWebBL.DTOs.FilterDTOs;
 using RestaurantWebBL.DTOs;
+using RestaurantWebBL.DTOs.FilterDTOs;
+using RestaurantWebBL.Interfaces;
 using RestaurantWebDAL.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RestaurantWebBL.QueryObjects
 {
-    public class MealQueryObject
+    public class MealQueryObject : IMealQueryObject
     {
         private IMapper mapper;
         private IQuery<Meal> myQuery;
@@ -22,7 +18,7 @@ namespace RestaurantWebBL.QueryObjects
             myQuery = _mealQuery;
         }
 
-        public QueryResultDto<MealDto> ExecuteQuery(MealFilterDTOs filter, int bigger)
+        public QueryResultDto<MealDto> GetMealByPrice(MealFilterDTOs filter, int bigger)
         {
             var query = myQuery;
             if ( bigger == 1) {

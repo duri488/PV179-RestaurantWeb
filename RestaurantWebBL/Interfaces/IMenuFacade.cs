@@ -8,4 +8,5 @@ public interface IMenuFacade
     Task<IEnumerable<DailyMenuDto>> GetAllDailyMenusAsync();
     Task<IEnumerable<DailyMenuDto>> GetAllDailyMenusAsync(bool includeNavigationProperty);
     Task<IEnumerable<WeeklyMenuDto>> GetAllWeeklyMenusAsync();
+    IEnumerable<WeeklyMenuDto> GetWeeklyMenusByDate(DateTime date);
 }

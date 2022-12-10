@@ -35,4 +35,9 @@ public class MenuFacade : IMenuFacade
     {
         return await _weeklyMenuService.GetAllAsync();
     }
+
+    public IEnumerable<WeeklyMenuDto> GetWeeklyMenusByDate(DateTime date)
+    {
+        return _weeklyMenuService.GetWeeklyMenusByDate(date);
+    }
 }

@@ -112,7 +112,7 @@ public class DailyMenuServiceTests
     public async Task DailyMenuService_GetByIdAsync_HappyPath()
     {
         DailyMenuDto expected = _dailyMenuDto;
-        _dailyMenuRepositoryMock.Setup(m => m.GetByIdAsync(1).Result)
+        _dailyMenuRepositoryMock.Setup(m => m.GetByIdAsync(1, false).Result)
             .Returns(_dailyMenu);
 
         var service = new DailyMenuService(_dailyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object);
@@ -160,7 +160,7 @@ public class DailyMenuServiceTests
     public async Task DailyMenuService_GetAllAsync_HappyPath()
     {
         var expected = (IEnumerable<DailyMenuDto>) new []{_dailyMenuDto};
-        _dailyMenuRepositoryMock.Setup(r => r.GetAllAsync().Result)
+        _dailyMenuRepositoryMock.Setup(r => r.GetAllAsync(false).Result)
             .Returns(new List<DailyMenu> {_dailyMenu});
         
         var service = new DailyMenuService(_dailyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object);

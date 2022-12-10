@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using RestaurantWeb.Contract;
 using RestaurantWebBL.DTOs;
+using RestaurantWebBL.DTOs.FilterDTOs;
 using RestaurantWebBL.Interfaces;
 using RestaurantWebDAL.Models;
 
@@ -11,13 +12,15 @@ public class WeeklyMenuService : IWeeklyMenuService
     private readonly IRepository<WeeklyMenu> _weeklyMenuRepository;
     private readonly IMapper _mapper;
     private readonly IUnitOfWorkFactory _unitOfWorkFactory;
+    private readonly IWeeklyMenuQueryObject _weeklyMenuQueryObject;
     public WeeklyMenuService(IRepository<WeeklyMenu> weeklyMenuRepository,
         IMapper mapper,
-        IUnitOfWorkFactory unitOfWorkFactory)
+        IUnitOfWorkFactory unitOfWorkFactory, IWeeklyMenuQueryObject weeklyMenuQueryObject)
     {
         _weeklyMenuRepository = weeklyMenuRepository;
         _mapper = mapper;
         _unitOfWorkFactory = unitOfWorkFactory;
+        _weeklyMenuQueryObject = weeklyMenuQueryObject;
     }
 
     public async Task<int> UpsertAsync(WeeklyMenuDto weeklyMenuDto, int? mealId, int? restaurantId)
@@ -78,6 +81,15 @@ public class WeeklyMenuService : IWeeklyMenuService
         return _mapper.Map<IEnumerable<WeeklyMenuDto>>(dailyMenuList);
     }
     
+    public IEnumerable<WeeklyMenuDto> GetWeeklyMenusByDate(DateTime date)
+    {
+        var filter = new WeeklyMenuFilterDto
+        {
+            Date = date
+        };
+        return _weeklyMenuQueryObject.WeeklyMenuByDate(filter).Items;
+    }
+
     private void AssertNavigationalPropertiesAreNull(WeeklyMenuDto weeklyMenuDto)
     {
         string operation = weeklyMenuDto.Id == 0 ? "create" : "update";

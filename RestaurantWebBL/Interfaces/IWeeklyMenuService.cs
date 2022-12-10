@@ -9,4 +9,5 @@ public interface IWeeklyMenuService
     Task UpdateAsync(WeeklyMenuDto updatedEntity, int? mealId, int? restaurantId);
     Task DeleteAsync(int entityId);
     Task<IEnumerable<WeeklyMenuDto>> GetAllAsync();
+    IEnumerable<WeeklyMenuDto> GetWeeklyMenusByDate(DateTime date);
 }

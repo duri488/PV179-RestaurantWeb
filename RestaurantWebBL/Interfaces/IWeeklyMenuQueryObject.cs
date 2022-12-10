@@ -5,5 +5,5 @@ namespace RestaurantWebBL.Interfaces;
 
 public interface IWeeklyMenuQueryObject
 {
-    QueryResultDto<WeeklyMenuDto> WeeklyMenusInDateRange(WeeklyMenuFilterDto filter);
+    QueryResultDto<WeeklyMenuDto> WeeklyMenuByDate(WeeklyMenuFilterDto filter);
 }

@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using RestaurantWeb.Contract;
-using RestaurantWebBL.DTOs.FilterDTOs;
 using RestaurantWebBL.DTOs;
-using RestaurantWebDAL.Models;
+using RestaurantWebBL.DTOs.FilterDTOs;
 using RestaurantWebBL.Interfaces;
+using RestaurantWebDAL.Models;
 
 namespace RestaurantWebBL.QueryObjects
 {
@@ -33,7 +33,15 @@ namespace RestaurantWebBL.QueryObjects
                 queryString = queryString.Page(filter.RequestedPageNumber.Value, filter.PageSize);
             }
 
-            return mapper.Map<QueryResultDto<LocalizationDto>>(queryString.Execute());
+            IEnumerable<Localization> localizations = queryString.Execute();
+            IEnumerable<LocalizationDto> localizationDtos = mapper.Map<IEnumerable<LocalizationDto>>(localizations).ToList();
+            return new QueryResultDto<LocalizationDto>
+            {
+                Items = localizationDtos,
+                PageSize = filter.PageSize,
+                RequestedPageNumber = filter.RequestedPageNumber,
+                TotalItemsCount = localizationDtos.Count()
+            };
         }
 
         public QueryResultDto<LocalizationDto> GetStringWithIso(LocalizationFilterDTOs filter)

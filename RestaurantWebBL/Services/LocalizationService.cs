@@ -3,9 +3,7 @@ using RestaurantWeb.Contract;
 using RestaurantWebBL.DTOs;
 using RestaurantWebBL.DTOs.FilterDTOs;
 using RestaurantWebBL.Interfaces;
-using RestaurantWebBL.QueryObjects;
 using RestaurantWebDAL.Models;
-using System.Diagnostics;
 
 namespace RestaurantWebBL.Services
 {
@@ -71,10 +69,10 @@ namespace RestaurantWebBL.Services
             return localizationsISO.Items;
         }
 
-        public IEnumerable<LocalizationDto> GetStringWithCode(string iso, string stringCode)
+        public LocalizationDto? GetStringWithCode(string iso, string stringCode)
         {
             var localizationsCode = _localizationQueryObject.GetStringWithCode(new LocalizationFilterDTOs() { IsoLanguageCode = iso, StringCode = stringCode });
-            return localizationsCode.Items;
+            return localizationsCode.Items.FirstOrDefault();
         }
     }
 }

@@ -9,25 +9,25 @@ namespace RestaurantWebBL.QueryObjects
 {
     public class MealQueryObject : IMealQueryObject
     {
-        private IMapper mapper;
-        private IQuery<Meal> myQuery;
+        private readonly IMapper _mapper;
+        private readonly IQuery<Meal> _mealQuery;
 
-        public MealQueryObject(IMapper mapper, IQuery<Meal> _mealQuery)
+        public MealQueryObject(IMapper mapper, IQuery<Meal> mealQuery)
         {
-            this.mapper = mapper;
-            myQuery = _mealQuery;
+            this._mapper = mapper;
+            _mealQuery = mealQuery;
         }
 
         public QueryResultDto<MealDto> GetMealByPrice(MealFilterDTOs filter, int bigger)
         {
-            var query = myQuery;
+            var query = _mealQuery;
             if ( bigger == 1) {
-                query = myQuery
+                query = _mealQuery
                     .Where<decimal>(a => a > filter.Price, nameof(Meal.Price));
             }
             else
             {
-                query = myQuery
+                query = _mealQuery
                     .Where<decimal>(a => a < filter.Price, nameof(Meal.Price));
             }
 
@@ -40,7 +40,7 @@ namespace RestaurantWebBL.QueryObjects
                 query = query.Page(filter.RequestedPageNumber.Value, filter.PageSize);
             }
 
-            return mapper.Map<QueryResultDto<MealDto>>(query.Execute());
+            return _mapper.Map<QueryResultDto<MealDto>>(query.Execute());
         }
 
     }

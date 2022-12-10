@@ -9,18 +9,18 @@ namespace RestaurantWebBL.QueryObjects;
 
 public class WeeklyMenuQueryObject : IWeeklyMenuQueryObject
 {
-    private readonly IQuery<WeeklyMenu> _query;
+    private readonly IQueryFactory<WeeklyMenu> _queryFactory;
     private readonly IMapper _mapper;
 
-    public WeeklyMenuQueryObject(IQuery<WeeklyMenu> query, IMapper mapper)
+    public WeeklyMenuQueryObject(IQueryFactory<WeeklyMenu> queryFactory, IMapper mapper)
     {
-        _query = query;
+        _queryFactory = queryFactory;
         _mapper = mapper;
     }
 
     public QueryResultDto<WeeklyMenuDto> WeeklyMenuByDate(WeeklyMenuFilterDto filter)
     {
-        IQuery<WeeklyMenu> query = _query
+        IQuery<WeeklyMenu> query = _queryFactory.Build()
             .Where<DateTime>(a => a >= filter.Date, nameof(WeeklyMenu.DateFrom))
             .Where<DateTime>(a => a <= filter.Date, nameof(WeeklyMenu.DateTo));
 

@@ -9,17 +9,17 @@ namespace RestaurantWebBL.QueryObjects
     public class UserQueryObject
     {
         private IMapper mapper;
-        private IQuery<User> myQuery;
+        private IQueryFactory<User> _queryFactory;
 
-        public UserQueryObject(IMapper mapper, IQuery<User> _userQuery)
+        public UserQueryObject(IMapper mapper, IQueryFactory<User> queryFactory)
         {
             this.mapper = mapper;
-            myQuery = _userQuery;
+            _queryFactory = queryFactory;
         }
 
         public QueryResultDto<UserDto> ExecuteQuery(UserFilterDto filter)
         {
-            var query = myQuery
+            var query = _queryFactory.Build()
                 .Where<string>(a => a == filter.Name, nameof(User.Username));
             if (!string.IsNullOrWhiteSpace(filter.SortCriteria))
             {

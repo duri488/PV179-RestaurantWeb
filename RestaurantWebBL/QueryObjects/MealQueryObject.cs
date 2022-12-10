@@ -10,25 +10,24 @@ namespace RestaurantWebBL.QueryObjects
     public class MealQueryObject : IMealQueryObject
     {
         private readonly IMapper _mapper;
-        private readonly IQuery<Meal> _mealQuery;
+        private readonly IQueryFactory<Meal> _queryFactory;
 
-        public MealQueryObject(IMapper mapper, IQuery<Meal> mealQuery)
+        public MealQueryObject(IMapper mapper, IQueryFactory<Meal> queryFactory)
         {
             this._mapper = mapper;
-            _mealQuery = mealQuery;
+            _queryFactory = queryFactory;
         }
 
         public QueryResultDto<MealDto> GetMealByPrice(MealFilterDTOs filter, int bigger)
         {
-            var query = _mealQuery;
-            if ( bigger == 1) {
-                query = _mealQuery
-                    .Where<decimal>(a => a > filter.Price, nameof(Meal.Price));
+            var query = _queryFactory.Build();
+            if ( bigger == 1) 
+            {
+                query.Where<decimal>(a => a > filter.Price, nameof(Meal.Price));
             }
             else
             {
-                query = _mealQuery
-                    .Where<decimal>(a => a < filter.Price, nameof(Meal.Price));
+                query.Where<decimal>(a => a < filter.Price, nameof(Meal.Price));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.SortCriteria))

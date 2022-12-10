@@ -52,6 +52,11 @@ builder.Services.AddTransient<IQuery<WeeklyMenu>, EfQuery<WeeklyMenu>>();
 builder.Services.AddTransient<ILocalizationService, LocalizationService>();
 builder.Services.AddTransient<ILocalizationQueryObject, LocalizationQueryObject>();
 builder.Services.AddTransient<IQuery<Localization>, EfQuery<Localization>>();
+builder.Services.AddTransient<IQueryFactory<Localization>, EfQueryFactory<Localization>>();
+builder.Services.AddTransient<IQueryFactory<WeeklyMenu>, EfQueryFactory<WeeklyMenu>>();
+builder.Services.AddTransient<IQueryFactory<DailyMenu>, EfQueryFactory<DailyMenu>>();
+builder.Services.AddTransient<IQueryFactory<Meal>, EfQueryFactory<Meal>>();
+builder.Services.AddTransient<IQueryFactory<User>, EfQueryFactory<User>>();
 
 var app = builder.Build();
 

@@ -9,28 +9,28 @@ namespace RestaurantWebBL.QueryObjects;
 
 public class DailyMenuQueryObject : IDailyMenuQueryObject
 {
-    private readonly IQuery<DailyMenu> _query;
+    private readonly IQueryFactory<DailyMenu> _queryFactory;
     private readonly IMapper _mapper;
 
-    public DailyMenuQueryObject(IMapper mapper, IQuery<DailyMenu> query)
+    public DailyMenuQueryObject(IMapper mapper, IQueryFactory<DailyMenu> queryFactory)
     {
         _mapper = mapper;
-        _query = query;
+        _queryFactory = queryFactory;
     }
 
     public QueryResultDto<DailyMenuDto> DailyMenusAssociatedToWeeklyMenu(DailyMenuFilterDto filter)
     {
         if (!filter.WeeklyMenuId.HasValue) throw new ArgumentNullException(nameof(filter.WeeklyMenuId));
-        IQuery<DailyMenu> query = _query
+        IQuery<DailyMenu> query = _queryFactory.Build()
             .Where<int>(a => a == filter.WeeklyMenuId.Value , nameof(DailyMenu.WeeklyMenuId));
 
         if (!string.IsNullOrWhiteSpace(filter.SortCriteria))
         {
-            query = query.OrderBy<string>(filter.SortCriteria, filter.SortAscending);
+            query.OrderBy<string>(filter.SortCriteria, filter.SortAscending);
         }
         if (filter.RequestedPageNumber.HasValue)
         {
-            query = query.Page(filter.RequestedPageNumber.Value, filter.PageSize);
+            query.Page(filter.RequestedPageNumber.Value, filter.PageSize);
         }
 
         IEnumerable<DailyMenu> items = query.Execute();

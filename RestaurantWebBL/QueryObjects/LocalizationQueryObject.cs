@@ -9,32 +9,32 @@ namespace RestaurantWebBL.QueryObjects
 {
     public class LocalizationQueryObject :ILocalizationQueryObject
     {
-        private IMapper mapper;
-        private IQuery<Localization> myQuery;
+        private readonly IMapper _mapper;
+        private readonly IQueryFactory<Localization> _queryFactory;
 
-        public LocalizationQueryObject(IMapper mapper, IQuery<Localization> _localizationQuery)
+        public LocalizationQueryObject(IMapper mapper, IQueryFactory<Localization> queryFactory)
         {
-            this.mapper = mapper;
-            myQuery = _localizationQuery;
+            this._mapper = mapper;
+            _queryFactory = queryFactory;
         }
 
         public QueryResultDto<LocalizationDto> GetStringWithCode(LocalizationFilterDTOs filter)
         {
-            var query = myQuery
-                .Where<string>(a => a == filter.IsoLanguageCode, nameof(Localization.IsoLanguageCode));
-            var queryString = query.
-                Where<string>(a => a == filter.StringCode, nameof(Localization.StringCode));
+            IQuery<Localization> query = _queryFactory.Build();
+            query
+                .Where<string>(a => a == filter.IsoLanguageCode, nameof(Localization.IsoLanguageCode))
+                .Where<string>(a => a == filter.StringCode, nameof(Localization.StringCode));
             if (!string.IsNullOrWhiteSpace(filter.SortCriteria))
             {
-                queryString = queryString.OrderBy<string>(filter.SortCriteria, filter.SortAscending);
+                query.OrderBy<string>(filter.SortCriteria, filter.SortAscending);
             }
             if (filter.RequestedPageNumber.HasValue)
             {
-                queryString = queryString.Page(filter.RequestedPageNumber.Value, filter.PageSize);
+                query.Page(filter.RequestedPageNumber.Value, filter.PageSize);
             }
 
-            IEnumerable<Localization> localizations = queryString.Execute();
-            IEnumerable<LocalizationDto> localizationDtos = mapper.Map<IEnumerable<LocalizationDto>>(localizations).ToList();
+            IEnumerable<Localization> localizations = query.Execute();
+            IEnumerable<LocalizationDto> localizationDtos = _mapper.Map<IEnumerable<LocalizationDto>>(localizations).ToList();
             return new QueryResultDto<LocalizationDto>
             {
                 Items = localizationDtos,
@@ -46,18 +46,19 @@ namespace RestaurantWebBL.QueryObjects
 
         public QueryResultDto<LocalizationDto> GetStringWithIso(LocalizationFilterDTOs filter)
         {
-            var query = myQuery
+            var query = _queryFactory.Build();
+            query
                 .Where<string>(a => a == filter.IsoLanguageCode, nameof(Localization.IsoLanguageCode));
             if (!string.IsNullOrWhiteSpace(filter.SortCriteria))
             {
-                query = query.OrderBy<string>(filter.SortCriteria, filter.SortAscending);
+                query.OrderBy<string>(filter.SortCriteria, filter.SortAscending);
             }
             if (filter.RequestedPageNumber.HasValue)
             {
-                query = query.Page(filter.RequestedPageNumber.Value, filter.PageSize);
+                query.Page(filter.RequestedPageNumber.Value, filter.PageSize);
             }
 
-            return mapper.Map<QueryResultDto<LocalizationDto>>(query.Execute());
+            return _mapper.Map<QueryResultDto<LocalizationDto>>(query.Execute());
         }
 
     }

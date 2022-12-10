@@ -9,7 +9,13 @@ public class DailyMenuViewModel
     [DisplayName("Day")]
     public DayOfWeek DayOfWeek { get; set; }
     [DataType(DataType.Date)]
-    public DateTime Date { get; set; }
+    public DateTime Date {
+        get
+        {
+            return Enumerable.Range(0, 1 + WeeklyMenu.DateTo.Subtract(WeeklyMenu.DateFrom).Days)
+                .Select(offset => WeeklyMenu.DateFrom.AddDays(offset))
+                .First(d => d.DayOfWeek == DayOfWeek); 
+        } }
     [DataType(DataType.Currency)]
     [DisplayName("Price")]
     public decimal MenuPrice { get; set; }

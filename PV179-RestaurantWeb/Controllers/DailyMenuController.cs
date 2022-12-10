@@ -111,5 +111,35 @@ namespace PV179_RestaurantWeb.Controllers
             ViewData["MealId"] = new SelectList(meals, "Id", "Name");
             return View(dailyMenu);
         }
+        
+        // GET: DailyMenu/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var dailyMenuDto =  await _dailyMenuService.GetByIdAsync(id.Value, true);
+            if (dailyMenuDto == null)
+            {
+                return NotFound();
+            }
+
+            DailyMenuViewModel dailyMenu = _mapper.Map<DailyMenuViewModel>(dailyMenuDto);
+            IEnumerable<AllergenDto> allergenDtos = await _allergenService.GetByFlags(dailyMenuDto.Meal.AllergenFlags);
+            List<AllergenViewModel> allergens = LocalizeAllergens(allergenDtos).ToList();
+            dailyMenu.Meal.Allergens = allergens;
+            return View(dailyMenu);
+        }
+        
+        // POST: DailyMenu/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _dailyMenuService.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

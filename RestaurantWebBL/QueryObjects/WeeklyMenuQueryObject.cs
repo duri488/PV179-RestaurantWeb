@@ -18,11 +18,11 @@ public class WeeklyMenuQueryObject : IWeeklyMenuQueryObject
         _mapper = mapper;
     }
 
-    public QueryResultDto<WeeklyMenuDto> WeeklyMenusInDateRange(WeeklyMenuFilterDto filter)
+    public QueryResultDto<WeeklyMenuDto> WeeklyMenuByDate(WeeklyMenuFilterDto filter)
     {
         IQuery<WeeklyMenu> query = _query
-            .Where<DateTime>(a => a >= filter.DateFrom, nameof(WeeklyMenu.DateFrom))
-            .Where<DateTime>(a => a <= filter.DateTo, nameof(WeeklyMenu.DateTo));
+            .Where<DateTime>(a => a >= filter.Date, nameof(WeeklyMenu.DateFrom))
+            .Where<DateTime>(a => a <= filter.Date, nameof(WeeklyMenu.DateTo));
 
         if (!string.IsNullOrWhiteSpace(filter.SortCriteria))
         {

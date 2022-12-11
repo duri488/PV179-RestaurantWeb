@@ -20,7 +20,7 @@ namespace RestaurantWebBL.QueryObjects
         public QueryResultDto<UserDto> ExecuteQuery(UserFilterDto filter)
         {
             var query = _queryFactory.Build()
-                .Where<string>(a => a == filter.Name, nameof(User.Username));
+                .Where<string>(a => a == filter.Name, nameof(User.UserName));
             if (!string.IsNullOrWhiteSpace(filter.SortCriteria))
             {
                 query = query.OrderBy<string>(filter.SortCriteria, filter.SortAscending);

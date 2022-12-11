@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework.Constraints;
+using RestaurantWeb.Contract;
 using RestaurantWebDAL.Models;
 using RestaurantWebInfrastructure.EFCore;
 
@@ -96,7 +97,7 @@ public class RepositoryTests
         Assert.That(await RepositoryUnderTest.GetByIdAsync(mojito.Id), Is.EqualTo(updated), "Object was expected to be updated");
     }
 
-    private void AssertElementExistsInLocalDb(BaseEntity entity, bool isElementInDatabase = true)
+    private void AssertElementExistsInLocalDb(IBaseEntity entity, bool isElementInDatabase = true)
     {
         IResolveConstraint nullConstraint = Is.Not.Null;
         if (!isElementInDatabase)

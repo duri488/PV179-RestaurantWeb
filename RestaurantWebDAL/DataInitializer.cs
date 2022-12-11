@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using RestaurantWeb.Contract.Enums;
 using RestaurantWebDAL.Models;
 using RestaurantWebUtilities.Helpers;
@@ -21,24 +22,25 @@ public static class DataInitializer
 
     public static void SeedUser(this ModelBuilder modelBuilder)
     {
-        byte[] salt = CryptoHashHelper.GenerateSalt();
-        modelBuilder.Entity<User>()
-            .HasData(
-                new User
-                {
-                    Id = 1,
-                    Username = "John Doe",
-                    Salt = salt,
-                    HashedPassword = CryptoHashHelper.GenerateSaltedPbkdf2Hash("password123", salt)
-                },
-                new User
-                {
-                    Id = 2,
-                    Username = "Mary Jane",
-                    Salt = salt,
-                    HashedPassword = CryptoHashHelper.GenerateSaltedPbkdf2Hash("password123", salt)
-                }
-            );
+        var hasher = new PasswordHasher<User>();
+
+        var admin = new User()
+        {
+            Id = 1,
+            UserName = "admin",
+            FirstName = "Gordon",
+            LastName = "Ramsay",
+            NormalizedUserName = "ADMIN",
+            Email = "lazorik.juraj@gmail.com",
+            NormalizedEmail = "lazorik.juraj@gmail.com".ToUpper(),
+            EmailConfirmed = true,
+            SecurityStamp = string.Empty,
+            PhoneNumber = "0917123456",
+            PhoneNumberConfirmed = true
+        };
+        admin.PasswordHash = hasher.HashPassword(admin, "admin");
+
+        modelBuilder.Entity<User>().HasData(admin);
     }
 
     public static void SeedRestaurant(this ModelBuilder modelBuilder)

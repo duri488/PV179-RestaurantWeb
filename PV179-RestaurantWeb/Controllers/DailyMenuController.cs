@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PV179_RestaurantWeb.Models;
@@ -71,6 +72,7 @@ namespace PV179_RestaurantWeb.Controllers
         }
 
         // GET: DailyMenu/Create
+        [Authorize]
         public async Task<IActionResult> Create()
         {
             IEnumerable<MealDto> meals = await _menuFacade.GetAllMealsAsync();
@@ -111,8 +113,9 @@ namespace PV179_RestaurantWeb.Controllers
             ViewData["MealId"] = new SelectList(meals, "Id", "Name");
             return View(dailyMenu);
         }
-        
+
         // GET: DailyMenu/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

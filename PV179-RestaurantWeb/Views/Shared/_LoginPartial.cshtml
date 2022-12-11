@@ -2,7 +2,6 @@
 @using RestaurantWebDAL.Models
 
 @inject SignInManager<User> SignInManager
-@inject UserManager<User> UserManager
 
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))

@@ -2,11 +2,14 @@
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using RestaurantWeb.Contract;
 
 namespace RestaurantWebDAL.Models
 {
-    public class Localization : BaseEntity
+    public class Localization : IBaseEntity
     {
+        [Key]
+        public int Id { get; set; }
         [MaxLength(2)]
         [MinLength(2)]
         public string IsoLanguageCode { get; set; }

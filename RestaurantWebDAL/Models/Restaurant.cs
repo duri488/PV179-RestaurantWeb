@@ -1,9 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using RestaurantWeb.Contract;
 
 namespace RestaurantWebDAL.Models
 {
-    public class Restaurant : BaseEntity
+    public class Restaurant : IBaseEntity
     {
+        [Key]
+        public int Id { get; set; }
         [MaxLength(255)]
         [MinLength(2)]
         public string Name { get; set; }

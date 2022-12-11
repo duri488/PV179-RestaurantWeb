@@ -5,7 +5,7 @@ using RestaurantWebDAL.Models;
 
 namespace RestaurantWebInfrastructure.EFCore.Repository;
 
-public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
+public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class, IBaseEntity
 {
     protected readonly RestaurantWebDbContext _dbContext;
     internal readonly DbSet<TEntity> DbSet;

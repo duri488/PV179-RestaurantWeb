@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using RestaurantWebDAL.Models;
 
 namespace RestaurantWebDAL
 {
-    public class RestaurantWebDbContext : DbContext
+    public class RestaurantWebDbContext : IdentityDbContext<User>
     {
         public DbSet<User> User { get; set; }
         public DbSet<Meal> Meal { get; set; }

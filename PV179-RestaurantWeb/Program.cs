@@ -41,12 +41,6 @@ builder.Services.AddTransient<IMapper, Mapper>(x =>
 
 builder.Services.AddTransient<IUnitOfWorkFactory, UnitOfWorkFactory>();
 builder.Services.AddTransient<IEagerLoadingRepository<DailyMenu>, EfDailyMenuRepository>();
-builder.Services.AddTransient<IRepository<Drink>, EfRepository<Drink>>();
-builder.Services.AddTransient<IRepository<Meal>, EfRepository<Meal>>();
-builder.Services.AddTransient<IRepository<Localization>, EfRepository<Localization>>();
-builder.Services.AddTransient<IRepository<Restaurant>, EfRepository<Restaurant>>();
-builder.Services.AddTransient<IRepository<Allergen>, EfRepository<Allergen>>();
-builder.Services.AddTransient<IRepository<WeeklyMenu>, EfRepository<WeeklyMenu>>();
 builder.Services.AddTransient<IDailyMenuService, DailyMenuService>();
 builder.Services.AddTransient<IDrinkService, DrinkService>();
 builder.Services.AddTransient<IAllergenService, AllergenService>();
@@ -54,18 +48,14 @@ builder.Services.AddTransient<IRestaurantService, RestaurantService>();
 builder.Services.AddTransient<IMenuFacade, MenuFacade>();
 builder.Services.AddTransient<IMealService, MealService>();
 builder.Services.AddTransient<IMealQueryObject, MealQueryObject>();
-builder.Services.AddTransient<IQuery<Meal>, EfQuery<Meal>>();
 builder.Services.AddTransient<IWeeklyMenuService, WeeklyMenuService>();
 builder.Services.AddTransient<IWeeklyMenuQueryObject, WeeklyMenuQueryObject>();
-builder.Services.AddTransient<IQuery<WeeklyMenu>, EfQuery<WeeklyMenu>>();
 builder.Services.AddTransient<ILocalizationService, LocalizationService>();
 builder.Services.AddTransient<ILocalizationQueryObject, LocalizationQueryObject>();
-builder.Services.AddTransient<IQuery<Localization>, EfQuery<Localization>>();
-builder.Services.AddTransient<IQueryFactory<Localization>, EfQueryFactory<Localization>>();
-builder.Services.AddTransient<IQueryFactory<WeeklyMenu>, EfQueryFactory<WeeklyMenu>>();
-builder.Services.AddTransient<IQueryFactory<DailyMenu>, EfQueryFactory<DailyMenu>>();
-builder.Services.AddTransient<IQueryFactory<Meal>, EfQueryFactory<Meal>>();
-builder.Services.AddTransient<IQueryFactory<User>, EfQueryFactory<User>>();
+builder.Services.AddTransient(typeof(IQueryFactory<>), typeof(EfQueryFactory<>));
+builder.Services.AddTransient(typeof(IQuery<>), typeof(EfQuery<>));
+builder.Services.AddTransient(typeof(IRepository<>), typeof(EfRepository<>));
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 

@@ -52,7 +52,6 @@ builder.Services.AddTransient<IWeeklyMenuService, WeeklyMenuService>();
 builder.Services.AddTransient<IWeeklyMenuQueryObject, WeeklyMenuQueryObject>();
 builder.Services.AddTransient<ILocalizationService, LocalizationService>();
 builder.Services.AddTransient<ILocalizationQueryObject, LocalizationQueryObject>();
-builder.Services.AddTransient(typeof(IQueryFactory<>), typeof(EfQueryFactory<>));
 builder.Services.AddTransient(typeof(IQuery<>), typeof(EfQuery<>));
 builder.Services.AddTransient(typeof(IRepository<>), typeof(EfRepository<>));
 builder.Services.AddRazorPages();

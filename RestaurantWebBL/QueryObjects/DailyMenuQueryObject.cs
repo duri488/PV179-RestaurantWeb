@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
 using RestaurantWeb.Contract;
 using RestaurantWebBL.DTOs;
 using RestaurantWebBL.DTOs.FilterDTOs;
@@ -9,20 +10,21 @@ namespace RestaurantWebBL.QueryObjects;
 
 public class DailyMenuQueryObject : IDailyMenuQueryObject
 {
-    private readonly IQueryFactory<DailyMenu> _queryFactory;
     private readonly IMapper _mapper;
+    private readonly IServiceProvider _serviceProvider;
 
-    public DailyMenuQueryObject(IMapper mapper, IQueryFactory<DailyMenu> queryFactory)
+    public DailyMenuQueryObject(IMapper mapper, IServiceProvider serviceProvider)
     {
         _mapper = mapper;
-        _queryFactory = queryFactory;
+        _serviceProvider = serviceProvider;
     }
 
     public QueryResultDto<DailyMenuDto> DailyMenusAssociatedToWeeklyMenu(DailyMenuFilterDto filter)
     {
         if (!filter.WeeklyMenuId.HasValue) throw new ArgumentNullException(nameof(filter.WeeklyMenuId));
-        IQuery<DailyMenu> query = _queryFactory.Build()
-            .Where<int>(a => a == filter.WeeklyMenuId.Value , nameof(DailyMenu.WeeklyMenuId));
+        var query = _serviceProvider.GetRequiredService<IQuery<DailyMenu>>();
+
+        query.Where<int>(a => a == filter.WeeklyMenuId.Value , nameof(DailyMenu.WeeklyMenuId));
 
         if (!string.IsNullOrWhiteSpace(filter.SortCriteria))
         {

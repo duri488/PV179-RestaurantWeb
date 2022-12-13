@@ -1,43 +1,43 @@
+@using RestaurantWebDAL.Models
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@using RestaurantWebDAL.Models
 @model IEnumerable<DailyMenuViewModel>
 @inject SignInManager<User> SignInManager
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Daily Menus";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1>Index</h1>
-
-@if (SignInManager.IsSignedIn(User))
-{
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
-}
+<div class="row">
+    <h1 class="col-auto me-auto">Daily Menus</h1>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <p class="col-auto mt-auto mb-auto">
+            <a asp-action="Create" class="btn btn-success">Create New</a>
+        </p>
+    }
+</div>
 
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DayOfWeek)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MenuPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Meal)
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DayOfWeek)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MenuPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Meal)
+        </th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
@@ -53,15 +53,14 @@
             </td>
             <td>
                 @* <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> | *@
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.Id">Details</a> 
                 @if (SignInManager.IsSignedIn(User))
                 {
-                        @Html.Raw("|")
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
                 }
                
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>

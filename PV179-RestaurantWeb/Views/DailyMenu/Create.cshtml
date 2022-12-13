@@ -15,13 +15,13 @@
             <div class="form-group">
                 <label asp-for="WeeklyMenu" class="control-label"></label>
                 @Html.DropDownListFor(dm => dm.WeeklyMenuId,
-                    Model.WeeklyMenu.Select(wm => new SelectListItem {
+                    Model.WeeklyMenu?.Select(wm => new SelectListItem {
                     Value = wm.Id.ToString(),
                     Text = wm.DateFrom.ToShortDateString() + '-' + wm.DateTo.ToShortDateString()
                     }), "Please select week", new {
                     @class="form-control"
                 })
-                <span asp-validation-for="WeeklyMenu" class="text-danger"></span>
+                <span asp-validation-for="WeeklyMenuId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DayOfWeek" class="control-label"></label>
@@ -33,23 +33,23 @@
             <div class="form-group">
                 <label asp-for="Meal" class="control-label"></label>
                 @Html.DropDownListFor(dm => dm.MealId, 
-                    Model.Meal.Select(m => new SelectListItem(m.Name, m.Id.ToString())),
+                    Model.Meal?.Select(m => new SelectListItem(m.Name, m.Id.ToString())),
                     "Please select meal", new {@class="form-control"})
-                <span asp-validation-for="Meal" class="text-danger"></span>
+                <span asp-validation-for="WeeklyMenuId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MenuPrice" class="control-label"></label>
-                <input asp-for="MenuPrice" class="form-control" />
+                <label asp-for="MenuPrice" class="control-label">Price (€)</label>
+                <input asp-for="MenuPrice" class="form-control" placeholder="0,00" value="" />
                 <span asp-validation-for="MenuPrice" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-success mb-2 mt-2" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-primary">Back to List</a>
 </div>
 

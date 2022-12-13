@@ -97,18 +97,64 @@ namespace PV179_RestaurantWeb.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<ActionResult> Update(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            DrinkDto? drink = await _drinkService.GetByIdAsync(id.Value);
+
+            if (drink == null)
+            {
+                return NotFound();
+            }
+            DrinkUpdateModel drinkUpdateModel = new DrinkUpdateModel
+            {
+                 Name = drink.Name,
+                 Price = drink.Price,
+                 Volume = drink.Volume,
+                 Allergens = drink.AllergenFlags
+            };
+            return View(drinkUpdateModel);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Update(DrinkUpdateModel drinkUpdateModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(drinkUpdateModel);
+            }
+
+
+            var drinkToUpdate = await _drinkService.GetByIdAsync(drinkUpdateModel.Id);
+
+            drinkToUpdate.Name = drinkToUpdate.Name;
+            drinkToUpdate.Price = drinkToUpdate.Price;
+            drinkToUpdate.Volume = drinkToUpdate.Volume;
+            // padne to ze to drink s id uz existuje ?? 
+            //await _drinkService.UpdateAsync(drinkToUpdate,1);
+            return RedirectToAction(nameof(Index));
+        }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+
             var dto = _drinkService.GetByIdAsync(id);
             if (dto == null)
             {
                 return NotFound();
             }
+            // pise ze je otvorena transakcia a ze sa musi ukoncit pred ty ale ked ju debagujem tak to prejde vsetko ok a neni problem 
+            // System.InvalidOperationException: There is already an open DataReader associated with this Connection which must be closed first.
+            //await _drinkService.DeleteAsync(id);
 
             _drinkService.DeleteAsync(id);
-
             return RedirectToAction(nameof(Index));
         }
 

@@ -1,7 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using PV179_RestaurantWeb.Models;
 using RestaurantWebBL.DTOs;
 using RestaurantWebBL.Interfaces;
@@ -75,43 +74,32 @@ namespace PV179_RestaurantWeb.Controllers
         [Authorize]
         public async Task<IActionResult> Create()
         {
-            IEnumerable<MealDto> meals = await _menuFacade.GetAllMealsAsync();
-            IEnumerable<WeeklyMenuDto> weeklyMenuDtos = await _menuFacade.GetAllWeeklyMenusAsync();
-            var weeklyMenus = weeklyMenuDtos.Select(wm => new
-            {
-                Id = wm.Id,
-                DateRange = wm.DateFrom.ToShortDateString() + '-' + wm.DateTo.ToShortDateString()
-            });
-            ViewData["WeeklyMenuId"] = new SelectList(weeklyMenus, "Id", "DateRange");
-            ViewData["MealId"] = new SelectList(meals, nameof(MealDto.Id), nameof(MealDto.Name));
-            return View();
+            var dailyMenuCreateModel = new DailyMenuCreateModel();
+            dailyMenuCreateModel.Meal = await _menuFacade.GetAllMealsAsync();
+            dailyMenuCreateModel. WeeklyMenu = await _menuFacade.GetAllWeeklyMenusAsync();
+            dailyMenuCreateModel.DayOfWeek = new DayOfWeek();
+            return View(dailyMenuCreateModel);
         }
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind($"DayOfWeek,MenuPrice,WeeklyMenu,Meal")] DailyMenuCreateModel dailyMenu)
+        public async Task<IActionResult> Create(DailyMenuCreateModel dailyMenu)
         {
             if (ModelState.IsValid)
             {
                 var dailyMenuDto = new DailyMenuDto
                 {
-                    DayOfWeek = dailyMenu.DayOfWeek,
+                    DayOfWeek = dailyMenu.DayOfWeek!.Value,
                     MenuPrice = dailyMenu.MenuPrice
                 };
                 
-                await _dailyMenuService.CreateAsync(dailyMenuDto,dailyMenu.Meal, dailyMenu.WeeklyMenu);
+                await _dailyMenuService.CreateAsync(dailyMenuDto,dailyMenu.MealId, dailyMenu.WeeklyMenuId);
                 return RedirectToAction(nameof(Index));
             }
-            IEnumerable<MealDto> meals = await _menuFacade.GetAllMealsAsync();
-            IEnumerable<WeeklyMenuDto> weeklyMenuDtos = await _menuFacade.GetAllWeeklyMenusAsync();
-            var weeklyMenus = weeklyMenuDtos.Select(wm => new
-            {
-                Id = wm.Id,
-                DateRange = wm.DateFrom.ToShortDateString() + '-' + wm.DateTo.ToShortDateString()
-            });
-            ViewData["WeeklyMenuId"] = new SelectList(weeklyMenus, "Id", "DateRange");
-            ViewData["MealId"] = new SelectList(meals, "Id", "Name");
-            return View(dailyMenu);
+            var dailyMenuCreateModel = new DailyMenuCreateModel();
+            dailyMenuCreateModel.Meal = await _menuFacade.GetAllMealsAsync();
+            dailyMenuCreateModel. WeeklyMenu = await _menuFacade.GetAllWeeklyMenusAsync();
+            return View(dailyMenuCreateModel);
         }
 
         // GET: DailyMenu/Delete/5

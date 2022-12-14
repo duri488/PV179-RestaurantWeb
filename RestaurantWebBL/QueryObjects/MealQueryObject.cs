@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
 using RestaurantWeb.Contract;
 using RestaurantWebBL.DTOs;
 using RestaurantWebBL.DTOs.FilterDTOs;
@@ -10,17 +11,17 @@ namespace RestaurantWebBL.QueryObjects
     public class MealQueryObject : IMealQueryObject
     {
         private readonly IMapper _mapper;
-        private readonly IQueryFactory<Meal> _queryFactory;
+        private readonly IServiceProvider _serviceProvider;
 
-        public MealQueryObject(IMapper mapper, IQueryFactory<Meal> queryFactory)
+        public MealQueryObject(IMapper mapper, IServiceProvider serviceProvider)
         {
             this._mapper = mapper;
-            _queryFactory = queryFactory;
+            _serviceProvider = serviceProvider;
         }
 
         public QueryResultDto<MealDto> GetMealByPrice(MealFilterDTOs filter, int bigger)
         {
-            var query = _queryFactory.Build();
+            var query = _serviceProvider.GetRequiredService<IQuery<Meal>>();
             if ( bigger == 1) 
             {
                 query.Where<decimal>(a => a > filter.Price, nameof(Meal.Price));

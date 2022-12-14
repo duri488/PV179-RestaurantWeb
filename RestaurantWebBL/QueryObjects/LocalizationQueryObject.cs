@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
 using RestaurantWeb.Contract;
 using RestaurantWebBL.DTOs;
 using RestaurantWebBL.DTOs.FilterDTOs;
@@ -10,17 +11,17 @@ namespace RestaurantWebBL.QueryObjects
     public class LocalizationQueryObject :ILocalizationQueryObject
     {
         private readonly IMapper _mapper;
-        private readonly IQueryFactory<Localization> _queryFactory;
+        private readonly IServiceProvider _serviceProvider; 
 
-        public LocalizationQueryObject(IMapper mapper, IQueryFactory<Localization> queryFactory)
+        public LocalizationQueryObject(IMapper mapper, IServiceProvider serviceProvider)
         {
             this._mapper = mapper;
-            _queryFactory = queryFactory;
+            _serviceProvider = serviceProvider;
         }
 
         public QueryResultDto<LocalizationDto> GetStringWithCode(LocalizationFilterDTOs filter)
         {
-            IQuery<Localization> query = _queryFactory.Build();
+            var query = _serviceProvider.GetRequiredService<IQuery<Localization>>();
             query
                 .Where<string>(a => a == filter.IsoLanguageCode, nameof(Localization.IsoLanguageCode))
                 .Where<string>(a => a == filter.StringCode, nameof(Localization.StringCode));
@@ -46,7 +47,7 @@ namespace RestaurantWebBL.QueryObjects
 
         public QueryResultDto<LocalizationDto> GetStringWithIso(LocalizationFilterDTOs filter)
         {
-            var query = _queryFactory.Build();
+            var query = _serviceProvider.GetRequiredService<IQuery<Localization>>();
             query
                 .Where<string>(a => a == filter.IsoLanguageCode, nameof(Localization.IsoLanguageCode));
             if (!string.IsNullOrWhiteSpace(filter.SortCriteria))

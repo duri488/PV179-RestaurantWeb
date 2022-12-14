@@ -10,12 +10,13 @@ namespace PV179_RestaurantWeb.Models
         [Required]
         public string Name { get; set; }
         [Required]
+        [DataType(DataType.Currency)]
         public decimal Volume { get; set; }
         [Required]
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
-        [Required]
-        public List<AllergenViewModel> Allergens { get; set; }
+        //[Required]
+        //public List<AllergenViewModel> Allergens { get; set; }
 
     }
 }

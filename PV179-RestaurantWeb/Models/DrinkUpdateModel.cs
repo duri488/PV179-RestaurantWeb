@@ -12,8 +12,8 @@ namespace PV179_RestaurantWeb.Models
         [Required]
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
-        [Required]
-        public int Allergens { get; set; }
+        //[Required]
+        //public int Allergens { get; set; }
 
     }
 }

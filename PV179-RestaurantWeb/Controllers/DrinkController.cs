@@ -62,17 +62,18 @@ namespace PV179_RestaurantWeb.Controllers
 
 
             var drink = _mapper.Map<DrinkViewModel>(drinkDto);
+            /*
             IEnumerable<AllergenDto> allergenDtos = await _allergenService.GetByFlags(drinkDto.AllergenFlags);
             List<AllergenViewModel> allergens = LocalizeAllergens(allergenDtos).ToList();
-            drink.Allergens = allergens;
+            drink.Allergens = allergens;*/
             return View(drink);
             
         }
 
         public async Task<IActionResult> Create()
         {
-            IEnumerable<AllergenDto> allergens = await _allergenService.GetByFlags(127);
-            ViewBag.Allergens = allergens;
+            //IEnumerable<AllergenDto> allergens = await _allergenService.GetByFlags(127);
+            //ViewBag.Allergens = allergens;
             return View();
         }
 
@@ -89,7 +90,7 @@ namespace PV179_RestaurantWeb.Controllers
                 Price = model.Price,
                 Volume = model.Volume,
                 Name = model.Name,
-                AllergenFlags= 65,
+                //AllergenFlags= 65,
                
             };
             await _drinkService.CreateAsync(drinkDto, 1);
@@ -115,7 +116,7 @@ namespace PV179_RestaurantWeb.Controllers
                  Name = drink.Name,
                  Price = drink.Price,
                  Volume = drink.Volume,
-                 Allergens = drink.AllergenFlags
+                 //Allergens = drink.AllergenFlags
             };
             return View(drinkUpdateModel);
         }
@@ -135,7 +136,7 @@ namespace PV179_RestaurantWeb.Controllers
             drinkToUpdate.Price = drinkToUpdate.Price;
             drinkToUpdate.Volume = drinkToUpdate.Volume;
             // padne to ze to drink s id uz existuje ?? 
-            //await _drinkService.UpdateAsync(drinkToUpdate,1);
+            // await _drinkService.UpdateAsync(drinkToUpdate,1);
             return RedirectToAction(nameof(Index));
         }
 

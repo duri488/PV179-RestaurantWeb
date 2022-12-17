@@ -4,6 +4,7 @@ using PV179_RestaurantWeb.Models;
 using RestaurantWebBL.DTOs;
 using RestaurantWebBL.Interfaces;
 using RestaurantWebBL.Services;
+using System.Web;
 
 namespace PV179_RestaurantWeb.Controllers
 {
@@ -65,6 +66,47 @@ namespace PV179_RestaurantWeb.Controllers
             drink.Allergens = allergens;
             return View(drink);
 
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(MealCreateModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            MealDto mealDto = new MealDto
+            {
+                Price = model.Price,
+                Description = model.Description,
+                Name = model.Name,
+                Picture= model.Picture,
+                AllergenFlags  = model.Allergens,
+            };
+            /*
+            var files = HttpContext.Request.Form.Files;
+
+            if (files.Count != 0)
+            {
+                var AbsolutePath = Path.Combine("wwwroot/Assets/", model.Picture);
+
+                using (var fileStream = new FileStream(AbsolutePath,FileMode.Create))
+                {
+                    files[0].CopyTo(fileStream);
+                }
+
+               
+            }*/
+
+            await _mealService.CreateAsync(mealDto, 1);
+            return RedirectToAction(nameof(Index));
         }
 
     }

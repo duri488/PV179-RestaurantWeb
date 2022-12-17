@@ -17,8 +17,8 @@ namespace RestaurantWebDAL.Models
         [MaxLength(255)]
         public string Address { get; set; }
 
-        public double Latitude { get; set; }
-        public double Longtitude { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
 
         [MaxLength(255)]
         public string Phone { get; set; }

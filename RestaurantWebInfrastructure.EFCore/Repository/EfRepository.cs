@@ -53,7 +53,7 @@ public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class,
     }
     public void Update(TEntity entityToUpdate)
     {
-        DbSet.Attach(entityToUpdate);
-        _dbContext.Entry(entityToUpdate).State = EntityState.Modified;
+        var entityUpdate = _dbContext.Set<TEntity>().Find(entityToUpdate.Id);
+        _dbContext.Entry(entityUpdate).CurrentValues.SetValues(entityToUpdate);
     }
 }

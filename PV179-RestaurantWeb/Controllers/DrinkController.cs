@@ -132,11 +132,10 @@ namespace PV179_RestaurantWeb.Controllers
 
             var drinkToUpdate = await _drinkService.GetByIdAsync(drinkUpdateModel.Id);
 
-            drinkToUpdate.Name = drinkToUpdate.Name;
-            drinkToUpdate.Price = drinkToUpdate.Price;
-            drinkToUpdate.Volume = drinkToUpdate.Volume;
-            // padne to ze to drink s id uz existuje ?? 
-            // await _drinkService.UpdateAsync(drinkToUpdate,1);
+            drinkToUpdate.Name = drinkUpdateModel.Name;
+            drinkToUpdate.Price = drinkUpdateModel.Price;
+            drinkToUpdate.Volume = drinkUpdateModel.Volume;
+            await _drinkService.UpdateAsync(drinkToUpdate,1);
             return RedirectToAction(nameof(Index));
         }
 

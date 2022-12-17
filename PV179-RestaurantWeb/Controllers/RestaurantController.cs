@@ -2,10 +2,13 @@
 using System.Net.Mail;
 using System.Net;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using PV179_RestaurantWeb.Models;
+using RestaurantWebBL.DTOs;
 using RestaurantWebBL.Interfaces;
+using RestaurantWebBL.Services;
 
 namespace PV179_RestaurantWeb.Controllers
 {
@@ -25,6 +28,31 @@ namespace PV179_RestaurantWeb.Controllers
             var model = _mapper.Map<RestaurantViewModel>(restaurant);
 
             return View(model);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Update()
+        {
+            var restaurant = await _restaurantService.GetFirstAsync();
+            var model = _mapper.Map<RestaurantViewModel>(restaurant);
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Update(RestaurantViewModel restaurantUpdateModel)
+        {
+            /*if (!ModelState.IsValid)
+            {
+                return View(restaurantUpdateModel);
+            }*/
+
+            var restaurant = await _restaurantService.GetFirstAsync();
+
+            var model = _mapper.Map<RestaurantDto>(restaurantUpdateModel);
+            model.Id = restaurant.Id;
+
+            await _restaurantService.UpdateAsync(model);
+            return RedirectToAction(nameof(Index));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

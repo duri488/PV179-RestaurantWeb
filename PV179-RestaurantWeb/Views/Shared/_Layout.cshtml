@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using RestaurantWebBL.Interfaces
+
+@inject ILocalizationService LocalizationService
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -20,16 +23,16 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Restaurant" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Restaurant" asp-action="Index">@LocalizationService.GetStringWithCode("en","home").LocalizedString</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="DailyMenu" asp-action="Index">Daily Menu</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="DailyMenu" asp-action="Index">@LocalizationService.GetStringWithCode("en","daily-menu").LocalizedString</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Drink" asp-action="Index">Drinks</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Drink" asp-action="Index">@LocalizationService.GetStringWithCode("en","drinks").LocalizedString</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Meal" asp-action="Index">Meal</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Meal" asp-action="Index">@LocalizationService.GetStringWithCode("en","meals").LocalizedString</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />

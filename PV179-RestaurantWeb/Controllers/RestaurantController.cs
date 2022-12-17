@@ -3,12 +3,10 @@ using System.Net.Mail;
 using System.Net;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using PV179_RestaurantWeb.Models;
 using RestaurantWebBL.DTOs;
 using RestaurantWebBL.Interfaces;
-using RestaurantWebBL.Services;
 
 namespace PV179_RestaurantWeb.Controllers
 {
@@ -16,16 +14,20 @@ namespace PV179_RestaurantWeb.Controllers
     {
         private readonly IRestaurantService _restaurantService;
         private readonly IMapper _mapper;
+        private readonly ILocalizationService _localizationService;
 
-        public RestaurantController(IMapper mapper, IRestaurantService restaurantService)
+        public RestaurantController(IMapper mapper, IRestaurantService restaurantService, ILocalizationService localizationService)
         {
             _restaurantService = restaurantService;
             _mapper = mapper;
+            _localizationService = localizationService;
         }
         public async Task<IActionResult> Index()
         {
             var restaurant = await _restaurantService.GetFirstAsync();
             var model = _mapper.Map<RestaurantViewModel>(restaurant);
+
+            model.Description = _localizationService.GetStringWithCode("en", "restaurant-description").LocalizedString;
 
             return View(model);
         }
@@ -47,11 +49,14 @@ namespace PV179_RestaurantWeb.Controllers
             }*/
 
             var restaurant = await _restaurantService.GetFirstAsync();
-
             var model = _mapper.Map<RestaurantDto>(restaurantUpdateModel);
             model.Id = restaurant.Id;
-
             await _restaurantService.UpdateAsync(model);
+
+            var descriptionLocalization = _localizationService.GetStringWithCode("en", "restaurant-description");
+            descriptionLocalization.LocalizedString = restaurantUpdateModel.Description;
+            await _localizationService.UpdateAsync(descriptionLocalization);
+
             return RedirectToAction(nameof(Index));
         }
 

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PV179_RestaurantWeb.Models;
 using RestaurantWebBL.DTOs;
 using RestaurantWebBL.Interfaces;
+using RestaurantWebBL.Services;
 
 namespace PV179_RestaurantWeb.Controllers
 {
@@ -25,6 +26,45 @@ namespace PV179_RestaurantWeb.Controllers
             IEnumerable<MealDto> mealDtos = await _mealService.GetAllAsync();
             var mealViewModels = _mapper.Map<IEnumerable<MealViewModel>>(mealDtos);
             return View(mealViewModels);
+        }
+
+        private IEnumerable<AllergenViewModel> LocalizeAllergens(IEnumerable<AllergenDto> allergenDtos)
+        {
+            string isoCode = "en";
+            return allergenDtos.Select(a => new AllergenViewModel
+            {
+
+                Name = _localizationService.GetStringWithCode(isoCode, a.NameLocalizationCode)?.LocalizedString ??
+                       throw new NotImplementedException($"Unable to find localization string for " +
+                                                         $"code:{a.NameLocalizationCode}; iso:{isoCode}"),
+                Number = _localizationService.GetStringWithCode(isoCode, a.NumberLocalizationCode)?.LocalizedString ??
+                         throw new NotImplementedException($"Unable to find localization string for " +
+                                                           $"code:{a.NumberLocalizationCode}; iso:{isoCode}")
+            });
+        }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            MealDto? mealDto = await _mealService.GetByIdAsync(id.Value);
+
+            if (mealDto == null)
+            {
+                return NotFound();
+            }
+
+
+            var drink = _mapper.Map<MealViewModel>(mealDto);
+            
+            IEnumerable<AllergenDto> allergenDtos = await _allergenService.GetByFlags(mealDto.AllergenFlags);
+            List<AllergenViewModel> allergens = LocalizeAllergens(allergenDtos).ToList();
+            drink.Allergens = allergens;
+            return View(drink);
+
         }
 
     }

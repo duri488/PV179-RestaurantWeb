@@ -33,8 +33,8 @@ public class DailyMenuServiceTests
             Description = "Italian restaurant",
             Email = "",
             Id = 1,
-            Latitude = 20.0,
-            Longtitude = 20.0,
+            Latitude = "20.0",
+            Longitude = "20.0",
             Name = "Papa Johns",
             Phone = "",
         };

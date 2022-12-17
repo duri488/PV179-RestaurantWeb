@@ -69,7 +69,7 @@ namespace RestaurantWebBL.Test
                 {
                     new UserDto()
                     {
-                        Username = username,
+                        UserName = username,
                     }
                 }});
 
@@ -87,7 +87,7 @@ namespace RestaurantWebBL.Test
             byte[] salt = CryptoHashHelper.GenerateSalt();
             UserDto userDto = new UserDto()
             {
-                Username = username,
+                UserName = username,
                 HashedPassword = CryptoHashHelper.GenerateSaltedPbkdf2Hash(password, salt),
                 Salt = salt,
             };
@@ -123,7 +123,7 @@ namespace RestaurantWebBL.Test
             byte[] salt = CryptoHashHelper.GenerateSalt();
             UserDto userDto = new UserDto()
             {
-                Username = username,
+                UserName = username,
                 HashedPassword = CryptoHashHelper.GenerateSaltedPbkdf2Hash(password, salt),
                 Salt = salt,
             };

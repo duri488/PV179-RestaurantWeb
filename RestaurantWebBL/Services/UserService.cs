@@ -35,7 +35,7 @@ namespace RestaurantWebBL.Services
             byte[] salt = CryptoHashHelper.GenerateSalt();
             var userDto = new UserDto()
             {
-                Username = userName,
+                UserName = userName,
                 HashedPassword = CryptoHashHelper.GenerateSaltedPbkdf2Hash(password, salt),
                 Salt = salt,
             };
@@ -73,7 +73,7 @@ namespace RestaurantWebBL.Services
             }
         }
 
-        public async Task UpdateAsync(int entityId, UserDto updatedEntity)
+        public async Task UpdateAsync(UserDto updatedEntity)
         {
             using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
             var updatedUser = _mapper.Map<User>(updatedEntity);

@@ -13,6 +13,6 @@ namespace RestaurantWebBL.Interfaces
         Task LogInAsync(string userName, string password);
         Task DeleteAsync(int entityId);
         Task<UserDto?> GetByIdAsync(int entityId);
-        Task UpdateAsync(int entityId, UserDto updatedEntity);
+        Task UpdateAsync(UserDto updatedEntity);
     }
 }

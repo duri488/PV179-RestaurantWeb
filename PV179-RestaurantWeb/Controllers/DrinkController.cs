@@ -14,13 +14,11 @@ namespace PV179_RestaurantWeb.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IDrinkService _drinkService;
-        private readonly IAllergenService _allergenService;
         private readonly ILocalizationService _localizationService;
-        public DrinkController(IMapper mapper, IDrinkService drinkService, IAllergenService allergenService, ILocalizationService localizationService)
+        public DrinkController(IMapper mapper, IDrinkService drinkService, ILocalizationService localizationService)
         {
             _mapper = mapper;
             _drinkService = drinkService;
-            _allergenService = allergenService;
             _localizationService = localizationService;
         }
 
@@ -29,21 +27,6 @@ namespace PV179_RestaurantWeb.Controllers
             IEnumerable<DrinkDto> drinkDtos = await _drinkService.GetAllAsync();
             var drinkViewModels = _mapper.Map<IEnumerable<DrinkViewModel>>(drinkDtos);
             return View(drinkViewModels);
-        }
-
-        private IEnumerable<AllergenViewModel> LocalizeAllergens(IEnumerable<AllergenDto> allergenDtos)
-        {
-            string isoCode = "en";
-            return allergenDtos.Select(a => new AllergenViewModel
-            {
-
-                Name = _localizationService.GetStringWithCode(isoCode, a.NameLocalizationCode)?.LocalizedString ??
-                       throw new NotImplementedException($"Unable to find localization string for " +
-                                                         $"code:{a.NameLocalizationCode}; iso:{isoCode}"),
-                Number = _localizationService.GetStringWithCode(isoCode, a.NumberLocalizationCode)?.LocalizedString ??
-                         throw new NotImplementedException($"Unable to find localization string for " +
-                                                           $"code:{a.NumberLocalizationCode}; iso:{isoCode}")
-            });
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -62,18 +45,12 @@ namespace PV179_RestaurantWeb.Controllers
 
 
             var drink = _mapper.Map<DrinkViewModel>(drinkDto);
-            /*
-            IEnumerable<AllergenDto> allergenDtos = await _allergenService.GetByFlags(drinkDto.AllergenFlags);
-            List<AllergenViewModel> allergens = LocalizeAllergens(allergenDtos).ToList();
-            drink.Allergens = allergens;*/
             return View(drink);
             
         }
 
         public async Task<IActionResult> Create()
         {
-            //IEnumerable<AllergenDto> allergens = await _allergenService.GetByFlags(127);
-            //ViewBag.Allergens = allergens;
             return View();
         }
 
@@ -90,8 +67,6 @@ namespace PV179_RestaurantWeb.Controllers
                 Price = model.Price,
                 Volume = model.Volume,
                 Name = model.Name,
-                //AllergenFlags= 65,
-               
             };
             await _drinkService.CreateAsync(drinkDto, 1);
 
@@ -116,7 +91,6 @@ namespace PV179_RestaurantWeb.Controllers
                  Name = drink.Name,
                  Price = drink.Price,
                  Volume = drink.Volume,
-                 //Allergens = drink.AllergenFlags
             };
             return View(drinkUpdateModel);
         }

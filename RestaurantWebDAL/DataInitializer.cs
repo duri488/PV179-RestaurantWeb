@@ -96,8 +96,7 @@ public static class DataInitializer
                     Name = "Kofola",
                     Volume = 0.1M,
                     Price = 0.3M,
-                    RestaurantId = 1,
-                    AllergenFlags = 0b1000001
+                    RestaurantId = 1
                 },
                 new Drink
                 {
@@ -105,8 +104,7 @@ public static class DataInitializer
                     Name = "Pilsner Urquell",
                     Volume = 0.5M,
                     Price = 2M,
-                    RestaurantId = 1,
-                    AllergenFlags = 0b1000001
+                    RestaurantId = 1
                 }
             );
     }

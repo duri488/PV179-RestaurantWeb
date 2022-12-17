@@ -109,5 +109,13 @@ namespace PV179_RestaurantWeb.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _mealService.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

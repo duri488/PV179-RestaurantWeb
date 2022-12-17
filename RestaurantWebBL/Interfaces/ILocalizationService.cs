@@ -6,7 +6,7 @@ namespace RestaurantWebBL.Interfaces
     {
         Task CreateAsync(LocalizationDto createdEntity);
         Task<LocalizationDto?> GetByIdAsync(int entityId);
-        Task UpdateAsync(int entityId, LocalizationDto updatedEntity);
+        Task UpdateAsync(LocalizationDto updatedEntity);
         Task DeleteAsync(int entityId);
         Task<IEnumerable<LocalizationDto>> GetAllAsync();
         IEnumerable<LocalizationDto?> GetAllWithIso(string iso);

@@ -56,7 +56,7 @@ namespace RestaurantWebBL.Services
             return _mapper.Map<LocalizationDto?>(localization);
         }
 
-        public async Task UpdateAsync(int entityId, LocalizationDto updatedEntity)
+        public async Task UpdateAsync(LocalizationDto updatedEntity)
         {
             using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
             var updatedLocal = _mapper.Map<Localization>(updatedEntity);

@@ -2,7 +2,7 @@
 
 public class UserDto : BaseEntityDto
 {
-    public string Username { get; set; }
+    public string UserName { get; set; }
     public byte[] HashedPassword { get; set; }
     public byte[] Salt { get; set; }
 }

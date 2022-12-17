@@ -45,6 +45,13 @@ namespace RestaurantWebBL.Services
             return _mapper.Map<IEnumerable<RestaurantDto>>(restaurant);
         }
 
+        public async Task<RestaurantDto?> GetFirstAsync()
+        {
+            var restaurant = await _restaurantRepository.GetAllAsync();
+            var firstRestaurant = restaurant.FirstOrDefault();
+            return _mapper.Map<RestaurantDto?>(firstRestaurant);
+        }
+
         public async Task<RestaurantDto?> GetByIdAsync(int entityId)
         {
             var restaurant = await _restaurantRepository.GetByIdAsync(entityId);

@@ -45,6 +45,8 @@ builder.Services.AddTransient<IDailyMenuService, DailyMenuService>();
 builder.Services.AddTransient<IDrinkService, DrinkService>();
 builder.Services.AddTransient<IAllergenService, AllergenService>();
 builder.Services.AddTransient<IRestaurantService, RestaurantService>();
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IUserQueryObject, UserQueryObject>();
 builder.Services.AddTransient<IMenuFacade, MenuFacade>();
 builder.Services.AddTransient<IMealService, MealService>();
 builder.Services.AddTransient<IMealQueryObject, MealQueryObject>();

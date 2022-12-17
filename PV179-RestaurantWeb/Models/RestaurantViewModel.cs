@@ -1,4 +1,6 @@
-﻿namespace PV179_RestaurantWeb.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace PV179_RestaurantWeb.Models
 {
     public class RestaurantViewModel
     {
@@ -10,5 +12,11 @@
         public double Longitude { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
+        [Required]
+        public string ContactName { get; set; }
+        [Required]
+        public string ContactMail { get; set; }
+        [Required]
+        public string ContactMessage { get; set; }
     }
 }

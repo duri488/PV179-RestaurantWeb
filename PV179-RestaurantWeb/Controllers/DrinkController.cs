@@ -144,17 +144,7 @@ namespace PV179_RestaurantWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-
-            var dto = _drinkService.GetByIdAsync(id);
-            if (dto == null)
-            {
-                return NotFound();
-            }
-            // pise ze je otvorena transakcia a ze sa musi ukoncit pred ty ale ked ju debagujem tak to prejde vsetko ok a neni problem 
-            // System.InvalidOperationException: There is already an open DataReader associated with this Connection which must be closed first.
-            //await _drinkService.DeleteAsync(id);
-
-            _drinkService.DeleteAsync(id);
+            await _drinkService.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
 

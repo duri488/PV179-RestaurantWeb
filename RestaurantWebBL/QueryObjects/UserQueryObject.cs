@@ -3,18 +3,19 @@ using Microsoft.Extensions.DependencyInjection;
 using RestaurantWeb.Contract;
 using RestaurantWebBL.DTOs;
 using RestaurantWebBL.DTOs.FilterDTOs;
+using RestaurantWebBL.Interfaces;
 using RestaurantWebDAL.Models;
 
 namespace RestaurantWebBL.QueryObjects
 {
-    public class UserQueryObject
+    public class UserQueryObject : IUserQueryObject
     {
-        private IMapper mapper;
+        private readonly IMapper _mapper;
         private readonly IServiceProvider _serviceProvider;
 
         public UserQueryObject(IMapper mapper, IServiceProvider serviceProvider)
         {
-            this.mapper = mapper;
+            this._mapper = mapper;
             _serviceProvider = serviceProvider;
         }
 
@@ -32,7 +33,7 @@ namespace RestaurantWebBL.QueryObjects
                 query = query.Page(filter.RequestedPageNumber.Value, filter.PageSize);
             }
 
-            return mapper.Map<QueryResultDto<UserDto>>(query.Execute());
+            return _mapper.Map<QueryResultDto<UserDto>>(query.Execute());
         }
     }
 }

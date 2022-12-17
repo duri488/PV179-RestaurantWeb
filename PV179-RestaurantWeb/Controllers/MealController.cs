@@ -10,10 +10,14 @@ namespace PV179_RestaurantWeb.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IMealService _mealService;
-        public MealController(IMapper mapper, IMealService mealService)
+        private readonly IAllergenService _allergenService;
+        private readonly ILocalizationService _localizationService;
+        public MealController(IMapper mapper, IMealService mealService, IAllergenService allergenService, ILocalizationService localizationService)
         {
             _mapper = mapper;
             _mealService = mealService;
+            _allergenService= allergenService;
+            _localizationService = localizationService;
         }
 
         public async Task<IActionResult> Index()

@@ -1,4 +1,8 @@
-﻿@model IEnumerable<MealViewModel>
+﻿@using RestaurantWebDAL.Models
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<MealViewModel>
+@inject SignInManager<User> SignInManager
 
 @{
     ViewData["Title"] = "Index";
@@ -6,10 +10,12 @@
 }
 
 <h1>Index</h1>
-
-<p>
-    <a class="btn btn-lg btn-primary" asp-action="Create">Create New</a>
-</p>
+@if (SignInManager.IsSignedIn(User))
+{
+    <p>
+        <a class="btn btn-lg btn-primary" asp-action="Create">Create New</a>
+    </p>
+}
 <table class="table">
     <thead>
         <tr>
@@ -35,9 +41,13 @@
                 <td>
                     @using (Html.BeginForm("Delete", "Meal", new { id = item.Id }, FormMethod.Post, true, new { @class = "form-inline" }))
                     {
-                        @* <a  class="btn btn-secondary my-1" asp-action="Edit" asp-route-id="@item.Id">Edit</a> | *@
                         <a class="btn btn-secondary my-1" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                        <input class="btn btn-secondary my-1" type="submit" value="Delete" />
+                        
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <a  class="btn btn-secondary my-1" asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                            <input class="btn btn-secondary my-1" type="submit" value="Delete" />
+                        }
                     }
                 </td>
             </tr>

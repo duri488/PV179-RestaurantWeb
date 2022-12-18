@@ -90,12 +90,20 @@ namespace PV179_RestaurantWeb.Controllers
 
             string[] allergens = model.Allergens.Split(' ');
             int numberForAlergens = 0;
-            for (int i = 0; i < allergens.Length; i++)
+            try
             {
-                numberForAlergens = (int)(numberForAlergens + Math.Pow(2, int.Parse(allergens[i])-1));
+                for (int i = 0; i < allergens.Length; i++)
+                {
+                    numberForAlergens = (int)(numberForAlergens + Math.Pow(2, int.Parse(allergens[i]) - 1));
+                }
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction(nameof(Index));
             }
 
-            MealDto mealDto = new MealDto
+
+                MealDto mealDto = new MealDto
             {
                 Price = model.Price,
                 Description = model.Description,

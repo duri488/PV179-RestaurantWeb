@@ -12,6 +12,7 @@ public class PresentationLayerProfile : Profile
         CreateMap<DailyMenuViewModel, DailyMenuDto>().ReverseMap();
         CreateMap<DailyMenuCreateModel, DailyMenuDto>().ReverseMap();
         CreateMap<WeeklyMenuViewModel, WeeklyMenuDto>().ReverseMap();
+        CreateMap<WeeklyMenuCreateModel, WeeklyMenuDto>().ReverseMap();
         CreateMap<MealViewModel, MealDto>().ReverseMap();
         CreateMap<AllergenViewModel, AllergenDto>().ReverseMap();
         CreateMap<DrinkViewModel, DrinkDto>().ReverseMap();

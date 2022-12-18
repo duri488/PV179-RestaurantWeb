@@ -1,8 +1,11 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PV179_RestaurantWeb.Models;
 using RestaurantWebBL.DTOs;
 using RestaurantWebBL.Interfaces;
+using RestaurantWebDAL.Models;
 
 namespace PV179_RestaurantWeb.Controllers
 {
@@ -13,46 +16,74 @@ namespace PV179_RestaurantWeb.Controllers
         private readonly IAllergenService _allergenService;
         private readonly IMenuFacade _menuFacade;
         private readonly ILocalizationService _localizationService;
+        private readonly SignInManager<User> _signInManager;
         public WeeklyMenuController(IMapper mapper, IWeeklyMenuService weeklyMenuService, IAllergenService allergenService,
-            IMenuFacade menuFacade, ILocalizationService localizationService)
+            IMenuFacade menuFacade, ILocalizationService localizationService, SignInManager<User> signInManager)
         {
             _mapper = mapper;
             _weeklyMenuService = weeklyMenuService;
             _allergenService = allergenService;
             _menuFacade = menuFacade;
             _localizationService = localizationService;
+            _signInManager = signInManager;
         }
 
         // GET: WeeklyMenu
         public async Task<IActionResult> Index()
         {
-            List<WeeklyMenuDto> weeklyMenuDtos = (await _weeklyMenuService.GetAllAsync()).ToList();
-            var weeklyMenuViewModels = _mapper.Map<List<WeeklyMenuViewModel>>(weeklyMenuDtos);
-
-            foreach (WeeklyMenuViewModel weeklyMenuViewModel in weeklyMenuViewModels)
+            List<WeeklyMenuViewModel> weeklyMenuViewModels;
+            if (_signInManager.IsSignedIn(User))
             {
-                IEnumerable<DailyMenuDto> dailyMenusForCurrentWeek = 
-                    await _menuFacade.GetDailyMenusForWeeklyMenu(weeklyMenuViewModel.Id!.Value, true);
-                
-                foreach (DailyMenuDto dailyMenuDto in dailyMenusForCurrentWeek)
-                {
-                    DailyMenuViewModel dailyMenu = await MapDailyMenuDtoToDailyMenuViewModel(dailyMenuDto);
-                    weeklyMenuViewModel.DailyMenusEnumerable.Add(dailyMenu);
-                }
-                weeklyMenuViewModel.DailyMenusEnumerable.Sort((previous, next) =>
-                        CompareDatesForSorting(previous.Date, next.Date, previous.Id, next.Id));
+                 weeklyMenuViewModels = await GetAdminWeeklyMenus();
             }
+            else
+            {
+                weeklyMenuViewModels = await GetUserWeeklyMenus();
+            }
+
+            await PopulateNavigationalProperties(weeklyMenuViewModels);
             
-            weeklyMenuViewModels.ToList().Sort((previous, next) =>
+            weeklyMenuViewModels.Sort((previous, next) =>
                 CompareDatesForSorting(previous.DateFrom, next.DateFrom, previous.Id.Value, next.Id.Value));
             
             return View(weeklyMenuViewModels);
         }
 
+        private async Task PopulateNavigationalProperties(List<WeeklyMenuViewModel> weeklyMenuViewModels)
+        {
+            foreach (WeeklyMenuViewModel weeklyMenuViewModel in weeklyMenuViewModels)
+            {
+                IEnumerable<DailyMenuDto> dailyMenusForCurrentWeek =
+                    await _menuFacade.GetDailyMenusForWeeklyMenu(weeklyMenuViewModel.Id!.Value, true);
+
+                foreach (DailyMenuDto dailyMenuDto in dailyMenusForCurrentWeek)
+                {
+                    DailyMenuViewModel dailyMenu = await MapDailyMenuDtoToDailyMenuViewModel(dailyMenuDto);
+                    weeklyMenuViewModel.DailyMenusEnumerable.Add(dailyMenu);
+                }
+
+                weeklyMenuViewModel.DailyMenusEnumerable.Sort((previous, next) =>
+                    CompareDatesForSorting(previous.Date, next.Date, previous.Id, next.Id));
+            }
+        }
+
+        private async Task<List<WeeklyMenuViewModel>> GetAdminWeeklyMenus()
+        {
+            List<WeeklyMenuDto> weeklyMenuDtos = (await _weeklyMenuService.GetAllAsync()).ToList();
+            var weeklyMenuViewModels = _mapper.Map<List<WeeklyMenuViewModel>>(weeklyMenuDtos);
+            return weeklyMenuViewModels;
+        }
+
+        private async Task<List<WeeklyMenuViewModel>> GetUserWeeklyMenus()
+        {
+            List<WeeklyMenuDto> weeklyMenuDtos = _weeklyMenuService.GetWeeklyMenusByDate(DateTime.Today).ToList();
+            var weeklyMenuViewModels = _mapper.Map<List<WeeklyMenuViewModel>>(weeklyMenuDtos);
+            return weeklyMenuViewModels;
+        }
+
         private static int CompareDatesForSorting(DateTime previous, DateTime next, int previousId, int nextId)
         {
-            if (previous.Date > next.Date) return 1;
-            if (previous.Date < next.Date) return -1;
+            if (previous != next) return previous.CompareTo(next);
             return previousId.CompareTo(nextId);
         }
 
@@ -64,25 +95,6 @@ namespace PV179_RestaurantWeb.Controllers
             dailyMenu.Meal.Allergens = allergens;
             return dailyMenu;
         }
-
-        // // GET: WeeklyMenu/Details/5
-        // public async Task<IActionResult> Details(int? id)
-        // {
-        //     if (id == null)
-        //     {
-        //         return NotFound();
-        //     }
-        //
-        //     DailyMenuDto? dailyMenuDto = await _weeklyMenuService.GetByIdAsync(id.Value, true);
-        //     
-        //     if (dailyMenuDto == null)
-        //     {
-        //         return NotFound();
-        //     }
-        //
-        //     var dailyMenu = await MapDailyMenuDtoToDailyMenuViewModel(dailyMenuDto);
-        //     return View(dailyMenu);
-        // }
 
         private IEnumerable<AllergenViewModel> LocalizeAllergens(IEnumerable<AllergenDto> allergenDtos)
         {
@@ -98,6 +110,38 @@ namespace PV179_RestaurantWeb.Controllers
                          throw new NotImplementedException($"Unable to find localization for" +
                                                            $"code:{a.NumberLocalizationCode}; iso:{isoCode}")
             });
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(WeeklyMenuCreateModel weeklyMenu)
+        {
+            if (!ModelState.IsValid) return View();
+            
+            var weeklyMenuDto = _mapper.Map<WeeklyMenuDto>(weeklyMenu);
+            await _weeklyMenuService.CreateAsync(weeklyMenuDto);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult VerifyDateRange(DateTime dateFrom, DateTime dateTo)
+        {
+            if (dateTo < dateFrom)
+            {
+                return Json("Date from must be later than date to");
+            }
+            if (dateTo - dateFrom != TimeSpan.FromDays(7))
+            {
+                return Json("Weekly menu must be 7 days long");
+            }
+
+            return Json(true);
         }
     }
 }

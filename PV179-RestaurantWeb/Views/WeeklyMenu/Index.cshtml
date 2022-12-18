@@ -1,11 +1,24 @@
-@model IEnumerable<WeeklyMenuViewModel>
+@using RestaurantWebDAL.Models
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<WeeklyMenuViewModel>
+@inject SignInManager<User> SignInManager
+
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="row">
+    <h1 class="col-auto me-auto">Weekly Menus</h1>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <p class="col-auto mt-auto mb-auto">
+            <a asp-action="Create" class="btn btn-success">Create New</a>
+        </p>
+    }
+</div>
 
 @foreach (var item in Model)
 {

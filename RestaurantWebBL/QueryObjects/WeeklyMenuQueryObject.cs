@@ -24,8 +24,7 @@ public class WeeklyMenuQueryObject : IWeeklyMenuQueryObject
         var query = _serviceProvider.GetRequiredService<IQuery<WeeklyMenu>>();
             
         query
-            .Where<DateTime>(a => a >= filter.Date, nameof(WeeklyMenu.DateFrom))
-            .Where<DateTime>(a => a <= filter.Date, nameof(WeeklyMenu.DateTo));
+            .Where<DateTime>(a => a >= filter.Date, nameof(WeeklyMenu.DateTo));
 
         if (!string.IsNullOrWhiteSpace(filter.SortCriteria))
         {

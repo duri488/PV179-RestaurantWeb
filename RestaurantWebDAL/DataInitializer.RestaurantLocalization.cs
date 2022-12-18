@@ -86,13 +86,6 @@ public static partial class DataInitializer
                     StringCode = "submit-form-button",
                     LocalizedString = "Odoslať"
                 },
-                /*new Localization
-                {
-                    Id = 70,
-                    IsoLanguageCode = "sk",
-                    StringCode = "login",
-                    LocalizedString = "Prihlásiť sa"
-                },*/
                 new Localization
                 {
                     Id = 71,

@@ -25,34 +25,50 @@
 
 <div class="row">
     <div class="col-2">
-        @LocalizationService.GetStringWithCode("weekly-menu-date")
+        <b>@LocalizationService.GetStringWithCode("weekly-menu-date")</b>
     </div>
-    <div class="col-10">
+    <div class="col-9">
         <div class="row">
-            <div class="col">
-                @LocalizationService.GetStringWithCode("daily-menu-day")
+            <div class="col-5">
+                <b>@LocalizationService.GetStringWithCode("daily-menu-day")</b>
             </div>
-            <div class="col">
-                @LocalizationService.GetStringWithCode("meal-name")
+            <div class="col-5">
+                <b>@LocalizationService.GetStringWithCode("meal")</b>
             </div>
-            <div class="col">
-                @LocalizationService.GetStringWithCode("meal-price")
+            <div class="col-2">
+                <b>@LocalizationService.GetStringWithCode("meal-price")</b>
             </div>
         </div>
     </div>
 </div>
 
 
-@foreach (WeeklyMenuViewModel item in Model.Where(item => item.DailyMenusEnumerable.Any()))
+@foreach (WeeklyMenuViewModel item in Model)
 {
+    if (!SignInManager.IsSignedIn(User) && !item.DailyMenusEnumerable.Any())
+    {
+        continue;
+    }
     hasDailyMenu = true;
-    <div class="row">
+    <div class="row mb-1"  style="min-height: 40px">
         <div class="col-2">
             @item.DateFrom.ToShortDateString() - @item.DateTo.ToShortDateString()
         </div>
-        <div class="col-10">
+        <div class="col-9">
             @Html.DisplayFor(m => item.DailyMenusEnumerable, "DailyMenuList")
         </div>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <div class="col-1">
+                @using (Html.BeginForm("Delete", "WeeklyMenu", new {id = item.Id},
+                    FormMethod.Post, true, new {@class = "form-inline"}))
+                {
+                    
+                        <input class="btn btn-danger" type="submit" value="@LocalizationService.GetStringWithCode("delete")"\>
+                    
+                }
+            </div>
+        }
     </div>
 }
 

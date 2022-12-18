@@ -138,5 +138,18 @@ namespace PV179_RestaurantWeb.Controllers
 
             return Json(true);
         }
+        
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var dailyMenuDtos = await _menuFacade.GetDailyMenusForWeeklyMenu(id, false);
+            foreach (DailyMenuDto dailyMenuDto in dailyMenuDtos)
+            {
+                await _menuFacade.DeleteDailyMenuAsync(dailyMenuDto.Id);
+            }
+
+            await _weeklyMenuService.DeleteAsync(id);
+            return RedirectToAction("Index");
+        }
     }
 }

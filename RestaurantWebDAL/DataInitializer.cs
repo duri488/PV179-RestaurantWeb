@@ -614,14 +614,14 @@ public static partial class DataInitializer
                 new WeeklyMenu
                 {
                     Id = 1,
-                    DateFrom = new DateTime(2022, 10, 3),
-                    DateTo = new DateTime(2022, 10, 7),
+                    DateFrom = new DateTime(2022, 12, 19),
+                    DateTo = new DateTime(2022, 12, 26),
                 },
                 new WeeklyMenu
                 {
                     Id = 2,
-                    DateFrom = new DateTime(2022, 10, 10),
-                    DateTo = new DateTime(2022, 10, 14),
+                    DateFrom = new DateTime(2022, 12, 27),
+                    DateTo = new DateTime(2023, 1, 3),
                 }
             );
     }
@@ -641,6 +641,22 @@ public static partial class DataInitializer
                 new DailyMenu
                 {
                     Id = 2,
+                    DayOfWeek = DayOfWeek.Monday,
+                    MenuPrice = 6.5M,
+                    WeeklyMenuId = 1,
+                    MealId = 2,
+                },
+                new DailyMenu
+                {
+                    Id = 3,
+                    DayOfWeek = DayOfWeek.Monday,
+                    MenuPrice = 6.5M,
+                    WeeklyMenuId = 2,
+                    MealId = 2,
+                },
+                new DailyMenu
+                {
+                    Id = 4,
                     DayOfWeek = DayOfWeek.Tuesday,
                     MenuPrice = 7.0M,
                     WeeklyMenuId = 2,

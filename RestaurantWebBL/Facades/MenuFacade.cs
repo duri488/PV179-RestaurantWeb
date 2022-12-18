@@ -72,4 +72,9 @@ public class MenuFacade : IMenuFacade
 
         return dailyMenuDtosWithNavigationProperties;
     }
+
+    public async Task DeleteDailyMenuAsync(int id)
+    {
+       await _dailyMenuService.DeleteAsync(id);
+    }
 }

@@ -3,17 +3,17 @@
 @foreach (var dailyMenu in Model)
 {
     <div class="row">
-        <div class="col">
+        <div class="col-5">
             @if (previousViewModel == null || previousViewModel.DayOfWeek != dailyMenu.DayOfWeek)
             {
-                @dailyMenu.DayOfWeek.ToString()   
+                @Html.Raw($"{dailyMenu.DayOfWeek} ({dailyMenu.Date.ToShortDateString()})")    
             }
         </div>
-        <div class="col">
+        <div class="col-5">
             @dailyMenu.Meal.Name
             @Html.DisplayFor(m => dailyMenu.Meal.Allergens, "AllergensShortForm")
         </div>
-        <div class="col">
+        <div class="col-2">
             @Html.DisplayFor(m => dailyMenu.MenuPrice)
         </div>
     </div>

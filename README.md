@@ -26,7 +26,7 @@ Administrace bude mít:
 ## How to set up SMTP server for contact form
 Contact formular sends email after submiting.
 To verify this function localy you need SMTP server.
-1. Install PapercutSMTP (https://github.com/ChangemakerStudios/Papercut-SMTP) from root directory (Papercut.Smtp.Setup.exe)
+1. Install PapercutSMTP (https://github.com/ChangemakerStudios/Papercut-SMTP) from root directory (Papercut.Smtp.Setup.exe), this file does not need to be downloaded, because it is in this github in main
 2. Open Papercut application
 3. Start Restaurant web
 4. Submit contact formular

@@ -125,8 +125,6 @@ public static partial class DataInitializer
         SeedSkDrinkLocalization(modelBuilder);
         SeedEnMealLocalization(modelBuilder);
         SeedSkMealLocalization(modelBuilder);
-        SeedSkDailyMenuLocalization(modelBuilder);
-        SeedEnDailyMenuLocalization(modelBuilder);
         SeedSkLocalization(modelBuilder);
         SeedEnLocalization(modelBuilder);
         SeedSkMenuLocalization(modelBuilder);

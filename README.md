@@ -22,3 +22,11 @@ Administrace bude mít:
 - Správu jídelního a nápojového lístku
 - Správu denního menu (i na několik týdnů dopředu), včetně exportu a importu (např. z/do CSV nebo Excelu)
 - Správu překladů webu
+
+## How to set up SMTP server for contact form
+Contact formular sends email after submiting.
+To verify this function localy you need SMTP server.
+1. Install PapercutSMTP (https://github.com/ChangemakerStudios/Papercut-SMTP) from root directory (Papercut.Smtp.Setup.exe)
+2. Open Papercut application
+3. Start Restaurant web
+4. Submit contact formular

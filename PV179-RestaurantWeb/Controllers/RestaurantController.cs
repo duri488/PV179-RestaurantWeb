@@ -71,7 +71,14 @@ namespace PV179_RestaurantWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ContactUsMail(RestaurantViewModel model)
         {
-            await SendMail(model.ContactName, model.ContactMail, model.ContactMessage);
+            try
+            {
+                await SendMail(model.ContactName, model.ContactMail, model.ContactMessage);
+            }catch(Exception ex)
+            {
+                //check if smtp server is configured
+            }
+            
             return RedirectToAction(nameof(Index));
         }
 
@@ -88,7 +95,7 @@ namespace PV179_RestaurantWeb.Controllers
 
             //should be configured when deployed
             smtpClient.Port = 25;
-            smtpClient.Host = "192.168.1.13";
+            smtpClient.Host = "127.0.0.1";
             smtpClient.EnableSsl = false;
             smtpClient.UseDefaultCredentials = true;
             //smtpClient.Credentials = new NetworkCredential("Username", "Password");

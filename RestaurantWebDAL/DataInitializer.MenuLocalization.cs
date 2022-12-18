@@ -5,7 +5,7 @@ namespace RestaurantWebDAL;
 
 public static partial class DataInitializer
 {
-    private static void SeedEnDailyMenuLocalization(ModelBuilder modelBuilder)
+    private static void SeedEnMenuLocalization(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Localization>()
             .HasData(
@@ -43,28 +43,21 @@ public static partial class DataInitializer
                     IsoLanguageCode = "en",
                     StringCode = "daily-menu-meal",
                     LocalizedString = "Meal"
+                },
+                new Localization
+                {
+                    Id = 307,
+                    IsoLanguageCode = "en",
+                    StringCode = "weekly-menu-date",
+                    LocalizedString = "Date (start - end)"
+                },
+                new Localization
+                {
+                    Id = 308,
+                    IsoLanguageCode = "en",
+                    StringCode = "no-weekly-menus",
+                    LocalizedString = "We apologize, there are currently no weekly menus offered for this date"
                 }
-                // new Localization
-                // {
-                //     Id = 306,
-                //     IsoLanguageCode = "en",
-                //     StringCode = "",
-                //     LocalizedString = ""
-                // },
-                // new Localization
-                // {
-                //     Id = 307,
-                //     IsoLanguageCode = "en",
-                //     StringCode = "",
-                //     LocalizedString = ""
-                // },
-                // new Localization
-                // {
-                //     Id = 308,
-                //     IsoLanguageCode = "en",
-                //     StringCode = "",
-                //     LocalizedString = ""
-                // },
                 // new Localization
                 // {
                 //     Id = 309,
@@ -89,7 +82,7 @@ public static partial class DataInitializer
             );
     }
 
-    private static void SeedSkDailyMenuLocalization(ModelBuilder modelBuilder)
+    private static void SeedSkMenuLocalization(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Localization>()
             .HasData
@@ -128,21 +121,21 @@ public static partial class DataInitializer
                     IsoLanguageCode = "sk",
                     StringCode = "daily-menu-meal",
                     LocalizedString = "Jedlo"
+                },
+                new Localization
+                {
+                    Id = 356,
+                    IsoLanguageCode = "sk",
+                    StringCode = "weekly-menu-date",
+                    LocalizedString = "Dátum (od - do)"
+                },
+                new Localization
+                {
+                    Id = 357,
+                    IsoLanguageCode = "sk",
+                    StringCode = "no-weekly-menus",
+                    LocalizedString = "Ľutujeme, pre tento týždeň neponúkame žiadne meníčka."
                 }
-                // new Localization
-                // {
-                //     Id = 356,
-                //     IsoLanguageCode = "sk",
-                //     StringCode = "",
-                //     LocalizedString = ""
-                // },
-                // new Localization
-                // {
-                //     Id = 357,
-                //     IsoLanguageCode = "sk",
-                //     StringCode = "",
-                //     LocalizedString = ""
-                // },
                 // new Localization
                 // {
                 //     Id = 358,

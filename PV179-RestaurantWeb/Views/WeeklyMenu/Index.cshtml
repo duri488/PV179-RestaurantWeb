@@ -1,9 +1,10 @@
 @using RestaurantWebDAL.Models
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@using RestaurantWebBL.Interfaces
 @model List<WeeklyMenuViewModel>
 @inject SignInManager<User> SignInManager
-
+@inject ILocalizationService LocalizationService
 
 @{
     ViewData["Title"] = "Index";
@@ -11,17 +12,48 @@
 }
 
 <div class="row">
-    <h1 class="col-auto me-auto">Weekly Menus</h1>
+    <h1 class="col-auto me-auto">@LocalizationService.GetStringWithCode("weekly-menu")</h1>
     @if (SignInManager.IsSignedIn(User))
     {
         <p class="col-auto mt-auto mb-auto">
-            <a asp-action="Create" class="btn btn-success">Create New</a>
+            <a asp-action="Create" class="btn btn-success">@LocalizationService.GetStringWithCode("create")</a>
         </p>
     }
 </div>
 
-@foreach (var item in Model)
+@{ bool hasDailyMenu = false;}
+
+
+@if (hasDailyMenu)
 {
+    <div class="row">
+        <div class="col-2">
+            @LocalizationService.GetStringWithCode("weekly-menu-date")
+        </div>
+        <div class="col-10">
+            <div class="row">
+                <div class="col">
+                    @LocalizationService.GetStringWithCode("daily-menu-day")
+                </div>
+                <div class="col">
+                    @LocalizationService.GetStringWithCode("meal-name")
+                </div>
+                <div class="col">
+                    @LocalizationService.GetStringWithCode("meal-price")
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if(!hasDailyMenu)
+{
+    <h1 class="m-auto">@LocalizationService.GetStringWithCode("no-weekly-menus")</h1>
+}
+
+@foreach (WeeklyMenuViewModel item in Model.Where(item => item.DailyMenusEnumerable.Any()))
+{
+    hasDailyMenu = true;
     <div class="row">
         <div class="col-2">
             @item.DateFrom.ToShortDateString() - @item.DateTo.ToShortDateString()

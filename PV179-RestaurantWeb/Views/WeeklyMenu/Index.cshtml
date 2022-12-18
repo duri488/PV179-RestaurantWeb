@@ -23,33 +23,25 @@
 
 @{ bool hasDailyMenu = false;}
 
-
-@if (hasDailyMenu)
-{
-    <div class="row">
-        <div class="col-2">
-            @LocalizationService.GetStringWithCode("weekly-menu-date")
-        </div>
-        <div class="col-10">
-            <div class="row">
-                <div class="col">
-                    @LocalizationService.GetStringWithCode("daily-menu-day")
-                </div>
-                <div class="col">
-                    @LocalizationService.GetStringWithCode("meal-name")
-                </div>
-                <div class="col">
-                    @LocalizationService.GetStringWithCode("meal-price")
-                </div>
+<div class="row">
+    <div class="col-2">
+        @LocalizationService.GetStringWithCode("weekly-menu-date")
+    </div>
+    <div class="col-10">
+        <div class="row">
+            <div class="col">
+                @LocalizationService.GetStringWithCode("daily-menu-day")
+            </div>
+            <div class="col">
+                @LocalizationService.GetStringWithCode("meal-name")
+            </div>
+            <div class="col">
+                @LocalizationService.GetStringWithCode("meal-price")
             </div>
         </div>
     </div>
-}
+</div>
 
-@if(!hasDailyMenu)
-{
-    <h1 class="m-auto">@LocalizationService.GetStringWithCode("no-weekly-menus")</h1>
-}
 
 @foreach (WeeklyMenuViewModel item in Model.Where(item => item.DailyMenusEnumerable.Any()))
 {
@@ -62,4 +54,9 @@
             @Html.DisplayFor(m => item.DailyMenusEnumerable, "DailyMenuList")
         </div>
     </div>
+}
+
+@if(!hasDailyMenu)
+{
+    <h1 class="m-auto">@LocalizationService.GetStringWithCode("no-weekly-menus")</h1>
 }

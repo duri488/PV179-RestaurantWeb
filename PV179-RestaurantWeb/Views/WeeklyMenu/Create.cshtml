@@ -1,7 +1,9 @@
-﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@using RestaurantWebBL.Interfaces
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model WeeklyMenuCreateModel
+@inject ILocalizationService LocalizationService
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = @LocalizationService.GetStringWithCode("create");
 }
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -9,29 +11,34 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
 
 
-<h1>Create</h1>
+<h1>@LocalizationService.GetStringWithCode("weekly-menu")</h1>
 
-<h4>DailyMenu</h4>
+<h4></h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <label asp-for="DateFrom" class="control-label"></label>
+            <label id="DateFrom" name="DateFrom" class="control-label">
+                @LocalizationService.GetStringWithCode("weekly-menu-date-from")
+            </label>
             <input asp-for="DateFrom" class="form-control"/>
             
-            <label asp-for="DateTo" class="control-label"></label>
+            <label name="DateTo" id="DateTo" class="control-label">
+                @LocalizationService.GetStringWithCode("weekly-menu-date-to")
+            </label>
             <input asp-for="DateTo" class="form-control"/>
             <span asp-validation-for="DateTo" class="text-danger"></span>
 
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-success mb-2 mt-2" />
+                <input type="submit" value="@LocalizationService.GetStringWithCode("create")" 
+                       class="btn btn-success mb-2 mt-2" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+    <a asp-action="Index" class="btn btn-primary">@LocalizationService.GetStringWithCode("back")</a>
 </div>
 

@@ -42,6 +42,7 @@ builder.Services.AddTransient<IMapper, Mapper>(x =>
 builder.Services.AddTransient<IUnitOfWorkFactory, UnitOfWorkFactory>();
 builder.Services.AddTransient<IEagerLoadingRepository<DailyMenu>, EfDailyMenuRepository>();
 builder.Services.AddTransient<IDailyMenuService, DailyMenuService>();
+builder.Services.AddTransient<IDailyMenuQueryObject, DailyMenuQueryObject>();
 builder.Services.AddTransient<IDrinkService, DrinkService>();
 builder.Services.AddTransient<IAllergenService, AllergenService>();
 builder.Services.AddTransient<IRestaurantService, RestaurantService>();

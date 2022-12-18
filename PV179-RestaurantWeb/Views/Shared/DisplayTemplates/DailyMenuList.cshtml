@@ -1,0 +1,21 @@
+﻿@model List<DailyMenuViewModel>
+@{ DailyMenuViewModel? previousViewModel = null;}
+@foreach (var dailyMenu in Model)
+{
+    <div class="row">
+        <div class="col">
+            @if (previousViewModel == null || previousViewModel.DayOfWeek != dailyMenu.DayOfWeek)
+            {
+                @dailyMenu.DayOfWeek.ToString()   
+            }
+        </div>
+        <div class="col">
+            @dailyMenu.Meal.Name
+            @Html.DisplayFor(m => dailyMenu.Meal.Allergens, "AllergensShortForm")
+        </div>
+        <div class="col">
+            @Html.DisplayFor(m => dailyMenu.MenuPrice)
+        </div>
+    </div>
+    previousViewModel = dailyMenu;
+}

@@ -1,0 +1,9 @@
+﻿@model List<AllergenViewModel>
+
+@Html.Raw("(")
+@foreach (var item in Model)
+{
+    @item.Number
+    @if(@item != Model.Last()) @Html.Raw(",")
+}
+@Html.Raw(")")

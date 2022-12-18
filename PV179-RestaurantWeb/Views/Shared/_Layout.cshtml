@@ -1,5 +1,4 @@
 ﻿@using RestaurantWebBL.Interfaces
-
 @inject ILocalizationService LocalizationService
 <!DOCTYPE html>
 <html lang="en">
@@ -33,6 +32,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Meal" asp-action="Index">@LocalizationService.GetStringWithCode("en","meals").LocalizedString</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="WeeklyMenu" asp-action="Index">@LocalizationService.GetStringWithCode("en","weekly-menu").LocalizedString</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />

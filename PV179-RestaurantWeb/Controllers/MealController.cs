@@ -4,6 +4,7 @@ using PV179_RestaurantWeb.Models;
 using RestaurantWebBL.DTOs;
 using RestaurantWebBL.Interfaces;
 using RestaurantWebBL.Services;
+using RestaurantWebDAL.Models;
 using System.Web;
 
 namespace PV179_RestaurantWeb.Controllers
@@ -70,6 +71,10 @@ namespace PV179_RestaurantWeb.Controllers
 
         public async Task<IActionResult> Create()
         {
+            //32767 sulphur-name iso en problem not incialize
+            IEnumerable<AllergenDto> allergenDtos = await _allergenService.GetByFlags(127);
+            List<AllergenViewModel> allergens = LocalizeAllergens(allergenDtos).ToList();
+            ViewBag.Allergens = allergens;
             return View();
         }
 
@@ -82,13 +87,21 @@ namespace PV179_RestaurantWeb.Controllers
                 return View(model);
             }
 
+
+            string[] allergens = model.Allergens.Split(' ');
+            int numberForAlergens = 0;
+            for (int i = 0; i < allergens.Length; i++)
+            {
+                numberForAlergens = (int)(numberForAlergens + Math.Pow(2, int.Parse(allergens[i])-1));
+            }
+
             MealDto mealDto = new MealDto
             {
                 Price = model.Price,
                 Description = model.Description,
                 Name = model.Name,
                 Picture =model.Picture,
-                AllergenFlags  = model.Allergens,
+                AllergenFlags  = numberForAlergens,
             };
             
             await _mealService.CreateAsync(mealDto, 1);

@@ -9,6 +9,7 @@ using RestaurantWebDAL.Models;
 
 namespace PV179_RestaurantWeb.Controllers
 {
+    [Authorize]
     public class WeeklyMenuController : Controller
     {
         private readonly IMapper _mapper;
@@ -29,6 +30,7 @@ namespace PV179_RestaurantWeb.Controllers
         }
 
         // GET: WeeklyMenu
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             List<WeeklyMenuViewModel> weeklyMenuViewModels;
@@ -111,7 +113,6 @@ namespace PV179_RestaurantWeb.Controllers
                                                            $"code:{a.NumberLocalizationCode}; iso:{isoCode}")
             });
         }
-
         public async Task<IActionResult> Create()
         {
             return View();

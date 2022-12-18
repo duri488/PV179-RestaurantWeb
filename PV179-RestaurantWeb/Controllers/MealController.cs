@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Text;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PV179_RestaurantWeb.Models;
 using RestaurantWebBL.DTOs;
@@ -10,6 +12,7 @@ using System.Web;
 
 namespace PV179_RestaurantWeb.Controllers
 {
+    [Authorize]
     public class MealController : Controller
     {
         private readonly IMapper _mapper;
@@ -24,6 +27,7 @@ namespace PV179_RestaurantWeb.Controllers
             _localizationService = localizationService;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             IEnumerable<MealDto> mealDtos = await _mealService.GetAllAsync();
@@ -45,7 +49,8 @@ namespace PV179_RestaurantWeb.Controllers
                                                            $"code:{a.NumberLocalizationCode}; iso:{isoCode}")
             });
         }
-
+        
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -69,7 +74,7 @@ namespace PV179_RestaurantWeb.Controllers
             return View(meal);
 
         }
-
+        
         public async Task<IActionResult> Create()
         {
             //32767 sulphur-name iso en problem not incialize

@@ -1,15 +1,13 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using PV179_RestaurantWeb.Models;
 using RestaurantWebBL.DTOs;
-using RestaurantWebBL.Facades;
 using RestaurantWebBL.Interfaces;
-using RestaurantWebBL.Services;
-using RestaurantWebDAL.Models;
 
 namespace PV179_RestaurantWeb.Controllers
 {
+    [Authorize]
     public class DrinkController : Controller
     {
         private readonly IMapper _mapper;
@@ -22,6 +20,7 @@ namespace PV179_RestaurantWeb.Controllers
             _localizationService = localizationService;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             IEnumerable<DrinkDto> drinkDtos = await _drinkService.GetAllAsync();
@@ -29,6 +28,7 @@ namespace PV179_RestaurantWeb.Controllers
             return View(drinkViewModels);
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)

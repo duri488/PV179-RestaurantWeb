@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Net.Mail;
-using System.Net;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +9,7 @@ using RestaurantWebBL.Interfaces;
 
 namespace PV179_RestaurantWeb.Controllers
 {
+    [Authorize]
     public class RestaurantController : Controller
     {
         private readonly IRestaurantService _restaurantService;
@@ -22,6 +22,8 @@ namespace PV179_RestaurantWeb.Controllers
             _mapper = mapper;
             _localizationService = localizationService;
         }
+        
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var restaurant = await _restaurantService.GetFirstAsync();
@@ -32,7 +34,6 @@ namespace PV179_RestaurantWeb.Controllers
             return View(model);
         }
 
-        [Authorize]
         public async Task<IActionResult> Update()
         {
             var restaurant = await _restaurantService.GetFirstAsync();
@@ -69,6 +70,7 @@ namespace PV179_RestaurantWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<IActionResult> ContactUsMail(RestaurantViewModel model)
         {
             try

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using RestaurantWebBL.Interfaces;
 
 namespace PV179_RestaurantWeb.Controllers
 {
+    [Authorize]
     public class DailyMenuController : Controller
     {
         private readonly IMapper _mapper;
@@ -25,6 +27,7 @@ namespace PV179_RestaurantWeb.Controllers
         }
 
         // GET: DailyMenu
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             IEnumerable<DailyMenuDto> dailyMenuDtos = await _dailyMenuService.GetAllAsync(true);
@@ -33,6 +36,7 @@ namespace PV179_RestaurantWeb.Controllers
         }
 
         // GET: DailyMenu/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -40,18 +44,29 @@ namespace PV179_RestaurantWeb.Controllers
                 return NotFound();
             }
 
-            DailyMenuDto? dailyMenuDto = await _dailyMenuService.GetByIdAsync(id.Value, true);
-            
-            if (dailyMenuDto == null)
+            DailyMenuViewModel? dailyMenu = await GetDetailViewModelById(id);
+            if (dailyMenu == null)
             {
                 return NotFound();
+            }
+            
+            return View(dailyMenu);
+        }
+
+        private async Task<DailyMenuViewModel?> GetDetailViewModelById([DisallowNull] int? id)
+        {
+            DailyMenuDto? dailyMenuDto = await _dailyMenuService.GetByIdAsync(id.Value, true);
+
+            if (dailyMenuDto == null)
+            {
+                return null;
             }
 
             var dailyMenu = _mapper.Map<DailyMenuViewModel>(dailyMenuDto);
             IEnumerable<AllergenDto> allergenDtos = await _allergenService.GetByFlags(dailyMenuDto.Meal.AllergenFlags);
             List<AllergenViewModel> allergens = LocalizeAllergens(allergenDtos).ToList();
             dailyMenu.Meal.Allergens = allergens;
-            return View(dailyMenu);
+            return dailyMenu;
         }
 
         private IEnumerable<AllergenViewModel> LocalizeAllergens(IEnumerable<AllergenDto> allergenDtos)
@@ -71,7 +86,6 @@ namespace PV179_RestaurantWeb.Controllers
         }
 
         // GET: DailyMenu/Create
-        [Authorize]
         public async Task<IActionResult> Create()
         {
             var dailyMenuCreateModel = new DailyMenuCreateModel();
@@ -107,7 +121,6 @@ namespace PV179_RestaurantWeb.Controllers
         }
 
         // GET: DailyMenu/Delete/5
-        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -115,16 +128,13 @@ namespace PV179_RestaurantWeb.Controllers
                 return NotFound();
             }
 
-            var dailyMenuDto =  await _dailyMenuService.GetByIdAsync(id.Value, true);
-            if (dailyMenuDto == null)
+            DailyMenuViewModel? dailyMenu = await GetDetailViewModelById(id);
+            
+            if (dailyMenu == null)
             {
                 return NotFound();
             }
-
-            DailyMenuViewModel dailyMenu = _mapper.Map<DailyMenuViewModel>(dailyMenuDto);
-            IEnumerable<AllergenDto> allergenDtos = await _allergenService.GetByFlags(dailyMenuDto.Meal.AllergenFlags);
-            List<AllergenViewModel> allergens = LocalizeAllergens(allergenDtos).ToList();
-            dailyMenu.Meal.Allergens = allergens;
+            
             return View(dailyMenu);
         }
         

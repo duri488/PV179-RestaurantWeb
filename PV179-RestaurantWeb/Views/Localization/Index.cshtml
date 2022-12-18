@@ -54,7 +54,8 @@
                     {
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            <input class="btn btn-danger" type="submit" value="@LocalizationService.GetStringWithCode("localization-delete")" />
+                            // Delete turned off to avoid unnecessary exceptions
+                            @* <input class="btn btn-danger" type="submit" value="@LocalizationService.GetStringWithCode("localization-delete")" /> *@
                             <a class="btn btn-secondary my-1" asp-action="Update" asp-route-id="@item.Id">@LocalizationService.GetStringWithCode("localization-edit")</a>
                         }
                     }

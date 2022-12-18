@@ -23,25 +23,23 @@ public class WeeklyMenuService : IWeeklyMenuService
         _weeklyMenuQueryObject = weeklyMenuQueryObject;
     }
 
-    public async Task<int> UpsertAsync(WeeklyMenuDto weeklyMenuDto, int? mealId, int? restaurantId)
+    public async Task<int> UpsertAsync(WeeklyMenuDto weeklyMenuDto)
     {
         WeeklyMenu? weeklyMenu = await _weeklyMenuRepository.GetByIdAsync(weeklyMenuDto.Id);
         if (weeklyMenu is null)
         {
-            weeklyMenuDto.Id = await CreateAsync(weeklyMenuDto, mealId, restaurantId);
+            weeklyMenuDto.Id = await CreateAsync(weeklyMenuDto);
             return weeklyMenuDto.Id;
         }
 
-        await UpdateAsync(weeklyMenuDto, mealId, restaurantId);
+        await UpdateAsync(weeklyMenuDto);
         return weeklyMenuDto.Id;
     }
 
-    public async Task<int> CreateAsync(WeeklyMenuDto createdEntity, int? mealId, int? restaurantId)
+    public async Task<int> CreateAsync(WeeklyMenuDto createdEntity)
     {
         AssertNavigationalPropertiesAreNull(createdEntity);
         var weeklyMenu = _mapper.Map<WeeklyMenu>(createdEntity);
-        weeklyMenu.MealId = mealId;
-        weeklyMenu.RestaurantId = restaurantId;
         await using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
         int id = _weeklyMenuRepository.Insert(weeklyMenu);
         await unitOfWork.CommitAsync();
@@ -54,15 +52,13 @@ public class WeeklyMenuService : IWeeklyMenuService
         return _mapper.Map<WeeklyMenuDto?>(dailyMenu);
     }
 
-    public async Task UpdateAsync(WeeklyMenuDto updatedEntity, int? mealId, int? restaurantId)
+    public async Task UpdateAsync(WeeklyMenuDto updatedEntity)
     {
         AssertNavigationalPropertiesAreNull(updatedEntity);
         WeeklyMenu weeklyMenu = await _weeklyMenuRepository.GetByIdAsync(updatedEntity.Id) ??
                                  throw new InvalidOperationException($"Entity with id {updatedEntity.Id} does not exist!");;
         weeklyMenu.DateFrom = updatedEntity.DateFrom;
         weeklyMenu.DateTo = updatedEntity.DateTo;
-        weeklyMenu.MealId = mealId;
-        weeklyMenu.RestaurantId = restaurantId;
         await using IUnitOfWork unitOfWork = _unitOfWorkFactory.Build();
         _weeklyMenuRepository.Update(weeklyMenu);
         await unitOfWork.CommitAsync();
@@ -97,10 +93,6 @@ public class WeeklyMenuService : IWeeklyMenuService
                                    $"WeeklyMenuDto.DateFrom={weeklyMenuDto.DateFrom}" +
                                    $"WeeklyMenuDto.DateTo={weeklyMenuDto.DateTo}";
         var throwString = "";
-        if (weeklyMenuDto.Meal != null)
-            throwString += $"Meal was set when attempting to {operation} weekly menu!\n";
-        if(weeklyMenuDto.Restaurant != null)
-            throwString += $"Restaurant was set when attempting to {operation} weekly menu!\n";
         if (!string.IsNullOrEmpty(throwString))
             throw new InvalidOperationException(throwString + entityInformation);
     }

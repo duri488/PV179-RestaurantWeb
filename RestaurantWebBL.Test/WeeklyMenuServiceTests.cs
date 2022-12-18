@@ -59,10 +59,6 @@ public class WeeklyMenuServiceTests
             DateFrom = DateTime.Today.Add(TimeSpan.FromDays(-7)),
             DateTo = DateTime.Today,
             Id = 1,
-            Meal = _meal,
-            MealId = _meal.Id,
-            Restaurant = _restaurant,
-            RestaurantId = _restaurant.Id
         };
 
         _weeklyMenuDto = new WeeklyMenuDto()
@@ -96,7 +92,7 @@ public class WeeklyMenuServiceTests
 
         var service = new WeeklyMenuService(_weeklyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object,
             _weeklyMenuQueryObjectMock.Object);
-        await service.CreateAsync(_weeklyMenuDto, _weeklyMenu.MealId, _weeklyMenu.RestaurantId);
+        await service.CreateAsync(_weeklyMenuDto);
         
         _unitOfWorkMock.Verify(u => u.CommitAsync(), Times.Once);
         AssertEqual(expected, actual);
@@ -130,7 +126,7 @@ public class WeeklyMenuServiceTests
         
         var service = new WeeklyMenuService(_weeklyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object,
             _weeklyMenuQueryObjectMock.Object);
-        await service.UpdateAsync(_weeklyMenuDto, _weeklyMenu.MealId, _weeklyMenu.RestaurantId);
+        await service.UpdateAsync(_weeklyMenuDto);
         
         _unitOfWorkMock.Verify(u => u.CommitAsync(), Times.Once);
         AssertEqual(expected, actual);
@@ -163,19 +159,11 @@ public class WeeklyMenuServiceTests
 
     private static void AssertEqual(WeeklyMenu actual, WeeklyMenu expected)
     {
-        expected.Should().BeEquivalentTo(actual, options =>
-            options
-                .Excluding(o => o.Restaurant)
-                .Excluding(o => o.Meal)
-        );
+        expected.Should().BeEquivalentTo(actual);
     }
 
     private static void AssertEqual(WeeklyMenuDto actual, WeeklyMenuDto expected)
     {
-        expected.Should().BeEquivalentTo(actual, options =>
-            options
-                .Excluding(o => o.Meal)
-                .Excluding(o => o.Restaurant)
-        );
+        expected.Should().BeEquivalentTo(actual);
     }
 }

@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using RestaurantWeb.Contract.Enums;
 using RestaurantWebDAL.Models;
-using RestaurantWebUtilities.Helpers;
 
 namespace RestaurantWebDAL;
 
@@ -1141,16 +1140,12 @@ public static class DataInitializer
                     Id = 1,
                     DateFrom = new DateTime(2022, 10, 3),
                     DateTo = new DateTime(2022, 10, 7),
-                    MealId = 1,
-                    RestaurantId = 1,
                 },
                 new WeeklyMenu
                 {
                     Id = 2,
                     DateFrom = new DateTime(2022, 10, 10),
                     DateTo = new DateTime(2022, 10, 14),
-                    MealId = 2,
-                    RestaurantId = 1,
                 }
             );
     }

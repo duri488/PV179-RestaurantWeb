@@ -3,6 +3,7 @@ using FluentAssertions;
 using Moq;
 using RestaurantWeb.Contract;
 using RestaurantWebBL.DTOs;
+using RestaurantWebBL.Interfaces;
 using RestaurantWebBL.MappingProfiles;
 using RestaurantWebBL.Services;
 using RestaurantWebDAL.Models;
@@ -15,6 +16,7 @@ public class DailyMenuServiceTests
     private Mock<IEagerLoadingRepository<DailyMenu>> _dailyMenuRepositoryMock = null!;
     private Mock<IUnitOfWorkFactory> _unitOfWorkFactoryMock = null!;
     private Mock<IUnitOfWork> _unitOfWorkMock = null!;
+    private Mock<IDailyMenuQueryObject> _dailyMenuQueryObjectMock = null!;
 
     private DailyMenu _dailyMenu = null!;
     private Meal _meal = null!;
@@ -55,11 +57,7 @@ public class DailyMenuServiceTests
         {
             DateFrom = DateTime.Now.Add(TimeSpan.FromDays(-7)),
             DateTo = DateTime.Now,
-            Id = 1,
-            Meal = _meal,
-            MealId = _meal.Id,
-            Restaurant = _restaurant,
-            RestaurantId = _restaurant.Id
+            Id = 1
         };
 
         _dailyMenu = new DailyMenu
@@ -90,6 +88,7 @@ public class DailyMenuServiceTests
         _unitOfWorkMock.Setup(m => m.CommitAsync()).Returns(Task.CompletedTask);
         _unitOfWorkFactoryMock = new Mock<IUnitOfWorkFactory>();
         _unitOfWorkFactoryMock.Setup(m => m.Build()).Returns(_unitOfWorkMock.Object);
+        _dailyMenuQueryObjectMock = new Mock<IDailyMenuQueryObject>();
     }
 
     [Test]
@@ -101,7 +100,8 @@ public class DailyMenuServiceTests
             .Setup(_ => _.Insert(It.IsAny<DailyMenu>()))
             .Callback(new InvocationAction(i => actual = (DailyMenu) i.Arguments[0]));
 
-        var service = new DailyMenuService(_dailyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object);
+        var service = new DailyMenuService(_dailyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object,
+            _dailyMenuQueryObjectMock.Object);
         await service.CreateAsync(_dailyMenuDto, _dailyMenu.MealId, _dailyMenu.WeeklyMenuId);
         
         _unitOfWorkMock.Verify(u => u.CommitAsync(), Times.Once);
@@ -115,7 +115,8 @@ public class DailyMenuServiceTests
         _dailyMenuRepositoryMock.Setup(m => m.GetByIdAsync(1, false).Result)
             .Returns(_dailyMenu);
 
-        var service = new DailyMenuService(_dailyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object);
+        var service = new DailyMenuService(_dailyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object,
+            _dailyMenuQueryObjectMock.Object);
         DailyMenuDto? actual = await service.GetByIdAsync(1);
         
         Assert.That(actual, Is.Not.Null);
@@ -133,7 +134,8 @@ public class DailyMenuServiceTests
         _dailyMenuRepositoryMock.Setup(_ => _.GetByIdAsync(_dailyMenu.Id).Result)
             .Returns(_dailyMenu);
         
-        var service = new DailyMenuService(_dailyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object);
+        var service = new DailyMenuService(_dailyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object,
+            _dailyMenuQueryObjectMock.Object);
         await service.UpdateAsync(_dailyMenuDto, _dailyMenu.MealId, _dailyMenu.WeeklyMenuId);
         
         _unitOfWorkMock.Verify(u => u.CommitAsync(), Times.Once);
@@ -149,7 +151,8 @@ public class DailyMenuServiceTests
     [Test]
     public async Task DailyMenuService_DeleteAsync_HappyPath()
     {
-        var service = new DailyMenuService(_dailyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object);
+        var service = new DailyMenuService(_dailyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object,
+            _dailyMenuQueryObjectMock.Object);
         await service.DeleteAsync(1);
         
         _unitOfWorkMock.Verify(u => u.CommitAsync(), Times.Once);
@@ -163,7 +166,8 @@ public class DailyMenuServiceTests
         _dailyMenuRepositoryMock.Setup(r => r.GetAllAsync(false).Result)
             .Returns(new List<DailyMenu> {_dailyMenu});
         
-        var service = new DailyMenuService(_dailyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object);
+        var service = new DailyMenuService(_dailyMenuRepositoryMock.Object, _mapper, _unitOfWorkFactoryMock.Object,
+            _dailyMenuQueryObjectMock.Object);
         IEnumerable<DailyMenuDto> actual = await service.GetAllAsync();
         
         AssertEqual(expected.First(), actual.First());

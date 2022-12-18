@@ -50,4 +50,26 @@ public class MenuFacade : IMenuFacade
     {
         return _weeklyMenuService.GetWeeklyMenusByDate(date);
     }
+
+    public async Task<IEnumerable<DailyMenuDto>> GetDailyMenusForWeeklyMenu(int weeklyMenuId, bool includeNavigationProperty)
+    {
+        var dailyMenuDtos = _dailyMenuService.GetDailyMenusForWeeklyMenu(weeklyMenuId);
+
+        if (!includeNavigationProperty) return dailyMenuDtos;
+        
+        // I realize this is incredibly ugly and should not be done this way
+        // A better solution would be to move the DailyMenuId to Meal and then poll Meals based on the DailyMenuId
+        // However due to deadline, I don't have enough time so need a hacky workaround
+        List<DailyMenuDto> dailyMenuDtosWithNavigationProperties = new();
+        foreach (DailyMenuDto dailyMenuDto in dailyMenuDtos)
+        {
+            DailyMenuDto? dailyMenuDtoWithProperties = 
+                await _dailyMenuService.GetByIdAsync(dailyMenuDto.Id, true);
+            if(dailyMenuDtoWithProperties is null) continue;
+                
+            dailyMenuDtosWithNavigationProperties.Add(dailyMenuDtoWithProperties);
+        }
+
+        return dailyMenuDtosWithNavigationProperties;
+    }
 }

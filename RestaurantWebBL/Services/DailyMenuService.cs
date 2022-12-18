@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using RestaurantWeb.Contract;
 using RestaurantWebBL.DTOs;
+using RestaurantWebBL.DTOs.FilterDTOs;
 using RestaurantWebBL.Interfaces;
 using RestaurantWebDAL.Models;
 
@@ -11,16 +12,19 @@ public class DailyMenuService : IDailyMenuService
     private readonly IEagerLoadingRepository<DailyMenu> _dailyMenuRepository;
     private readonly IMapper _mapper;
     private readonly IUnitOfWorkFactory _unitOfWorkFactory;
+    private readonly IDailyMenuQueryObject _dailyMenuQueryObject;
+    
     public DailyMenuService(IEagerLoadingRepository<DailyMenu> dailyMenuRepository,
         IMapper mapper,
-        IUnitOfWorkFactory unitOfWorkFactory)
+        IUnitOfWorkFactory unitOfWorkFactory, IDailyMenuQueryObject dailyMenuQueryObject)
     {
         _dailyMenuRepository = dailyMenuRepository;
         _mapper = mapper;
         _unitOfWorkFactory = unitOfWorkFactory;
+        _dailyMenuQueryObject = dailyMenuQueryObject;
     }
 
-    public async Task<int> UpsertAsync(DailyMenuDto dailyMenuDto, int? mealId, int? weeklyMenuId)
+    public async Task<int> UpsertAsync(DailyMenuDto dailyMenuDto, int? mealId, int weeklyMenuId)
     {
         DailyMenu? dailyMenu = await _dailyMenuRepository.GetByIdAsync(dailyMenuDto.Id);
         if (dailyMenu is null)
@@ -33,7 +37,7 @@ public class DailyMenuService : IDailyMenuService
         return dailyMenuDto.Id;
     }
 
-    public async Task<int> CreateAsync(DailyMenuDto createdEntity, int? mealId, int? weeklyMenuId)
+    public async Task<int> CreateAsync(DailyMenuDto createdEntity, int? mealId, int weeklyMenuId)
     {
         AssertNavigationalPropertiesAreNull(createdEntity);
         var dailyMenu = _mapper.Map<DailyMenu>(createdEntity);
@@ -56,7 +60,7 @@ public class DailyMenuService : IDailyMenuService
         return _mapper.Map<DailyMenuDto?>(dailyMenu);
     }
 
-    public async Task UpdateAsync(DailyMenuDto updatedEntity, int? mealId, int? weeklyMenuId)
+    public async Task UpdateAsync(DailyMenuDto updatedEntity, int? mealId, int weeklyMenuId)
     {
         AssertNavigationalPropertiesAreNull(updatedEntity);
         DailyMenu dailyMenu = await _dailyMenuRepository.GetByIdAsync(updatedEntity.Id) ?? 
@@ -101,5 +105,15 @@ public class DailyMenuService : IDailyMenuService
             throwString += $"WeeklyMenu was set when attempting to {operation} daily menu!\n";
         if (!string.IsNullOrEmpty(throwString))
             throw new InvalidOperationException(throwString + entityInformation);
+    }
+
+    public IEnumerable<DailyMenuDto> GetDailyMenusForWeeklyMenu(int weeklyMenuId)
+    {
+        var dailyMenuFilter = new DailyMenuFilterDto
+        {
+            WeeklyMenuId = weeklyMenuId
+        };
+
+        return _dailyMenuQueryObject.DailyMenusAssociatedToWeeklyMenu(dailyMenuFilter).Items;
     }
 }

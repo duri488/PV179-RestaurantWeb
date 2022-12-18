@@ -22,5 +22,5 @@ public class DailyMenuCreateModel
     public IEnumerable<WeeklyMenuDto>? WeeklyMenusEnumerable { get; set; }
     [Range(1, int.MaxValue, ErrorMessage = "Value must be greater than 0")]
     [Required(ErrorMessage = "This field is required")]
-    public int? WeeklyMenuId { get; set; }
+    public int WeeklyMenuId { get; set; }
 }

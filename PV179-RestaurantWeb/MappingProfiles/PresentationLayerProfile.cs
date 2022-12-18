@@ -9,12 +9,11 @@ public class PresentationLayerProfile : Profile
     public PresentationLayerProfile()
     {
         CreateMap<RestaurantViewModel, RestaurantDto>().ReverseMap();
-       // CreateMap<UserViewModel, UserDto>().ReverseMap();
         CreateMap<DailyMenuViewModel, DailyMenuDto>().ReverseMap();
+        CreateMap<DailyMenuCreateModel, DailyMenuDto>().ReverseMap();
         CreateMap<WeeklyMenuViewModel, WeeklyMenuDto>().ReverseMap();
         CreateMap<MealViewModel, MealDto>().ReverseMap();
         CreateMap<AllergenViewModel, AllergenDto>().ReverseMap();
         CreateMap<DrinkViewModel, DrinkDto>().ReverseMap();
-        //CreateMap<DrinkCreateModel, DrinkDto>().ReverseMap();
     }
 }

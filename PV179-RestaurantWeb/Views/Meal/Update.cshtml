@@ -41,8 +41,11 @@
                 <span asp-validation-for="Allergens" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value=@LocalizationService.GetStringWithCode("meal-edit") class="btn btn-primary" />
+                <input type="submit" value=@LocalizationService.GetStringWithCode("meal-edit") class="btn btn-success" />
             </div>
         </form>
     </div>
+</div>
+<div>
+    <a asp-action="Index" class="btn btn-primary">@LocalizationService.GetStringWithCode("back")</a>
 </div>

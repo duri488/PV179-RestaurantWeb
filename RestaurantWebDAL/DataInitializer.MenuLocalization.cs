@@ -57,21 +57,21 @@ public static partial class DataInitializer
                     IsoLanguageCode = "en",
                     StringCode = "no-weekly-menus",
                     LocalizedString = "We apologize, there are currently no weekly menus offered for this date"
+                },
+                new Localization
+                {
+                    Id = 309,
+                    IsoLanguageCode = "en",
+                    StringCode = "weekly-menu-date-from",
+                    LocalizedString = "Date From"
+                },
+                new Localization
+                {
+                    Id = 310,
+                    IsoLanguageCode = "en",
+                    StringCode = "weekly-menu-date-to",
+                    LocalizedString = "Date To"
                 }
-                // new Localization
-                // {
-                //     Id = 309,
-                //     IsoLanguageCode = "en",
-                //     StringCode = "",
-                //     LocalizedString = ""
-                // },
-                // new Localization
-                // {
-                //     Id = 310,
-                //     IsoLanguageCode = "en",
-                //     StringCode = "",
-                //     LocalizedString = ""
-                // },
                 // new Localization
                 // {
                 //     Id = 311,
@@ -135,21 +135,21 @@ public static partial class DataInitializer
                     IsoLanguageCode = "sk",
                     StringCode = "no-weekly-menus",
                     LocalizedString = "Ľutujeme, pre tento týždeň neponúkame žiadne meníčka."
+                },
+                new Localization
+                {
+                    Id = 358,
+                    IsoLanguageCode = "sk",
+                    StringCode = "weekly-menu-date-from",
+                    LocalizedString = "Dátum (Od)"
+                },
+                new Localization
+                {
+                    Id = 359,
+                    IsoLanguageCode = "sk",
+                    StringCode = "weekly-menu-date-to",
+                    LocalizedString = "Dátum(Do)"
                 }
-                // new Localization
-                // {
-                //     Id = 358,
-                //     IsoLanguageCode = "sk",
-                //     StringCode = "",
-                //     LocalizedString = ""
-                // },
-                // new Localization
-                // {
-                //     Id = 359,
-                //     IsoLanguageCode = "sk",
-                //     StringCode = "",
-                //     LocalizedString = ""
-                // },
                 // new Localization
                 // {
                 //     Id = 360,

@@ -1,19 +1,21 @@
 @using RestaurantWebDAL.Models
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@using RestaurantWebBL.Interfaces
 @model IEnumerable<DailyMenuViewModel>
 @inject SignInManager<User> SignInManager
+@inject ILocalizationService LocalizationService
 
 @{
-    ViewData["Title"] = "Daily Menus";
+    ViewData["Title"] = @LocalizationService.GetStringWithCode("daily-menu");
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="row">
-    <h1 class="col-auto me-auto">Daily Menus</h1>
+    <h1 class="col-auto me-auto">@LocalizationService.GetStringWithCode("daily-menu")</h1>
     @if (SignInManager.IsSignedIn(User))
     {
         <p class="col-auto mt-auto mb-auto">
-            <a asp-action="Create" class="btn btn-success">Create New</a>
+            <a asp-action="Create" class="btn btn-success">@LocalizationService.GetStringWithCode("create")</a>
         </p>
     }
 </div>
@@ -22,16 +24,16 @@
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Date)
+            @LocalizationService.GetStringWithCode("daily-menu-date")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DayOfWeek)
+            @LocalizationService.GetStringWithCode("daily-menu-day")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MenuPrice)
+            @LocalizationService.GetStringWithCode("daily-menu-price")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Meal)
+            @LocalizationService.GetStringWithCode("daily-menu-meal")
         </th>
         <th></th>
     </tr>
@@ -52,11 +54,11 @@
                 @Html.DisplayFor(modelItem => item.Meal.Name)
             </td>
             <td>
-                <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.Id">Details</a> 
+                <a asp-action="Details" class="btn btn-primary" asp-route-id="@item.Id">@LocalizationService.GetStringWithCode("details")</a> 
                 @if (SignInManager.IsSignedIn(User))
                 {
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">@LocalizationService.GetStringWithCode("delete")</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">@LocalizationService.GetStringWithCode("edit")</a>
                 }
                
             </td>

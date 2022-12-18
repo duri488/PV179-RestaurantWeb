@@ -167,7 +167,7 @@ public static partial class DataInitializer
                 new Localization
                 {
                     Id = 53,
-                    IsoLanguageCode = "sk",
+                    IsoLanguageCode = "en",
                     StringCode = "sulfur-number",
                     LocalizedString = "12"
                 },
@@ -196,14 +196,14 @@ public static partial class DataInitializer
                 new Localization
                 {
                     Id = 57,
-                    IsoLanguageCode = "sk",
+                    IsoLanguageCode = "en",
                     StringCode = "molluscs-number",
                     LocalizedString = "14"
                 },
                 new Localization
                 {
                     Id = 58,
-                    IsoLanguageCode = "sk",
+                    IsoLanguageCode = "en",
                     StringCode = "molluscs-name",
                     LocalizedString = "Molluscs and products thereof"
                 }

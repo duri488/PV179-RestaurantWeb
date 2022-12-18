@@ -64,6 +64,48 @@ public static partial class DataInitializer
                     IsoLanguageCode = "sk",
                     StringCode = "weekly-menu",
                     LocalizedString = "Týždenné menu"
+                },
+                new Localization
+                {
+                    Id = 400,
+                    IsoLanguageCode = "sk",
+                    StringCode = "delete",
+                    LocalizedString = "Vymazať"
+                },
+                new Localization
+                {
+                    Id = 401,
+                    IsoLanguageCode = "sk",
+                    StringCode = "edit",
+                    LocalizedString = "Upraviť"
+                },
+                new Localization
+                {
+                    Id = 402,
+                    IsoLanguageCode = "sk",
+                    StringCode = "back",
+                    LocalizedString = "Späť"
+                },
+                new Localization
+                {
+                    Id = 403,
+                    IsoLanguageCode = "sk",
+                    StringCode = "details",
+                    LocalizedString = "Detaily"
+                },
+                new Localization
+                {
+                    Id = 404,
+                    IsoLanguageCode = "sk",
+                    StringCode = "confirm-delete",
+                    LocalizedString = "Ste si istý že si prajete zmazať túto položku?"
+                },
+                new Localization
+                {
+                    Id = 405,
+                    IsoLanguageCode = "sk",
+                    StringCode = "create",
+                    LocalizedString = "Vytvoriť"
                 }
             );
     }
@@ -127,6 +169,48 @@ public static partial class DataInitializer
                     IsoLanguageCode = "en",
                     StringCode = "weekly-menu",
                     LocalizedString = "Weekly Menu"
+                },
+                new Localization
+                {
+                    Id = 450,
+                    IsoLanguageCode = "en",
+                    StringCode = "delete",
+                    LocalizedString = "Delete"
+                },
+                new Localization
+                {
+                    Id = 451,
+                    IsoLanguageCode = "en",
+                    StringCode = "edit",
+                    LocalizedString = "Edit"
+                },
+                new Localization
+                {
+                    Id = 452,
+                    IsoLanguageCode = "en",
+                    StringCode = "back",
+                    LocalizedString = "Back"
+                },
+                new Localization
+                {
+                    Id = 453,
+                    IsoLanguageCode = "en",
+                    StringCode = "details",
+                    LocalizedString = "Details"
+                },
+                new Localization
+                {
+                    Id = 454,
+                    IsoLanguageCode = "en",
+                    StringCode = "confirm-delete",
+                    LocalizedString = "Are you sure you wish to delete this?"
+                },
+                new Localization
+                {
+                    Id = 455,
+                    IsoLanguageCode = "en",
+                    StringCode = "create",
+                    LocalizedString = "Create"
                 }
             );
     }    

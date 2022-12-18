@@ -127,6 +127,36 @@ public static partial class DataInitializer
         SeedSkMealLocalization(modelBuilder);
         SeedSkDailyMenuLocalization(modelBuilder);
         SeedEnDailyMenuLocalization(modelBuilder);
+        SeedSkLocalization(modelBuilder);
+        SeedEnLocalization(modelBuilder);
+    }
+
+    private static void SeedSkLocalization(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Localization>()
+        .HasData(
+            new Localization
+            {
+                Id = 2000,
+                IsoLanguageCode = "sk",
+                StringCode = "localization",
+                LocalizedString = "Lokalizácia"
+            }
+            );
+    }
+
+    private static void SeedEnLocalization(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Localization>()
+        .HasData(
+            new Localization
+            {
+                Id = 2001,
+                IsoLanguageCode = "en",
+                StringCode = "localization",
+                LocalizedString = "Localization"
+            }
+    );
     }
 
     private static void SeedEnDrinkLocalization(ModelBuilder modelBuilder)

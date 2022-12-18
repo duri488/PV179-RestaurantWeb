@@ -7,35 +7,35 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>@LocalizationService.GetStringWithCode("create-meal")</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create" >
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">@LocalizationService.GetStringWithCode("meal-name")</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
+                <label asp-for="Price" class="control-label">@LocalizationService.GetStringWithCode("meal-price")</label>
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
              <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
+                <label asp-for="Description" class="control-label">@LocalizationService.GetStringWithCode("meal-description")</label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Picture" class="control-label"></label>
+                <label asp-for="Picture" class="control-label">@LocalizationService.GetStringWithCode("meal-picture")</label>
                 <label name="PictureDescription">@LocalizationService.GetStringWithCode("meal-pictureDescription")</label>
                 <input asp-for="Picture" class="form-control" />
                 <span asp-validation-for="Picture" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Allergens" class="control-label"></label>
+                <label asp-for="Allergens" class="control-label">@LocalizationService.GetStringWithCode("meal-allergens")</label>
                 <label name="AllergensDescription">@LocalizationService.GetStringWithCode("meal-allergensDesctption")</label>
                 <input asp-for="Allergens" class="form-control" />
                 <span asp-validation-for="Allergens" class="text-danger"></span>
@@ -47,7 +47,7 @@
                 <br/>
             }
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value=@LocalizationService.GetStringWithCode("create-meal") class="btn btn-primary" />
             </div>
         </form>
     </div>

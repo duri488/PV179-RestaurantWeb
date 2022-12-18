@@ -7,10 +7,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>@LocalizationService.GetStringWithCode("meal-details")</h1>
 
 <div>
-    <h4>Meal</h4>
+    <h4>@LocalizationService.GetStringWithCode("meal-single")</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -45,5 +45,5 @@
     </div>
 </div>
 <div>
-    <a class="btn btn-lg btn-primary" asp-action="Index">@LocalizationService.GetStringWithCode("drink-back")</a>
+    <a class="btn btn-lg btn-primary" asp-action="Index">@LocalizationService.GetStringWithCode("meal-back")</a>
 </div>

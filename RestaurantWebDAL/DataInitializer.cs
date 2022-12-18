@@ -248,7 +248,7 @@ public static partial class DataInitializer
                     Id = 114,
                     IsoLanguageCode = "sk",
                     StringCode = "drink-back",
-                    LocalizedString = "Spat"
+                    LocalizedString = "Späť"
                 }
                 );
     }
@@ -333,6 +333,27 @@ public static partial class DataInitializer
                     IsoLanguageCode = "en",
                     StringCode = "meal-pictureDescription",
                     LocalizedString = " - Write link to picture"
+                },
+                new Localization
+                {
+                    Id = 1002,
+                    IsoLanguageCode = "en",
+                    StringCode = "meal",
+                    LocalizedString = "Meals"
+                },
+                new Localization
+                {
+                    Id = 1004,
+                    IsoLanguageCode = "en",
+                    StringCode = "meal-single",
+                    LocalizedString = "Meal"
+                },
+                new Localization
+                {
+                    Id = 1006,
+                    IsoLanguageCode = "en",
+                    StringCode = "meal-picture",
+                    LocalizedString = "Picture"
                 }
                 );
     }
@@ -346,7 +367,7 @@ public static partial class DataInitializer
                     Id = 126,
                     IsoLanguageCode = "sk",
                     StringCode = "create-meal",
-                    LocalizedString = "Vytvorit"
+                    LocalizedString = "Vytvoriť"
                 },
                 new Localization
                 {
@@ -374,21 +395,21 @@ public static partial class DataInitializer
                     Id = 130,
                     IsoLanguageCode = "sk",
                     StringCode = "meal-edit",
-                    LocalizedString = "Upravit"
+                    LocalizedString = "Upraviť"
                 },
                 new Localization
                 {
                     Id = 131,
                     IsoLanguageCode = "sk",
                     StringCode = "meal-delete",
-                    LocalizedString = "Vymazat"
+                    LocalizedString = "Vymazať"
                 },
                 new Localization
                 {
                     Id = 132,
                     IsoLanguageCode = "sk",
                     StringCode = "meal-back",
-                    LocalizedString = "Spat"
+                    LocalizedString = "Späť"
                 },
                 new Localization
                 {
@@ -402,21 +423,42 @@ public static partial class DataInitializer
                     Id = 134,
                     IsoLanguageCode = "sk",
                     StringCode = "meal-allergens",
-                    LocalizedString = "Alergeny"
+                    LocalizedString = "Alergény"
                 },
                 new Localization
                 {
                     Id = 135,
                     IsoLanguageCode = "sk",
                     StringCode = "meal-allergensDesctption",
-                    LocalizedString = " - Napiste cislo alergenu oddelene medzerou, okrem posledneho alegenu"
+                    LocalizedString = " - Napíšte číslo alergénu oddelené medzerou, okrem posledného alegénu"
                 },
                 new Localization
                 {
                     Id = 136,
                     IsoLanguageCode = "sk",
                     StringCode = "meal-pictureDescription",
-                    LocalizedString = " - Vlozte link na obrazok"
+                    LocalizedString = " - Vložte link na obrázok"
+                },
+                new Localization
+                {
+                    Id = 1001,
+                    IsoLanguageCode = "sk",
+                    StringCode = "meal",
+                    LocalizedString = "Jedlá"
+                },
+                new Localization
+                {
+                    Id = 1003,
+                    IsoLanguageCode = "sk",
+                    StringCode = "meal-single",
+                    LocalizedString = "Jedlo"
+                },
+                new Localization
+                {
+                    Id = 1005,
+                    IsoLanguageCode = "sk",
+                    StringCode = "meal-picture",
+                    LocalizedString = "Obrázok"
                 }
                 );
     }

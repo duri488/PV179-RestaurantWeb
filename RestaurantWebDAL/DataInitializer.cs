@@ -129,6 +129,8 @@ public static partial class DataInitializer
         SeedEnDailyMenuLocalization(modelBuilder);
         SeedSkLocalization(modelBuilder);
         SeedEnLocalization(modelBuilder);
+        SeedSkMenuLocalization(modelBuilder);
+        SeedEnMenuLocalization(modelBuilder);
     }
 
     private static void SeedSkLocalization(ModelBuilder modelBuilder)

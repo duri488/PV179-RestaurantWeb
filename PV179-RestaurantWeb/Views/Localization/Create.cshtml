@@ -7,3 +7,30 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h1>@LocalizationService.GetStringWithCode("create-drink")</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IsoLanguageCode" class="control-label"></label>
+                <input asp-for="IsoLanguageCode" class="form-control" />
+                <span asp-validation-for="IsoLanguageCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StringCode" class="control-label"></label>
+                <input asp-for="StringCode" class="form-control" />
+                <span asp-validation-for="StringCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LocalizedString" class="control-label"></label>
+                <input asp-for="LocalizedString" class="form-control" />
+                <span asp-validation-for="LocalizedString" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value=@LocalizationService.GetStringWithCode("create-drink") class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

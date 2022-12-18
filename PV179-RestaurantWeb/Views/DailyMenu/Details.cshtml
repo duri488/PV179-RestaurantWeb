@@ -1,61 +1,68 @@
+@using RestaurantWebBL.Interfaces
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model DailyMenuViewModel
+@inject ILocalizationService LocalizationService
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = @LocalizationService.GetStringWithCode("daily-menu");
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>@LocalizationService.GetStringWithCode("edit")</h1>
 
 <div>
-    <h4>DailyMenu</h4>
+    <h4>@LocalizationService.GetStringWithCode("daily-menu")</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Date)
+            @LocalizationService.GetStringWithCode("daily-menu-date")
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Date)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DayOfWeek)
+            @LocalizationService.GetStringWithCode("daily-menu-day")
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DayOfWeek)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MenuPrice)
+            @LocalizationService.GetStringWithCode("daily-menu-price")
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.MenuPrice)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Meal)
+            @LocalizationService.GetStringWithCode("meal-name")
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Meal.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Meal.Description)
+            @LocalizationService.GetStringWithCode("meal-description")
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Meal.Description)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Meal.Picture)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Meal.Picture)
+        <dd class="col-sm-10">
+            <div class="col-6">
+                <div>
+                    <img class="w-50 p-3" src="@Url.Content(Model.Meal.Picture)" />
+                </div>
+            </div>
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Meal.Allergens)
+            @LocalizationService.GetStringWithCode("meal-allergens")
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Meal.Allergens, "Allergens")
         </dd>
+        
     </dl>
 </div>
 <div>
-    @* <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> | *@
-    <a asp-action="Index">Back to List</a>
+     <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-secondary">@LocalizationService.GetStringWithCode("edit")</a>
+    <a asp-action="Index" class="btn-primary btn"> @LocalizationService.GetStringWithCode("back")</a>
 </div>

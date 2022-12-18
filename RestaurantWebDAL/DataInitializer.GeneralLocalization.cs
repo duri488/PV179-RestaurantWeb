@@ -60,7 +60,7 @@ public static partial class DataInitializer
                 },
                 new Localization
                 {
-                    Id = 100,
+                    Id = 138,
                     IsoLanguageCode = "sk",
                     StringCode = "weekly-menu",
                     LocalizedString = "Týždenné menu"
@@ -123,7 +123,7 @@ public static partial class DataInitializer
                 },
                 new Localization
                 {
-                    Id = 99,
+                    Id = 137,
                     IsoLanguageCode = "en",
                     StringCode = "weekly-menu",
                     LocalizedString = "Weekly Menu"

@@ -1,7 +1,7 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿@using RestaurantWebDAL.Models
+@using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using RestaurantWebBL.Interfaces
-@using RestaurantWebDAL.Models
 @model RestaurantViewModel
 @inject SignInManager<User> SignInManager
 @inject ILocalizationService LocalizationService
@@ -19,10 +19,10 @@
 <body>
 
     <div class="row">
-        <h1 class="display-1">@Model.Name</h1>
+        <h1 class="display-1 col-10">@Model.Name</h1>
         @if (SignInManager.IsSignedIn(User))
         {
-            <p class="col-11">
+            <p class="col-2">
                 <a asp-action="Update" class="btn btn-success btn-sm">@LocalizationService.GetStringWithCode("en","update-restaurant-button").LocalizedString</a>
             </p>
         }

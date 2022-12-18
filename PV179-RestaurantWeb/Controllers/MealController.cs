@@ -68,8 +68,7 @@ namespace PV179_RestaurantWeb.Controllers
         
         public async Task<IActionResult> Create()
         {
-            //32767 sulphur-name iso en problem not incialize
-            IEnumerable<AllergenDto> allergenDtos = await _allergenService.GetByFlags(127);
+            IEnumerable<AllergenDto> allergenDtos = await _allergenService.GetByFlags(32767);
             List<AllergenViewModel> allergens = LocalizeAllergens(allergenDtos).ToList();
             ViewBag.Allergens = allergens;
             return View();

@@ -186,6 +186,20 @@ public static partial class DataInitializer
                     IsoLanguageCode = "en",
                     StringCode = "drink-back",
                     LocalizedString = "Back"
+                },
+                new Localization
+                {
+                    Id = 1009,
+                    IsoLanguageCode = "en",
+                    StringCode = "drink",
+                    LocalizedString = "Drink"
+                },
+                new Localization
+                {
+                    Id = 1010,
+                    IsoLanguageCode = "en",
+                    StringCode = "drinks",
+                    LocalizedString = "Drinks"
                 }
                 );
     }
@@ -199,7 +213,7 @@ public static partial class DataInitializer
                     Id = 107,
                     IsoLanguageCode = "sk",
                     StringCode = "create-drink",
-                    LocalizedString = "Vytvorit"
+                    LocalizedString = "Vytvoriť"
                 },
                 new Localization
                 {
@@ -234,14 +248,14 @@ public static partial class DataInitializer
                     Id = 112,
                     IsoLanguageCode = "sk",
                     StringCode = "drink-edit",
-                    LocalizedString = "Upravit"
+                    LocalizedString = "Upraviť"
                 },
                 new Localization
                 {
                     Id = 113,
                     IsoLanguageCode = "sk",
                     StringCode = "drink-delete",
-                    LocalizedString = "Vymazat"
+                    LocalizedString = "Vymazať"
                 },
                 new Localization
                 {
@@ -249,6 +263,20 @@ public static partial class DataInitializer
                     IsoLanguageCode = "sk",
                     StringCode = "drink-back",
                     LocalizedString = "Späť"
+                },
+                new Localization
+                {
+                    Id = 1007,
+                    IsoLanguageCode = "sk",
+                    StringCode = "drink",
+                    LocalizedString = "Nápoj"
+                },
+                new Localization
+                {
+                    Id = 1008,
+                    IsoLanguageCode = "sk",
+                    StringCode = "drinks",
+                    LocalizedString = "Nápoje"
                 }
                 );
     }

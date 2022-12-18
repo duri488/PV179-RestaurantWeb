@@ -1,33 +1,35 @@
-﻿@model DrinkCreateModel
+﻿@using RestaurantWebBL.Interfaces
+@model DrinkCreateModel
+@inject ILocalizationService LocalizationService
 
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>@LocalizationService.GetStringWithCode("create-drink")</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">@LocalizationService.GetStringWithCode("drink-name")</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Volume" class="control-label"></label>
+                <label asp-for="Volume" class="control-label">@LocalizationService.GetStringWithCode("drink-volume")</label>
                 <input asp-for="Volume" class="form-control" />
                 <span asp-validation-for="Volume" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
+                <label asp-for="Price" class="control-label">@LocalizationService.GetStringWithCode("drink-price")</label>
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value=@LocalizationService.GetStringWithCode("create-drink") class="btn btn-primary" />
             </div>
         </form>
     </div>

@@ -132,6 +132,8 @@ public static class DataInitializer
         SeedEnAllergenLocalization(modelBuilder);
         SeedSkRestaurantLocalization(modelBuilder);
         SeedEnRestaurantLocalization(modelBuilder);
+        SeedEnDrinkLocalization(modelBuilder);
+        SeedSkDrinkLocalization(modelBuilder);
     }
 
     private static void SeedEnRestaurantLocalization(ModelBuilder modelBuilder)
@@ -425,6 +427,132 @@ public static class DataInitializer
                     IsoLanguageCode = "sk",
                     StringCode = "meals",
                     LocalizedString = "Jedlá"
+                }
+                );
+    }
+
+    private static void SeedEnDrinkLocalization(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Localization>()
+            .HasData(
+                new Localization
+                {
+                    Id = 99,
+                    IsoLanguageCode = "en",
+                    StringCode = "create-drink",
+                    LocalizedString = "Create New"
+                },
+                new Localization
+                {
+                    Id = 100,
+                    IsoLanguageCode = "en",
+                    StringCode = "drink-name",
+                    LocalizedString = "Name"
+                },
+                new Localization
+                {
+                    Id = 101,
+                    IsoLanguageCode = "en",
+                    StringCode = "drink-volume",
+                    LocalizedString = "Volume"
+                },
+                new Localization
+                {
+                    Id = 102,
+                    IsoLanguageCode = "en",
+                    StringCode = "drink-price",
+                    LocalizedString = "Price"
+                },
+                new Localization
+                {
+                    Id = 103,
+                    IsoLanguageCode = "en",
+                    StringCode = "drink-details",
+                    LocalizedString = "Details"
+                },
+                new Localization
+                {
+                    Id = 104,
+                    IsoLanguageCode = "en",
+                    StringCode = "drink-edit",
+                    LocalizedString = "Edit"
+                },
+                new Localization
+                {
+                    Id = 105,
+                    IsoLanguageCode = "en",
+                    StringCode = "drink-delete",
+                    LocalizedString = "Delete"
+                },
+                new Localization
+                {
+                    Id = 106,
+                    IsoLanguageCode = "en",
+                    StringCode = "drink-back",
+                    LocalizedString = "Back"
+                }
+                );
+    }
+
+    private static void SeedSkDrinkLocalization(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Localization>()
+            .HasData(
+                new Localization
+                {
+                    Id = 107,
+                    IsoLanguageCode = "sk",
+                    StringCode = "create-drink",
+                    LocalizedString = "Vytvorit"
+                },
+                new Localization
+                {
+                    Id = 108,
+                    IsoLanguageCode = "sk",
+                    StringCode = "drink-name",
+                    LocalizedString = "Meno"
+                },
+                new Localization
+                {
+                    Id = 109,
+                    IsoLanguageCode = "sk",
+                    StringCode = "drink-volume",
+                    LocalizedString = "Objem"
+                },
+                new Localization
+                {
+                    Id = 110,
+                    IsoLanguageCode = "sk",
+                    StringCode = "drink-price",
+                    LocalizedString = "Cena"
+                },
+                new Localization
+                {
+                    Id = 111,
+                    IsoLanguageCode = "sk",
+                    StringCode = "drink-details",
+                    LocalizedString = "Podrobnosti"
+                },
+                new Localization
+                {
+                    Id = 112,
+                    IsoLanguageCode = "sk",
+                    StringCode = "drink-edit",
+                    LocalizedString = "Upravit"
+                },
+                new Localization
+                {
+                    Id = 113,
+                    IsoLanguageCode = "sk",
+                    StringCode = "drink-delete",
+                    LocalizedString = "Vymazat"
+                },
+                new Localization
+                {
+                    Id = 114,
+                    IsoLanguageCode = "sk",
+                    StringCode = "drink-back",
+                    LocalizedString = "Spat"
                 }
                 );
     }

@@ -1,32 +1,37 @@
-﻿@using RestaurantWebDAL.Models
+﻿@using RestaurantWebBL.Interfaces;
+@using RestaurantWebDAL.Models
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model IEnumerable<DrinkViewModel>
 @inject SignInManager<User> SignInManager
+@inject ILocalizationService LocalizationService
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
-@if (SignInManager.IsSignedIn(User))
-{
-    <p>
-        <a class ="btn btn-lg btn-primary" asp-action="Create">Create New</a>
-    </p>
-}
+<div class="row">
+    <h1 class="col-auto me-auto">Drinks</h1>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <p class="col-auto mt-auto mb-auto">
+            <a class="btn btn-success" asp-action="Create">@LocalizationService.GetStringWithCode("en","create-drink").LocalizedString</a>
+        </p>
+    }
+</div>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @LocalizationService.GetStringWithCode("en","drink-name").LocalizedString
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Volume)
+                @LocalizationService.GetStringWithCode("en","drink-volume").LocalizedString
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @LocalizationService.GetStringWithCode("en","drink-price").LocalizedString
             </th>
             <th></th>
         </tr>
@@ -47,11 +52,11 @@
                 <td>
                     @using (Html.BeginForm("Delete", "Drink", new { id = item.Id }, FormMethod.Post, true, new { @class = "form-inline" }))
                     {
-                        <a class="btn btn-secondary my-1" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">@LocalizationService.GetStringWithCode("en","drink-details").LocalizedString</a>
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            <a class="btn btn-secondary my-1" asp-action="Update" asp-route-id="@item.Id">Edit</a>
-                            <input class="btn btn-secondary my-1" type="submit" value="Delete" />
+                            <input class="btn btn-danger" type="submit" value="@LocalizationService.GetStringWithCode("en","drink-delete").LocalizedString" />
+                            <a class="btn btn-secondary my-1" asp-action="Update" asp-route-id="@item.Id">@LocalizationService.GetStringWithCode("en","drink-edit").LocalizedString</a>
                         }
                     }
                 </td>

@@ -87,24 +87,10 @@ namespace PV179_RestaurantWeb.Controllers
                 Price = model.Price,
                 Description = model.Description,
                 Name = model.Name,
-                Picture= model.Picture,
+                Picture =model.Picture,
                 AllergenFlags  = model.Allergens,
             };
-            /*
-            var files = HttpContext.Request.Form.Files;
-
-            if (files.Count != 0)
-            {
-                var AbsolutePath = Path.Combine("wwwroot/Assets/", model.Picture);
-
-                using (var fileStream = new FileStream(AbsolutePath,FileMode.Create))
-                {
-                    files[0].CopyTo(fileStream);
-                }
-
-               
-            }*/
-
+            
             await _mealService.CreateAsync(mealDto, 1);
             return RedirectToAction(nameof(Index));
         }

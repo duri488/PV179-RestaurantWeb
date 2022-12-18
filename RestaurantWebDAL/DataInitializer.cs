@@ -69,7 +69,7 @@ public static class DataInitializer
                     Name = "Capri",
                     Description = "Tomato, Cheese, Ham, Mushrooms",
                     Price = 6.35M,
-                    Picture = "/Assets/capri.jpg",
+                    Picture = "https://i.imgur.com/BH6YDXe.jpeg",
                     RestaurantId = 1,
                     AllergenFlags = 0b1000001
                 },
@@ -79,7 +79,7 @@ public static class DataInitializer
                     Name = "Hawai",
                     Description = "Tomato, Cheese, Ham, Pineapple",
                     Price = 8.99M,
-                    Picture = "/Assets/pizza-hawai.jpg",
+                    Picture = "https://i.imgur.com/1Urm6EY.jpeg",
                     RestaurantId = 1,
                     AllergenFlags = 0b1000001
                 }

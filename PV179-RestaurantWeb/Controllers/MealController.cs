@@ -5,6 +5,7 @@ using RestaurantWebBL.DTOs;
 using RestaurantWebBL.Interfaces;
 using RestaurantWebBL.Services;
 using RestaurantWebDAL.Models;
+using System.Text;
 using System.Web;
 
 namespace PV179_RestaurantWeb.Controllers
@@ -78,17 +79,8 @@ namespace PV179_RestaurantWeb.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(MealCreateModel model)
+        public int ConvertAllergens(string[] allergens)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-
-            string[] allergens = model.Allergens.Split(' ');
             int numberForAlergens = 0;
             try
             {
@@ -99,17 +91,35 @@ namespace PV179_RestaurantWeb.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction(nameof(Index));
+                return -1;
+            }
+            return numberForAlergens;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(MealCreateModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
             }
 
+            string[] allergens = model.Allergens.Split(' ');
+            int allergensNumbers = ConvertAllergens(allergens);
 
+            if (allergensNumbers == -1)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            
             MealDto mealDto = new MealDto
             {
                 Price = model.Price,
                 Description = model.Description,
                 Name = model.Name,
                 Picture =model.Picture,
-                AllergenFlags  = numberForAlergens,
+                AllergenFlags  = allergensNumbers,
             };
             
             await _mealService.CreateAsync(mealDto, 1);
@@ -130,16 +140,60 @@ namespace PV179_RestaurantWeb.Controllers
                 return NotFound();
             }
 
-            MealCreateModel mealUpdateModel = new MealCreateModel
+            var AllergenNumbers = Convert.ToString(meal.AllergenFlags, 2);
+            char[] CharArray = AllergenNumbers.ToCharArray();
+            Array.Reverse(CharArray);
+            var builder = new StringBuilder();
+            int length = 1;
+            foreach(char c in CharArray)
+            {
+                if (c == '1')
+                {
+                    builder.Append(length);
+                    builder.Append(' ');
+                }
+                length = length + 1;               
+            }
+            builder.Length--;
+
+            MealUpdateModel mealUpdateModel = new MealUpdateModel
             {
                 Name = meal.Name,
                 Price = meal.Price,
                 Description = meal.Description,
                 Picture = meal.Picture,
-                Allergens = meal.AllergenFlags.ToString()
+                Allergens = builder.ToString()
             };
 
             return View(mealUpdateModel);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Update(MealUpdateModel mealUpdateModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(mealUpdateModel);
+            }
+
+            string[] allergens = mealUpdateModel.Allergens.Split(' ');
+            int allergensNumbers = ConvertAllergens(allergens);
+
+            if (allergensNumbers == -1)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            var mealToUpdate = await _mealService.GetByIdAsync(mealUpdateModel.Id);
+
+            mealToUpdate.Name = mealUpdateModel.Name;
+            mealToUpdate.Price = mealUpdateModel.Price;
+            mealToUpdate.Description = mealUpdateModel.Description;
+            mealToUpdate.Picture = mealUpdateModel.Picture;
+            mealToUpdate.AllergenFlags = allergensNumbers;
+
+            await _mealService.UpdateAsync(mealToUpdate, 1);
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]

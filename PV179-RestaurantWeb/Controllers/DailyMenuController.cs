@@ -83,7 +83,7 @@ namespace PV179_RestaurantWeb.Controllers
         private async Task PopulateDailyMenuCreateModelEnumerables(DailyMenuCreateModel dailyMenuCreateModel)
         {
             dailyMenuCreateModel.MealsEnumerable = await _menuFacade.GetAllMealsAsync();
-            dailyMenuCreateModel.WeeklyMenusEnumerable = await _menuFacade.GetAllWeeklyMenusAsync();
+            dailyMenuCreateModel.WeeklyMenusEnumerable = _menuFacade.GetWeeklyMenusByDate(DateTime.Today);
         }
 
         [HttpPost]

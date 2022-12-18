@@ -52,6 +52,43 @@ namespace PV179_RestaurantWeb.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<ActionResult> Update(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            LocalizationDto? local = await _localizationService.GetByIdAsync(id.Value);
+
+            if (local == null)
+            {
+                return NotFound();
+            }
+            LocalizationUpdateModel localizationUpdateModel = new LocalizationUpdateModel
+            {
+                LocalizedString = local.LocalizedString,
+            };
+
+            return View(localizationUpdateModel);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Update(LocalizationUpdateModel localUpdateModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(localUpdateModel);
+            }
+
+
+            var localToUpdate = await _localizationService.GetByIdAsync(localUpdateModel.Id);
+
+            localToUpdate.LocalizedString = localUpdateModel.LocalizedString;
+            await _localizationService.UpdateAsync(localToUpdate);
+            return RedirectToAction(nameof(Index));
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)

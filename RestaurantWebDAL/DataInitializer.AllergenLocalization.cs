@@ -498,8 +498,8 @@ public static partial class DataInitializer
                 {
                     Id = (int) Allergens.Sulphur,
                     Name = "sulphur",
-                    NumberLocalizationCode = "sulphur-number",
-                    NameLocalizationCode = "sulphur-name",
+                    NumberLocalizationCode = "sulfur-number",
+                    NameLocalizationCode = "sulfur-name",
                 },
                 new Allergen
                 {

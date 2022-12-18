@@ -1,4 +1,6 @@
-﻿@model MealUpdateModel
+﻿@using RestaurantWebBL.Interfaces;
+@model MealUpdateModel
+@inject ILocalizationService LocalizationService
 
 @{
     ViewData["Title"] = "Update";
@@ -28,11 +30,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="Picture" class="control-label"></label>
+                <label name="PictureDescription">@LocalizationService.GetStringWithCode("en","meal-pictureDescription").LocalizedString</label>
                 <input asp-for="Picture" class="form-control" />
                 <span asp-validation-for="Picture" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Allergens" class="control-label"></label>
+                <label name="AllergensDescription">@LocalizationService.GetStringWithCode("en","meal-allergensDesctption").LocalizedString</label>
                 <input asp-for="Allergens" class="form-control" />
                 <span asp-validation-for="Allergens" class="text-danger"></span>
             </div>

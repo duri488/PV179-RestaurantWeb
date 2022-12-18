@@ -134,6 +134,7 @@ public static class DataInitializer
         SeedEnRestaurantLocalization(modelBuilder);
         SeedEnDrinkLocalization(modelBuilder);
         SeedSkDrinkLocalization(modelBuilder);
+        SeedEnMealLocalization(modelBuilder);
     }
 
     private static void SeedEnRestaurantLocalization(ModelBuilder modelBuilder)
@@ -553,6 +554,174 @@ public static class DataInitializer
                     IsoLanguageCode = "sk",
                     StringCode = "drink-back",
                     LocalizedString = "Spat"
+                }
+                );
+    }
+
+    private static void SeedEnMealLocalization(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Localization>()
+            .HasData(
+                new Localization
+                {
+                    Id = 115,
+                    IsoLanguageCode = "en",
+                    StringCode = "create-meal",
+                    LocalizedString = "Create New"
+                },
+                new Localization
+                {
+                    Id = 116,
+                    IsoLanguageCode = "en",
+                    StringCode = "meal-name",
+                    LocalizedString = "Name"
+                },
+                new Localization
+                {
+                    Id = 117,
+                    IsoLanguageCode = "en",
+                    StringCode = "meal-price",
+                    LocalizedString = "Price"
+                },
+                new Localization
+                {
+                    Id = 118,
+                    IsoLanguageCode = "en",
+                    StringCode = "meal-details",
+                    LocalizedString = "Details"
+                },
+                new Localization
+                {
+                    Id = 119,
+                    IsoLanguageCode = "en",
+                    StringCode = "meal-edit",
+                    LocalizedString = "Edit"
+                },
+                new Localization
+                {
+                    Id = 120,
+                    IsoLanguageCode = "en",
+                    StringCode = "meal-delete",
+                    LocalizedString = "Delete"
+                },
+                new Localization
+                {
+                    Id = 121,
+                    IsoLanguageCode = "en",
+                    StringCode = "meal-back",
+                    LocalizedString = "Back"
+                },
+                new Localization
+                {
+                    Id = 122,
+                    IsoLanguageCode = "en",
+                    StringCode = "meal-description",
+                    LocalizedString = "Description"
+                },
+                new Localization
+                {
+                    Id = 123,
+                    IsoLanguageCode = "en",
+                    StringCode = "meal-allergens",
+                    LocalizedString = "Allergens"
+                },
+                new Localization
+                {
+                    Id = 124,
+                    IsoLanguageCode = "en",
+                    StringCode = "meal-allergensDesctption",
+                    LocalizedString = " - Write number of allergen separated by space, expect for last allergen"
+                },
+                new Localization
+                {
+                    Id = 125,
+                    IsoLanguageCode = "en",
+                    StringCode = "meal-pictureDescription",
+                    LocalizedString = " - Write link to picture"
+                }
+                );
+    }
+
+    private static void SeedSkMealLocalization(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Localization>()
+            .HasData(
+                new Localization
+                {
+                    Id = 126,
+                    IsoLanguageCode = "sk",
+                    StringCode = "create-meal",
+                    LocalizedString = "Vytvorit"
+                },
+                new Localization
+                {
+                    Id = 127,
+                    IsoLanguageCode = "sk",
+                    StringCode = "meal-name",
+                    LocalizedString = "Meno"
+                },
+                new Localization
+                {
+                    Id = 128,
+                    IsoLanguageCode = "sk",
+                    StringCode = "meal-price",
+                    LocalizedString = "Cena"
+                },
+                new Localization
+                {
+                    Id = 129,
+                    IsoLanguageCode = "sk",
+                    StringCode = "meal-details",
+                    LocalizedString = "Podprobnosti"
+                },
+                new Localization
+                {
+                    Id = 130,
+                    IsoLanguageCode = "sk",
+                    StringCode = "meal-edit",
+                    LocalizedString = "Upravit"
+                },
+                new Localization
+                {
+                    Id = 131,
+                    IsoLanguageCode = "sk",
+                    StringCode = "meal-delete",
+                    LocalizedString = "Vymazat"
+                },
+                new Localization
+                {
+                    Id = 132,
+                    IsoLanguageCode = "sk",
+                    StringCode = "meal-back",
+                    LocalizedString = "Spat"
+                },
+                new Localization
+                {
+                    Id = 133,
+                    IsoLanguageCode = "sk",
+                    StringCode = "meal-description",
+                    LocalizedString = "Popis"
+                },
+                new Localization
+                {
+                    Id = 134,
+                    IsoLanguageCode = "sk",
+                    StringCode = "meal-allergens",
+                    LocalizedString = "Alergeny"
+                },
+                new Localization
+                {
+                    Id = 135,
+                    IsoLanguageCode = "sk",
+                    StringCode = "meal-allergensDesctption",
+                    LocalizedString = " - Napiste cislo alergenu oddelene medzerou, okrem posledneho alegenu"
+                },
+                new Localization
+                {
+                    Id = 136,
+                    IsoLanguageCode = "sk",
+                    StringCode = "meal-pictureDescription",
+                    LocalizedString = " - Vlozte link na obrazok"
                 }
                 );
     }

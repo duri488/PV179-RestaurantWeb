@@ -1,4 +1,6 @@
-﻿@model MealViewModel
+﻿@using RestaurantWebBL.Interfaces;
+@model MealViewModel
+@inject ILocalizationService LocalizationService
 
 @{
     ViewData["Title"] = "Details";
@@ -12,25 +14,25 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            @LocalizationService.GetStringWithCode("en","meal-name").LocalizedString
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
+            @LocalizationService.GetStringWithCode("en","meal-price").LocalizedString
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Price)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+            @LocalizationService.GetStringWithCode("en","meal-description").LocalizedString
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
          <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Allergens)
+            @LocalizationService.GetStringWithCode("en","meal-allergens").LocalizedString
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Allergens, "Allergens")
@@ -43,5 +45,5 @@
     </div>
 </div>
 <div>
-    <a class="btn btn-lg btn-primary" asp-action="Index">Back</a>
+    <a class="btn btn-lg btn-primary" asp-action="Index">@LocalizationService.GetStringWithCode("en","drink-back").LocalizedString</a>
 </div>

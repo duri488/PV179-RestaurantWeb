@@ -24,6 +24,32 @@ namespace PV179_RestaurantWeb.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public async Task<IActionResult> Index()
+        {
+            IEnumerable<LocalizationDto> localizationDtos = await _localizationService.GetAllAsync();
+            var localizationViewModels = _mapper.Map<IEnumerable<LocalizationCreateModel>>(localizationDtos);
+            return View(localizationViewModels);
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(LocalizationCreateModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            LocalizationDto localizationDto = new LocalizationDto
+            {
+                IsoLanguageCode = model.IsoLanguageCode,
+                StringCode = model.StringCode,
+                LocalizedString = model.LocalizedString,
+            };
+            await _localizationService.CreateAsync(localizationDto);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

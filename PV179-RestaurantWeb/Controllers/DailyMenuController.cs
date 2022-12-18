@@ -76,12 +76,8 @@ namespace PV179_RestaurantWeb.Controllers
             return allergenDtos.Select(a => new AllergenViewModel
             {
             
-                Name = _localizationService.GetStringWithCode(isoCode, a.NameLocalizationCode)?.LocalizedString ?? 
-                       throw new NotImplementedException($"Unable to find localization string for " +
-                                                         $"code:{a.NameLocalizationCode}; iso:{isoCode}"),
-                Number = _localizationService.GetStringWithCode(isoCode, a.NumberLocalizationCode)?.LocalizedString ??
-                         throw new NotImplementedException($"Unable to find localization string for " +
-                                                           $"code:{a.NumberLocalizationCode}; iso:{isoCode}")
+                Name = _localizationService.GetStringWithCode(a.NameLocalizationCode),
+                Number = _localizationService.GetStringWithCode(a.NumberLocalizationCode)
             });
         }
 

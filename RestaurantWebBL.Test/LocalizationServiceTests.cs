@@ -21,6 +21,7 @@ namespace RestaurantWebBL.Test
         Mock<IRepository<Localization>> _localRepositoryMock;
         Mock<IUnitOfWorkFactory> _unitOfWorkFactory;
         Mock<ILocalizationQueryObject> _localQueryObjectMock;
+        Mock<ILanguageContext> _languageContextMock;
 
         [SetUp]
         public void Setup()
@@ -28,6 +29,7 @@ namespace RestaurantWebBL.Test
             _unitOfWorkFactory = new Mock<IUnitOfWorkFactory>();
             _localQueryObjectMock = new Mock<ILocalizationQueryObject>();
             _localRepositoryMock = new Mock<IRepository<Localization>>();
+            _languageContextMock = new Mock<ILanguageContext>();
         }
 
         [Test]
@@ -63,8 +65,8 @@ namespace RestaurantWebBL.Test
             _localQueryObjectMock
                 .Setup(x => x.GetStringWithCode(It.IsAny<LocalizationFilterDTOs>()))
                 .Returns(new QueryResultDto<LocalizationDto>());
-
-            var service = new LocalizationService(_unitOfWorkFactory.Object, Mapper, _localRepositoryMock.Object, _localQueryObjectMock.Object);
+            
+            var service = new LocalizationService(_unitOfWorkFactory.Object, Mapper, _localRepositoryMock.Object, _localQueryObjectMock.Object, _languageContextMock.Object);
 
             await service.CreateAsync(expected);
             var actual = await service.GetByIdAsync(Id);
@@ -114,7 +116,7 @@ namespace RestaurantWebBL.Test
                 }
                 });
 
-            var service = new LocalizationService(_unitOfWorkFactory.Object, Mapper, _localRepositoryMock.Object, _localQueryObjectMock.Object);
+            var service = new LocalizationService(_unitOfWorkFactory.Object, Mapper, _localRepositoryMock.Object, _localQueryObjectMock.Object, _languageContextMock.Object);
 
             Func<Task> act = async () => { await service.CreateAsync(expectedSame); };
             await act.Should().ThrowAsync<SystemException>();
@@ -143,7 +145,7 @@ namespace RestaurantWebBL.Test
 
             _unitOfWorkFactory.Setup(x => x.Build().CommitAsync());
 
-            var service = new LocalizationService(_unitOfWorkFactory.Object, Mapper, _localRepositoryMock.Object, _localQueryObjectMock.Object);
+            var service = new LocalizationService(_unitOfWorkFactory.Object, Mapper, _localRepositoryMock.Object, _localQueryObjectMock.Object, _languageContextMock.Object);
             var result = service.GetAllWithIso("en");
 
             Assert.That(result.Count, Is.EqualTo(1));

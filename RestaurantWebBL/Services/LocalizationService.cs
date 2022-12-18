@@ -14,13 +14,18 @@ namespace RestaurantWebBL.Services
         private readonly IUnitOfWorkFactory _unitOfWorkFactory;
         private readonly IRepository<Localization> _localizationRepository;
         private readonly ILocalizationQueryObject _localizationQueryObject;
+        private readonly ILanguageContext _languageContext;
+        private const string DefaultLanguageCode = "en";
 
-        public LocalizationService(IUnitOfWorkFactory unitOfWorkFactory, IMapper mapper, IRepository<Localization> localizationRepository, ILocalizationQueryObject localizationQueryObject)
+        public LocalizationService(IUnitOfWorkFactory unitOfWorkFactory, IMapper mapper, 
+            IRepository<Localization> localizationRepository, ILocalizationQueryObject localizationQueryObject,
+            ILanguageContext languageContext)
         {
             _unitOfWorkFactory = unitOfWorkFactory;
             _localizationRepository = localizationRepository;
             _mapper = mapper;
             _localizationQueryObject = localizationQueryObject;
+            _languageContext = languageContext;
         }
         public async Task CreateAsync(LocalizationDto createdEntity)
         {
@@ -69,10 +74,43 @@ namespace RestaurantWebBL.Services
             return localizationsISO.Items;
         }
 
-        public LocalizationDto? GetStringWithCode(string iso, string stringCode)
+        public string GetStringWithCode( string stringCode)
         {
-            var localizationsCode = _localizationQueryObject.GetStringWithCode(new LocalizationFilterDTOs() { IsoLanguageCode = iso, StringCode = stringCode });
-            return localizationsCode.Items.FirstOrDefault();
+            var filter = new LocalizationFilterDTOs() {IsoLanguageCode = _languageContext.GetCurrentLanguage(),
+                StringCode = stringCode};
+            
+            LocalizationDto? localizationDto = _localizationQueryObject.GetStringWithCode(filter)
+                .Items
+                .FirstOrDefault();
+
+            if (localizationDto is not null) return localizationDto.LocalizedString;
+            
+            filter.StringCode = DefaultLanguageCode;
+            localizationDto = _localizationQueryObject.GetStringWithCode(filter)
+                .Items
+                .FirstOrDefault();
+            return localizationDto?.LocalizedString ?? 
+                   throw new NotImplementedException(
+                       $"Localization for code: {stringCode} - isoCode: {_languageContext.GetCurrentLanguage()} " +
+                       $"combination was not found");
+        }
+
+        public LocalizationDto? GetDtoWithCode(string stringCode)
+        {
+            var filter = new LocalizationFilterDTOs() {IsoLanguageCode = _languageContext.GetCurrentLanguage(),
+                StringCode = stringCode};
+            
+            LocalizationDto? localizationDto = _localizationQueryObject.GetStringWithCode(filter)
+                .Items
+                .FirstOrDefault();
+
+            if (localizationDto is not null) return localizationDto;
+            
+            filter.StringCode = DefaultLanguageCode;
+            localizationDto = _localizationQueryObject.GetStringWithCode(filter)
+                .Items
+                .FirstOrDefault();
+            return localizationDto;
         }
     }
 }

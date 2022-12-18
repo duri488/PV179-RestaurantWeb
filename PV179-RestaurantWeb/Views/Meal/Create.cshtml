@@ -1,4 +1,4 @@
-﻿@using RestaurantWebBL.Interfaces;
+﻿@using RestaurantWebBL.Interfaces
 @model MealCreateModel
 @inject ILocalizationService LocalizationService
 
@@ -30,13 +30,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="Picture" class="control-label"></label>
-                <label name="PictureDescription">@LocalizationService.GetStringWithCode("en","meal-pictureDescription").LocalizedString</label>
+                <label name="PictureDescription">@LocalizationService.GetStringWithCode("meal-pictureDescription")</label>
                 <input asp-for="Picture" class="form-control" />
                 <span asp-validation-for="Picture" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Allergens" class="control-label"></label>
-                <label name="AllergensDescription">@LocalizationService.GetStringWithCode("en","meal-allergensDesctption").LocalizedString</label>
+                <label name="AllergensDescription">@LocalizationService.GetStringWithCode("meal-allergensDesctption")</label>
                 <input asp-for="Allergens" class="form-control" />
                 <span asp-validation-for="Allergens" class="text-danger"></span>
             </div>

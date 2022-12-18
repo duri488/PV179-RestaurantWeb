@@ -1,7 +1,6 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿@using RestaurantWebDAL.Models
+@using Microsoft.AspNetCore.Identity
 @using RestaurantWebBL.Interfaces
-@using RestaurantWebDAL.Models
-
 @inject SignInManager<User> SignInManager
 @inject ILocalizationService LocalizationService
 
@@ -9,19 +8,19 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <span class="nav-link text-dark">@LocalizationService.GetStringWithCode("en","greetings").LocalizedString @User.Identity?.Name!</span>
+            <span class="nav-link text-dark">@LocalizationService.GetStringWithCode("greetings") @User.Identity?.Name!</span>
         </li>
         <li class="nav-item">
             @using (Html.BeginForm("Logout", "Identity", new { returnUrl = Url.Action("Index", "Restaurant") }, FormMethod.Post))
             {
-                <button type="submit" class="nav-link btn btn-link text-dark">@LocalizationService.GetStringWithCode("en","logout").LocalizedString</button>
+                <button type="submit" class="nav-link btn btn-link text-dark">@LocalizationService.GetStringWithCode("logout")</button>
             }
         </li>
     }
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" href="@Url.Action("Login", "Identity")">@LocalizationService.GetStringWithCode("en","login").LocalizedString</a>
+            <a class="nav-link text-dark" href="@Url.Action("Login", "Identity")">@LocalizationService.GetStringWithCode("login")</a>
         </li>
     }
 </ul>

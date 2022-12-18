@@ -29,7 +29,7 @@ namespace PV179_RestaurantWeb.Controllers
             var restaurant = await _restaurantService.GetFirstAsync();
             var model = _mapper.Map<RestaurantViewModel>(restaurant);
 
-            model.Description = _localizationService.GetStringWithCode("en", "restaurant-description").LocalizedString;
+            model.Description = _localizationService.GetStringWithCode("restaurant-description");
 
             return View(model);
         }
@@ -54,7 +54,7 @@ namespace PV179_RestaurantWeb.Controllers
             model.Id = restaurant.Id;
             await _restaurantService.UpdateAsync(model);
 
-            var descriptionLocalization = _localizationService.GetStringWithCode("en", "restaurant-description");
+            var descriptionLocalization = _localizationService.GetDtoWithCode("restaurant-description");
             descriptionLocalization.LocalizedString = restaurantUpdateModel.Description;
             await _localizationService.UpdateAsync(descriptionLocalization);
 

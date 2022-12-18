@@ -3,7 +3,7 @@
 
 @inject ILocalizationService LocalizationService
 @{
-    ViewData["Title"] = @LocalizationService.GetStringWithCode("en", "login").LocalizedString;
+    ViewData["Title"] = @LocalizationService.GetStringWithCode("login");
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -19,17 +19,17 @@
                 <hr />
                 @Html.ValidationSummary(string.Empty, new { @class = "text-danger" })
                 <div class="form-group">
-                    @Html.LabelFor(x => x.UserName, labelText:@LocalizationService.GetStringWithCode("en","name").LocalizedString)
+                    @Html.LabelFor(x => x.UserName, labelText:@LocalizationService.GetStringWithCode("name"))
                     @Html.TextBoxFor(x => x.UserName, new { @class = "form-control" })
                     @Html.ValidationMessageFor(x => x.UserName, null, new { @class = "text-danger" })
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(x => x.Password, labelText:@LocalizationService.GetStringWithCode("en","password").LocalizedString)
+                    @Html.LabelFor(x => x.Password, labelText:@LocalizationService.GetStringWithCode("password"))
                     @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
                     @Html.ValidationMessageFor(x => x.Password, null, new { @class = "text-danger" })
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary mt-1">@LocalizationService.GetStringWithCode("en","login").LocalizedString</button>
+                    <button type="submit" class="btn btn-primary mt-1">@LocalizationService.GetStringWithCode("login")</button>
                 </div>
             }
         </section>

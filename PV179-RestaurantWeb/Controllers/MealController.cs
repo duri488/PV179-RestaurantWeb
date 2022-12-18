@@ -5,10 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using PV179_RestaurantWeb.Models;
 using RestaurantWebBL.DTOs;
 using RestaurantWebBL.Interfaces;
-using RestaurantWebBL.Services;
-using RestaurantWebDAL.Models;
-using System.Text;
-using System.Web;
 
 namespace PV179_RestaurantWeb.Controllers
 {
@@ -37,16 +33,11 @@ namespace PV179_RestaurantWeb.Controllers
 
         private IEnumerable<AllergenViewModel> LocalizeAllergens(IEnumerable<AllergenDto> allergenDtos)
         {
-            string isoCode = "en";
             return allergenDtos.Select(a => new AllergenViewModel
             {
 
-                Name = _localizationService.GetStringWithCode(isoCode, a.NameLocalizationCode)?.LocalizedString ??
-                       throw new NotImplementedException($"Unable to find localization string for " +
-                                                         $"code:{a.NameLocalizationCode}; iso:{isoCode}"),
-                Number = _localizationService.GetStringWithCode(isoCode, a.NumberLocalizationCode)?.LocalizedString ??
-                         throw new NotImplementedException($"Unable to find localization string for " +
-                                                           $"code:{a.NumberLocalizationCode}; iso:{isoCode}")
+                Name = _localizationService.GetStringWithCode(a.NameLocalizationCode),
+                Number = _localizationService.GetStringWithCode(a.NumberLocalizationCode)
             });
         }
         

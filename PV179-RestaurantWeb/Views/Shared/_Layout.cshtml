@@ -2,8 +2,10 @@
 @using RestaurantWebDAL.Models
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@using RestaurantWeb.Contract
 @inject ILocalizationService LocalizationService
 @inject SignInManager<User> SignInManager
+@inject ILanguageContext LanguageContext
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,25 +29,34 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Restaurant" asp-action="Index">@LocalizationService.GetStringWithCode("en","home").LocalizedString</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Restaurant" asp-action="Index">@LocalizationService.GetStringWithCode("home")</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="WeeklyMenu" asp-action="Index">@LocalizationService.GetStringWithCode("en","weekly-menu").LocalizedString</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="WeeklyMenu" asp-action="Index">@LocalizationService.GetStringWithCode("weekly-menu")</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Drink" asp-action="Index">@LocalizationService.GetStringWithCode("en","drinks").LocalizedString</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Drink" asp-action="Index">@LocalizationService.GetStringWithCode("drinks")</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Meal" asp-action="Index">@LocalizationService.GetStringWithCode("en","meals").LocalizedString</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Meal" asp-action="Index">@LocalizationService.GetStringWithCode("meals")</a>
                         </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="DailyMenu" asp-action="Index">@LocalizationService.GetStringWithCode("en", "daily-menu").LocalizedString</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="DailyMenu" asp-action="Index">@LocalizationService.GetStringWithCode("daily-menu")</a>
                             </li>
                         }
                     </ul>
                     <partial name="_LoginPartial" />
+                    <div class="col-1">
+                         <div class="dropdown">
+                          <button class="dropbtn">@LanguageContext.GetCurrentLanguage()</button>
+                          <div class="dropdown-content">
+                            <button onclick="setCookie('lang', 'en')" class="btn w-100">English</button>
+                            <button onclick="setCookie('lang', 'sk')" class="btn w-100">Slovensky</button>
+                          </div>
+                        </div> 
+                    </div>
                 </div>
             </div>
         </nav>
@@ -57,9 +68,12 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - PV179 - RestaurantWeb
+        <div class="row">
+            <div class="container col-auto">
+                &copy; 2022 - PV179 - RestaurantWeb
+            </div>
         </div>
+        
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

@@ -23,7 +23,7 @@
         @if (SignInManager.IsSignedIn(User))
         {
             <p class="col-2">
-                <a asp-action="Update" class="btn btn-success btn-sm">@LocalizationService.GetStringWithCode("en","update-restaurant-button").LocalizedString</a>
+                <a asp-action="Update" class="btn btn-success btn-sm">@LocalizationService.GetStringWithCode("update-restaurant-button")</a>
             </p>
         }
     </div>
@@ -31,7 +31,7 @@
     <p class="lead">@Model.Description</p>
 
 <div class="container">
-        <h1 class="text-center">@LocalizationService.GetStringWithCode("en","restaurant-contacts").LocalizedString</h1>
+        <h1 class="text-center">@LocalizationService.GetStringWithCode("restaurant-contacts")</h1>
     <hr>
     <div class="row">
         <div class="col-sm-8">
@@ -41,18 +41,18 @@
         <div class="col-sm-4">
             <h3>@Model.Name</h3>
             <hr align="left" width="50%">
-                <h4 class="pt-2">@LocalizationService.GetStringWithCode("en","restaurant-address").LocalizedString</h4>
+                <h4 class="pt-2">@LocalizationService.GetStringWithCode("restaurant-address")</h4>
             <i class="fas fa-globe" style="color: #000"></i>@Model.Address<br>
-                <h4 class="pt-2">@LocalizationService.GetStringWithCode("en","restaurant-phone").LocalizedString</h4>
+                <h4 class="pt-2">@LocalizationService.GetStringWithCode("restaurant-phone")</h4>
             <i class="fas fa-phone" style="color: #000"></i> <a href="tel:+">+421 @Model.Phone</a><br>
-                <h4 class="pt-2">@LocalizationService.GetStringWithCode("en","email").LocalizedString</h4>
+                <h4 class="pt-2">@LocalizationService.GetStringWithCode("email")</h4>
             <i class="fa fa-envelope" style="color: #000"></i> <a href="mailto:">@Model.Email</a><br>
         </div>
     </div>
 </div>
 
 <div class="container">
-        <h1 class="text-center">@LocalizationService.GetStringWithCode("en","restaurant-contact-us").LocalizedString</h1>
+        <h1 class="text-center">@LocalizationService.GetStringWithCode("restaurant-contact-us")</h1>
     <hr>
 
     <div class="row">
@@ -60,23 +60,23 @@
             <form asp-action="ContactUsMail">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="ContactName" class="control-label">@LocalizationService.GetStringWithCode("en","name").LocalizedString</label>
-                        <input asp-for="ContactName" class="form-control" type="text" required="true" placeholder="@LocalizationService.GetStringWithCode("en","contact-form-name").LocalizedString" />
+                    <label asp-for="ContactName" class="control-label">@LocalizationService.GetStringWithCode("name")</label>
+                        <input asp-for="ContactName" class="form-control" type="text" required="true" placeholder="@LocalizationService.GetStringWithCode("contact-form-name")" />
                     <span asp-validation-for="ContactName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                        <label asp-for="ContactMail" class="control-label">@LocalizationService.GetStringWithCode("en","email").LocalizedString</label>
-                        <input asp-for="ContactMail" class="form-control" type="email" required="true" placeholder="@LocalizationService.GetStringWithCode("en","contact-form-email").LocalizedString" />
+                        <label asp-for="ContactMail" class="control-label">@LocalizationService.GetStringWithCode("email")</label>
+                        <input asp-for="ContactMail" class="form-control" type="email" required="true" placeholder="@LocalizationService.GetStringWithCode("contact-form-email")" />
                     <span asp-validation-for="ContactMail" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                        <label asp-for="ContactMessage" class="control-label">@LocalizationService.GetStringWithCode("en","restaurant-message").LocalizedString</label>
+                        <label asp-for="ContactMessage" class="control-label">@LocalizationService.GetStringWithCode("restaurant-message")</label>
                     <textarea asp-for="ContactMessage" class="form-control" rows="3"></textarea>
                     <span asp-validation-for="ContactMessage" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
-                        <input type="submit" value="@LocalizationService.GetStringWithCode("en","submit-form-button").LocalizedString" class="btn btn-primary mt-1" />
+                        <input type="submit" value="@LocalizationService.GetStringWithCode("submit-form-button")" class="btn btn-primary mt-1" />
                 </div>
             </form>
         </div>

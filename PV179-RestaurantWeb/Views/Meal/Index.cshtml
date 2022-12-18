@@ -16,7 +16,7 @@
         @if (SignInManager.IsSignedIn(User))
         {
             <p class="col-auto mt-auto mb-auto">
-            <a class="btn btn-success" asp-action="Create">@LocalizationService.GetStringWithCode("en","create-meal").LocalizedString</a>
+            <a class="btn btn-success" asp-action="Create">@LocalizationService.GetStringWithCode("create-meal")</a>
             </p>
         }
 </div>
@@ -25,10 +25,10 @@
     <thead>
         <tr>
             <th>
-                @LocalizationService.GetStringWithCode("en","meal-name").LocalizedString
+                @LocalizationService.GetStringWithCode("meal-name")
             </th>
             <th>
-                @LocalizationService.GetStringWithCode("en","meal-price").LocalizedString
+                @LocalizationService.GetStringWithCode("meal-price")
             </th>
             <th></th>
         </tr>
@@ -46,12 +46,12 @@
                 <td>
                     @using (Html.BeginForm("Delete", "Meal", new { id = item.Id }, FormMethod.Post, true, new { @class = "form-inline" }))
                     {
-                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">@LocalizationService.GetStringWithCode("en","meal-details").LocalizedString</a>
+                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">@LocalizationService.GetStringWithCode("meal-details")</a>
                         
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            <input class="btn btn-danger" type="submit" value="@LocalizationService.GetStringWithCode("en","meal-delete").LocalizedString" />
-                            <a class="btn btn-secondary my-1" asp-action="Update" asp-route-id="@item.Id">@LocalizationService.GetStringWithCode("en","meal-edit").LocalizedString</a>
+                            <input class="btn btn-danger" type="submit" value="@LocalizationService.GetStringWithCode("meal-delete")" />
+                            <a class="btn btn-secondary my-1" asp-action="Update" asp-route-id="@item.Id">@LocalizationService.GetStringWithCode("meal-edit")</a>
                         }
                     }
                 </td>

@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using PV179_RestaurantWeb.MappingProfiles;
+using PV179_RestaurantWeb.Services;
 using RestaurantWeb.Contract;
 using RestaurantWebBL.Facades;
 using RestaurantWebBL.Interfaces;
@@ -57,6 +58,7 @@ builder.Services.AddTransient<ILocalizationService, LocalizationService>();
 builder.Services.AddTransient<ILocalizationQueryObject, LocalizationQueryObject>();
 builder.Services.AddTransient(typeof(IQuery<>), typeof(EfQuery<>));
 builder.Services.AddTransient(typeof(IRepository<>), typeof(EfRepository<>));
+builder.Services.AddTransient<ILanguageContext, CookieLanguageContext>();
 builder.Services.AddRazorPages();
 
 var app = builder.Build();

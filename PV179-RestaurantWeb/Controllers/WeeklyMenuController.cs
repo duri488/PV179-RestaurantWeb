@@ -100,17 +100,11 @@ namespace PV179_RestaurantWeb.Controllers
 
         private IEnumerable<AllergenViewModel> LocalizeAllergens(IEnumerable<AllergenDto> allergenDtos)
         {
-            // TODO: How to get ISO code?
-            string isoCode = "en";
             return allergenDtos.Select(a => new AllergenViewModel
             {
             
-                Name = _localizationService.GetStringWithCode(isoCode, a.NameLocalizationCode)?.LocalizedString ?? 
-                       throw new NotImplementedException($"Unable to find localization for" +
-                                                         $"code:{a.NameLocalizationCode}; iso:{isoCode}"),
-                Number = _localizationService.GetStringWithCode(isoCode, a.NumberLocalizationCode)?.LocalizedString ??
-                         throw new NotImplementedException($"Unable to find localization for" +
-                                                           $"code:{a.NumberLocalizationCode}; iso:{isoCode}")
+                Name = _localizationService.GetStringWithCode(a.NameLocalizationCode),
+                Number = _localizationService.GetStringWithCode(a.NumberLocalizationCode)
             });
         }
         public async Task<IActionResult> Create()

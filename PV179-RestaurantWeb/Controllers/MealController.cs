@@ -60,12 +60,12 @@ namespace PV179_RestaurantWeb.Controllers
             }
 
 
-            var drink = _mapper.Map<MealViewModel>(mealDto);
+            var meal = _mapper.Map<MealViewModel>(mealDto);
             
             IEnumerable<AllergenDto> allergenDtos = await _allergenService.GetByFlags(mealDto.AllergenFlags);
             List<AllergenViewModel> allergens = LocalizeAllergens(allergenDtos).ToList();
-            drink.Allergens = allergens;
-            return View(drink);
+            meal.Allergens = allergens;
+            return View(meal);
 
         }
 
@@ -103,7 +103,7 @@ namespace PV179_RestaurantWeb.Controllers
             }
 
 
-                MealDto mealDto = new MealDto
+            MealDto mealDto = new MealDto
             {
                 Price = model.Price,
                 Description = model.Description,
@@ -114,6 +114,32 @@ namespace PV179_RestaurantWeb.Controllers
             
             await _mealService.CreateAsync(mealDto, 1);
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<ActionResult> Update(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            MealDto? meal = await _mealService.GetByIdAsync(id.Value);
+
+            if (meal == null)
+            {
+                return NotFound();
+            }
+
+            MealCreateModel mealUpdateModel = new MealCreateModel
+            {
+                Name = meal.Name,
+                Price = meal.Price,
+                Description = meal.Description,
+                Picture = meal.Picture,
+                Allergens = meal.AllergenFlags.ToString()
+            };
+
+            return View(mealUpdateModel);
         }
 
         [HttpPost]

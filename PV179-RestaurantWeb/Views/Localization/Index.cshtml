@@ -12,11 +12,11 @@
 }
 
 <div class="row">
-    <h1 class="col-auto me-auto">Lokalization</h1>
+    <h1 class="col-auto me-auto">@LocalizationService.GetStringWithCode("localization")</h1>
     @if (SignInManager.IsSignedIn(User))
     {
             <p class="col-auto mt-auto mb-auto">
-                <a class="btn btn-success" asp-action="Create">@LocalizationService.GetStringWithCode("create-drink")</a>
+            <a class="btn btn-success" asp-action="Create">@LocalizationService.GetStringWithCode("localization-create")</a>
             </p>
     }
 </div>
@@ -25,13 +25,13 @@
     <thead>
         <tr>
             <th>
-                IsoLanguageCode
+                @LocalizationService.GetStringWithCode("localization-iso")
             </th>
             <th>
-                StringCode
+                @LocalizationService.GetStringWithCode("localization-stringcode")
             </th>
             <th>
-                LocalizedString
+                @LocalizationService.GetStringWithCode("localization-localizedsting")
             </th>
             <th></th>
         </tr>
@@ -54,8 +54,8 @@
                     {
                         @if (SignInManager.IsSignedIn(User))
                         {
-                                        <input class="btn btn-danger" type="submit" value="@LocalizationService.GetStringWithCode("drink-delete")" />
-                                        <a class="btn btn-secondary my-1" asp-action="Update" asp-route-id="@item.Id">@LocalizationService.GetStringWithCode("drink-edit")</a>
+                            <input class="btn btn-danger" type="submit" value="@LocalizationService.GetStringWithCode("localization-delete")" />
+                            <a class="btn btn-secondary my-1" asp-action="Update" asp-route-id="@item.Id">@LocalizationService.GetStringWithCode("localization-edit")</a>
                         }
                     }
                     </td>

@@ -7,29 +7,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>@LocalizationService.GetStringWithCode("create-drink")</h1>
+<h1>@LocalizationService.GetStringWithCode("localization-create")</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="IsoLanguageCode" class="control-label"></label>
+                <label asp-for="IsoLanguageCode" class="control-label">@LocalizationService.GetStringWithCode("localization-iso")</label>
                 <input asp-for="IsoLanguageCode" class="form-control" />
                 <span asp-validation-for="IsoLanguageCode" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StringCode" class="control-label"></label>
+                <label asp-for="StringCode" class="control-label">@LocalizationService.GetStringWithCode("localization-stringcode")</label>
                 <input asp-for="StringCode" class="form-control" />
                 <span asp-validation-for="StringCode" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LocalizedString" class="control-label"></label>
+                <label asp-for="LocalizedString" class="control-label">@LocalizationService.GetStringWithCode("localization-localizedsting")</label>
                 <input asp-for="LocalizedString" class="form-control" />
                 <span asp-validation-for="LocalizedString" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value=@LocalizationService.GetStringWithCode("create-drink") class="btn btn-primary" />
+                <input type="submit" value=@LocalizationService.GetStringWithCode("localization-create") class="btn btn-primary" />
             </div>
         </form>
     </div>

@@ -141,6 +141,48 @@ public static partial class DataInitializer
                 IsoLanguageCode = "sk",
                 StringCode = "localization",
                 LocalizedString = "Lokalizácia"
+            },
+            new Localization
+            {
+                Id = 2002,
+                IsoLanguageCode = "sk",
+                StringCode = "localization-create",
+                LocalizedString = "Vytvoriť"
+            },
+            new Localization
+            {
+                Id = 2004,
+                IsoLanguageCode = "sk",
+                StringCode = "localization-iso",
+                LocalizedString = "Jazykový Kód Iso"
+            },
+            new Localization
+            {
+                Id = 2006,
+                IsoLanguageCode = "sk",
+                StringCode = "localization-stringcode",
+                LocalizedString = "Kód textu"
+            },
+            new Localization
+            {
+                Id = 2008,
+                IsoLanguageCode = "sk",
+                StringCode = "localization-localizedsting",
+                LocalizedString = "Lokalizovaný text"
+            },
+            new Localization
+            {
+                Id = 2010,
+                IsoLanguageCode = "sk",
+                StringCode = "localization-delete",
+                LocalizedString = "Vymazať"
+            },
+            new Localization
+            {
+                Id = 2012,
+                IsoLanguageCode = "sk",
+                StringCode = "localization-edit",
+                LocalizedString = "Upraviť"
             }
             );
     }
@@ -155,6 +197,48 @@ public static partial class DataInitializer
                 IsoLanguageCode = "en",
                 StringCode = "localization",
                 LocalizedString = "Localization"
+            },
+            new Localization
+            {
+                Id = 2003,
+                IsoLanguageCode = "en",
+                StringCode = "localization-create",
+                LocalizedString = "Create"
+            },
+            new Localization
+            {
+                Id = 2005,
+                IsoLanguageCode = "en",
+                StringCode = "localization-iso",
+                LocalizedString = "Iso Language Code"
+            },
+            new Localization
+            {
+                Id = 2007,
+                IsoLanguageCode = "en",
+                StringCode = "localization-stringcode",
+                LocalizedString = "String code"
+            },
+            new Localization
+            {
+                Id = 2009,
+                IsoLanguageCode = "en",
+                StringCode = "localization-localizedsting",
+                LocalizedString = "Localized string"
+            },
+            new Localization
+            {
+                Id = 2011,
+                IsoLanguageCode = "en",
+                StringCode = "localization-delete",
+                LocalizedString = "Delete"
+            },
+            new Localization
+            {
+                Id = 2013,
+                IsoLanguageCode = "en",
+                StringCode = "localization-edit",
+                LocalizedString = "Edit"
             }
     );
     }

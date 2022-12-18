@@ -75,12 +75,17 @@ namespace PV179_RestaurantWeb.Controllers
         public async Task<IActionResult> Create()
         {
             var dailyMenuCreateModel = new DailyMenuCreateModel();
-            dailyMenuCreateModel.Meal = await _menuFacade.GetAllMealsAsync();
-            dailyMenuCreateModel. WeeklyMenu = await _menuFacade.GetAllWeeklyMenusAsync();
+            await PopulateDailyMenuCreateModelEnumerables(dailyMenuCreateModel);
             dailyMenuCreateModel.DayOfWeek = new DayOfWeek();
             return View(dailyMenuCreateModel);
         }
-        
+
+        private async Task PopulateDailyMenuCreateModelEnumerables(DailyMenuCreateModel dailyMenuCreateModel)
+        {
+            dailyMenuCreateModel.MealsEnumerable = await _menuFacade.GetAllMealsAsync();
+            dailyMenuCreateModel.WeeklyMenusEnumerable = await _menuFacade.GetAllWeeklyMenusAsync();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(DailyMenuCreateModel dailyMenu)
@@ -97,8 +102,7 @@ namespace PV179_RestaurantWeb.Controllers
                 return RedirectToAction(nameof(Index));
             }
             var dailyMenuCreateModel = new DailyMenuCreateModel();
-            dailyMenuCreateModel.Meal = await _menuFacade.GetAllMealsAsync();
-            dailyMenuCreateModel. WeeklyMenu = await _menuFacade.GetAllWeeklyMenusAsync();
+            await PopulateDailyMenuCreateModelEnumerables(dailyMenuCreateModel);
             return View(dailyMenuCreateModel);
         }
 
@@ -131,6 +135,56 @@ namespace PV179_RestaurantWeb.Controllers
         {
             await _dailyMenuService.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
+        }
+        
+        // GET: DailyMenu/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            DailyMenuDto? dailyMenuDto = await _dailyMenuService.GetByIdAsync(id.Value, true);
+            if (dailyMenuDto == null)
+            {
+                return NotFound();
+            }
+            
+            var dailyMenuCreateModel = _mapper.Map<DailyMenuCreateModel>(dailyMenuDto);
+            await PopulateDailyMenuCreateModelEnumerables(dailyMenuCreateModel);
+            
+            return View(dailyMenuCreateModel);
+        }
+
+        // POST: DailyMenu/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, DailyMenuCreateModel dailyMenuCreateModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                await PopulateDailyMenuCreateModelEnumerables(dailyMenuCreateModel);
+                return View(dailyMenuCreateModel);
+            }
+            
+            DailyMenuDto? dailyMenuDto = await _dailyMenuService.GetByIdAsync(id);
+            
+            if (dailyMenuDto == null)
+            {
+                return NotFound();
+            }
+
+            dailyMenuDto = _mapper.Map<DailyMenuDto>(dailyMenuCreateModel);
+                
+            await _dailyMenuService.UpdateAsync(dailyMenuDto, dailyMenuCreateModel.MealId,
+                dailyMenuCreateModel.WeeklyMenuId);
+                
+            
+            return RedirectToAction(nameof(Index));
+
         }
     }
 }
